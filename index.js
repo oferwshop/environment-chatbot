@@ -102,6 +102,10 @@ function handleMessage(sender_psid, message) {
   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
   const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
 
+  if (message.text === 'hi'){
+    handlePostback(sender_psid, {payload: GREETING});
+    return;
+  }
   if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
     handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
     return;
@@ -112,7 +116,7 @@ function handleMessage(sender_psid, message) {
       callGeocodingApi(locationNameEncoded, sender_psid, handleConfirmLocation);
     }
     return;
-  } else if (message.text === 'hi' || message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
+  } else if (message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
     handlePostback(sender_psid, {payload: GREETING});
     return;
   }
