@@ -101,8 +101,11 @@ function handleMessage(sender_psid, message) {
 
   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
   const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
+  
+  console.log(77773333)
 
   if (message.text === 'hi'){
+    console.log(7777)
     handlePostback(sender_psid, {payload: GREETING});
     return;
   }
