@@ -112,7 +112,7 @@ function handleMessage(sender_psid, message) {
       callGeocodingApi(locationNameEncoded, sender_psid, handleConfirmLocation);
     }
     return;
-  } else if (message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
+  } else if (message.text === 'hi' || message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
     handlePostback(sender_psid, {payload: GREETING});
     return;
   }
