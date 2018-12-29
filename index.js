@@ -35,7 +35,12 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
     response = {
-      "text":  "אהלן, באיזה יום מתאים לך לבוא להתאמן ?"
+      "text":  "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
+      buttons: [
+        { type: 'postback', title: 'Settings', payload: 'HELP_SETTINGS' },
+        { type: 'postback', title: 'FAQ', payload: 'HELP_FAQ' },
+        { type: 'postback', title: 'Talk to a human', payload: 'HELP_HUMAN' }
+      ]
     }
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
