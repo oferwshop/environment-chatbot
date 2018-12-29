@@ -35,6 +35,7 @@ function handleMessage(sender_psid, received_message) {
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
 
+    var name = "";
 
     request({
       url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -44,12 +45,11 @@ function handleMessage(sender_psid, received_message) {
       },
       method: "GET"
     }, function(error, response, body) {
-      var greeting = "";
       if (error) {
         console.log("Error getting user's name: " +  error);
       } else {
         var bodyObj = JSON.parse(body);
-        const name = bodyObj.first_name;
+        name = bodyObj.first_name;
       }
      
 
