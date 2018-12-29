@@ -34,49 +34,8 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
-    /*response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
-    }*/
     response = {
-      "text": "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
-            "subtitle": "לחץ על כפתור כדי להשיב",
-         //  "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "ראשון",
-                "payload": "yes",
-              },{
-                "type": "postback",
-                "title": "שני",
-                "payload": "yes",
-              },{
-                "type": "postback",
-                "title": "שלישי",
-                "payload": "yes",
-              },{
-                "type": "postback",
-                "title": "רביעי",
-                "payload": "yes",
-              },{
-                "type": "postback",
-                "title": "חמישי",
-                "payload": "yes",
-              },{
-                "type": "postback",
-                "title": "שישי",
-                "payload": "yes",
-              }
-            ],
-          }]
-        }
-      }
+      "text":  "אהלן, באיזה יום מתאים לך לבוא להתאמן ?"
     }
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
@@ -229,3 +188,48 @@ app.get('/webhook', (req, res) => {
     }
   }
 });
+
+
+/*
+
+      "text": "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
+            "subtitle": "לחץ על כפתור כדי להשיב",
+         //  "image_url": attachment_url,
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "ראשון",
+                "payload": "yes",
+              },{
+                "type": "postback",
+                "title": "שני",
+                "payload": "yes",
+              },{
+                "type": "postback",
+                "title": "שלישי",
+                "payload": "yes",
+              },{
+                "type": "postback",
+                "title": "רביעי",
+                "payload": "yes",
+              },{
+                "type": "postback",
+                "title": "חמישי",
+                "payload": "yes",
+              },{
+                "type": "postback",
+                "title": "שישי",
+                "payload": "yes",
+              }
+            ],
+          }]
+        }
+      }
+    }
+*/
