@@ -49,7 +49,7 @@ function handleMessage(sender_psid, received_message) {
             },
             {
               "type":"postback",
-              "payload": 'AUSTRALIA_YE'S,
+              "payload": 'AUSTRALIA_YE',
               "title":"No"
             }
           ]
