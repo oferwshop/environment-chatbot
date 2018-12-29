@@ -27,7 +27,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 
 // Handles messages events
-function handleMessage(sender_psid, received_message, first_name) {
+function handleMessage(sender_psid, received_message) {
   let response;
   
   // Checks if the message contains text
@@ -39,7 +39,7 @@ function handleMessage(sender_psid, received_message, first_name) {
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text": `${first_name} אהלן, מתי מתאים לך לבוא להתאמן ?`,
+          "text":`אהלן, מתי מתאים לך לבוא להתאמן ?`,
           "buttons":[
             {
               "type":"postback",
@@ -162,7 +162,7 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message, body.first_name);        
+        handleMessage(sender_psid, webhook_event.message);        
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
