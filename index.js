@@ -38,6 +38,7 @@ function handleMessage(sender_psid, received_message) {
       "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
     }*/
     response = {
+      "text": "אהלן, באיזה יום מתאים לך לבוא להתאמן ?",
       "attachment": {
         "type": "template",
         "payload": {
