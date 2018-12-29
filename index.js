@@ -44,32 +44,12 @@ function handleMessage(sender_psid, received_message) {
             {
               "type":"postback",
               "payload": 'AU_LOC_PROVIDED',
-              "title":"ראשון"
+              "title": 'ראשון'
             },
             {
               "type":"postback",
-              "payload": 'AUSTRALIA_YE',
-              "title":"שני"
-            },
-            {
-              "type":"postback",
-              "payload": 'AUSTRALIA_YE',
-              "title":"שלישי"
-            },
-            {
-              "type":"postback",
-              "payload": 'AUSTRALIA_YE',
-              "title":"רביעי"
-            },
-            {
-              "type":"postback",
-              "payload": 'AUSTRALIA_YE',
-              "title":"חמישי"
-            },
-            {
-              "type":"postback",
-              "payload": 'AUSTRALIA_YE',
-              "title":"שישי"
+              "payload": 'AUSTRA44LIA_YE',
+              "title": 'שני'
             }
           ]
         }
