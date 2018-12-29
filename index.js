@@ -34,12 +34,31 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {    
     // Create the payload for a basic text message, which
     // will be added to the body of our request to the Send API
+
+
+    request({
+      url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
+      qs: {
+        access_token: PAGE_ACCESS_TOKEN,
+        fields: "first_name"
+      },
+      method: "GET"
+    }, function(error, response, body) {
+      var greeting = "";
+      if (error) {
+        console.log("Error getting user's name: " +  error);
+      } else {
+        var bodyObj = JSON.parse(body);
+        const name = bodyObj.first_name;
+      }
+     
+
     response = {
       "attachment":{
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text":`אהלן, מתי מתאים לך לבוא להתאמן ?`,
+          "text":`${name} אהלן, מתי מתאים לך לבוא להתאמן ?`,
           "buttons":[
             {
               "type":"postback",
@@ -55,6 +74,8 @@ function handleMessage(sender_psid, received_message) {
         }
       }
     }
+  })
+  
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
