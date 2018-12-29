@@ -39,17 +39,37 @@ function handleMessage(sender_psid, received_message) {
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text":`Is it your address?`,
+          "text":`אהלן, מתי מתאים לך לבוא להתאמן ?`,
           "buttons":[
             {
               "type":"postback",
               "payload": 'AU_LOC_PROVIDED',
-              "title":"Yes"
+              "title":"ראשון"
             },
             {
               "type":"postback",
               "payload": 'AUSTRALIA_YE',
-              "title":"No"
+              "title":"שני"
+            },
+            {
+              "type":"postback",
+              "payload": 'AUSTRALIA_YE',
+              "title":"שלישי"
+            },
+            {
+              "type":"postback",
+              "payload": 'AUSTRALIA_YE',
+              "title":"רביעי"
+            },
+            {
+              "type":"postback",
+              "payload": 'AUSTRALIA_YE',
+              "title":"חמישי"
+            },
+            {
+              "type":"postback",
+              "payload": 'AUSTRALIA_YE',
+              "title":"שישי"
             }
           ]
         }
