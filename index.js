@@ -58,7 +58,7 @@ function handleMessage(sender_psid, received_message) {
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text":`אהלן ${name}  !, מתי מתאים לך לבוא להתאמן ?`,
+          "text":`אהלן ${name}, מתי מתאים לך לבוא להתאמן ?`,
           "buttons":[
             {
               "type":"postback",
