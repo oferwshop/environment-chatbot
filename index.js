@@ -58,7 +58,7 @@ function handleMessage(sender_psid, received_message) {
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text":`${name} אהלן, מתי מתאים לך לבוא להתאמן ?`,
+          "text":`אהלן ${name}  !, מתי מתאים לך לבוא להתאמן ?`,
           "buttons":[
             {
               "type":"postback",
@@ -78,7 +78,7 @@ function handleMessage(sender_psid, received_message) {
      
   // Send the response message
   callSendAPI(sender_psid, response);    
-  
+
   })
   
   } else if (received_message.attachments) {
