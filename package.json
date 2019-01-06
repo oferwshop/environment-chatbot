@@ -18,5 +18,8 @@
     "express": "^4.16.2",
     "mongoose": "^5.0.0-rc0",
     "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "express-debug": "^1.1.1"
   }
 }
