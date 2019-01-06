@@ -18,7 +18,6 @@
 
 // Imports dependencies and set up http server
 const 
-  request = require('request'),
   express = require('express'),
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()),
