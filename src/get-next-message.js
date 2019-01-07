@@ -5,8 +5,8 @@ const { ageButtons } = require('./button-sets')
 
 async function getNextMessage(webhook_event) {
 
-    if (webhook_event.messaging) return {
-        text: await getMessageResponse(webhook_event.messaging[0].message),
+    if (webhook_event.message) return {
+        text: await getMessageResponse(webhook_event.message[0].text),
         buttons: ageButtons
     }
     return {
