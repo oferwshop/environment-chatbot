@@ -39,7 +39,7 @@ function handleMessage(sender_psid, received_message) {
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text": helloTxt,//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
+            "text": helloTxt.replace('[user_name]', name),//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
             "buttons":[
               {
                 "type":"postback",
