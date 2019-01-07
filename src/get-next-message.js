@@ -34,8 +34,8 @@ async function getMessageResponse(message, sender_psid){
           reject(error)
         } else {
           var bodyObj = JSON.parse(body);
-          name = bodyObj.first_name;
-          resolve(name)
+          const name1 = bodyObj.first_name;
+          resolve(name1)
         }
         }
     )})
