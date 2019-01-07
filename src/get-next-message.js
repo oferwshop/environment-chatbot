@@ -12,7 +12,7 @@ async function getNextMessage(webhook_event, sender_psid) {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: ageButtons
     }
-    return {
+    if (webhook_event.postback) return {
         text: webhook_event.postback.title,
         buttons: ageButtons
     }
