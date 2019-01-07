@@ -1,6 +1,3 @@
-const request = require('request');
-const fs = require('fs');
-const path = require("path");
 const callSendAPI = require('./call-send-api')
 const getNextMessage = require('./get-next-message')
  

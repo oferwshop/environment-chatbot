@@ -1,7 +1,10 @@
+const request = require('request');
+const fs = require('fs');
+const path = require("path");
+const { ageButtons } = require('./button-sets')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
-const { ageButtons } = require('./button-sets')
 
 async function getNextMessage(webhook_event) {
 
