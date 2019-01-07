@@ -4,7 +4,7 @@ const getNextMessage = require('./get-next-message')
 // Handles messages events
 async function handleMessage(sender_psid, webhook_event) {
 
-    const nextMessage = await getNextMessage(webhook_event)
+    const nextMessage = await getNextMessage(webhook_event, sender_psid)
 
     const response = {
       "attachment":{
