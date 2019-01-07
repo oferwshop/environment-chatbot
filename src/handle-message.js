@@ -1,9 +1,12 @@
 const request = require('request');
 const fs = require('fs');
+const path = require("path");
 const callSendAPI = require('./call-send-api')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
+ 
+const helloTxt = fs.readFileSync(path.resolve(__dirname, './messages/hello.txt')).toString()
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -36,7 +39,7 @@ function handleMessage(sender_psid, received_message) {
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text": fs.readFileSync('./messages/hello.txt').toString(),//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
+            "text": helloTxt,//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
             "buttons":[
               {
                 "type":"postback",
