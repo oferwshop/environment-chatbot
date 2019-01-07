@@ -34,10 +34,6 @@ app.post('/webhook', (req, res) => {
 
   // Parse the request body from the POST
   let body = req.body;
-  console.log('---------------')
-  console.log(JSON.stringify(body))
-  console.log('---------------')
-
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
@@ -45,21 +41,25 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function(entry) {
 
       // Gets the body of the webhook event
-      let webhook_event = entry.messaging[0];
+      let webhook_event = (entry.messaging || entry.standby)[0];
       console.log(webhook_event);
     
     
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
+
+      handleMessage(sender_psid, webhook_event);        
     
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
+      /*
       if (webhook_event.message) {
         handleMessage(sender_psid, webhook_event.message);        
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
+      */
       
     });
 
