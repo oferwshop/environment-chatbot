@@ -1,4 +1,5 @@
 const request = require('request');
+const fs = require('fs');
 const callSendAPI = require('./call-send-api')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -35,7 +36,7 @@ function handleMessage(sender_psid, received_message) {
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text":`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
+            "text": fs.readFileSync('./messages/hello.txt').toString(),//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
             "buttons":[
               {
                 "type":"postback",
