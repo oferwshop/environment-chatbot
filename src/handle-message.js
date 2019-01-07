@@ -2,11 +2,12 @@ const request = require('request');
 const fs = require('fs');
 const path = require("path");
 const callSendAPI = require('./call-send-api')
+const nextMessage = require('./next-message')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
  
-const helloTxt = fs.readFileSync(path.resolve(__dirname, './messages/hello.txt')).toString()
+const helloAgeTxt = fs.readFileSync(path.resolve(__dirname, './messages/hello-age.txt')).toString()
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -39,7 +40,7 @@ function handleMessage(sender_psid, received_message) {
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text": helloTxt.replace('[user_name]', name),//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
+            "text": helloAgeTxt.replace('[user_name]', name),//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
             "buttons":[
               {
                 "type":"postback",
