@@ -11,8 +11,8 @@ async function handleMessage(sender_psid, webhook_event) {
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text": nextMessage.text,//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
-          "buttons": nextMessage.buttons
+          "text": nextMessage ? nextMessage.text : null,//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
+          "buttons": nextMessage ? nextMessage.buttons: null
         }
       }
     }
