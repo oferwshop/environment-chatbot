@@ -7,18 +7,22 @@ async function handleMessage(sender_psid, webhook_event) {
 
     const nextMessage = await getNextMessage(webhook_event, sender_psid)
     if (!nextMessage) return
-    const { buttons, quick_replies, text } = nextMessage
-    const response = nextMessage.buttons ? {
+
+    const { buttons, quick_replies, text, attachment } = nextMessage
+
+    const response = buttons ? {
       "attachment":{
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text": nextMessage.text,
+          "text": text,
           buttons
         }
       }
     }
-      : _.assign({ text }, quick_replies ? { quick_replies } : null)
+      : ( attachment ? { attachment }
+        : _.assign({ text }, quick_replies ? { quick_replies } : null)
+      )
 
      
   // Send the response message

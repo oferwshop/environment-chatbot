@@ -11,10 +11,9 @@ async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:")
     console.log(JSON.stringify(webhook_event))
 
-    
+    const isSchedule = _.get(webhook_event, 'message.nlp.entities.datetime')    
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
-    const isSchedule = _.get(webhook_event, 'message.nlp.entities.datetime')
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isTextMessage = webhook_event.message
     
@@ -71,7 +70,8 @@ const getPostbackResponse = (payload) => {
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
-            : { buttons: elements }))
+            : ( elements[0].type === 'attachment' ? { attachment: elements[0] }
+                : { buttons: elements })))
 
     console.log("*** RETURNING: ", JSON.stringify(retVal))
 
