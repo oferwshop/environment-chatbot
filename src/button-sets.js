@@ -1,41 +1,31 @@
+const _ = require('lodash')
 
 const greetingsAge = [
-    {
-      "type":"postback",
-      "payload": 'kids-info',
-      "title": 'ילדים(עד גיל 14)'
-    },
-    {
-      "type":"postback",
-      "payload": 'military-info',
-      "title": 'חיילים בסדיר'
-    },
-    {
-      "type":"postback",
-      "payload": 'adults-info',
-      "title": 'בוגרים'
-    }
+    { "payload": 'kids-info', "title": 'ילדים (עד גיל 14)'},
+    { "payload": 'military-info', "title": 'חיילים בסדיר' },
+    { "payload": 'adults-info', "title": 'בוגרים' }
   ]
 
 const learnMore = [
-  {
-    "type":"postback",
-    "payload": 'schedule-free-session',
-    "title": 'לקביעת אימון ניסיון בחינם'
-  },
-  {
-    "type":"postback",
-    "payload": 'more-info',
-    "title": 'לקבלת פרטים נוספים'
-  }
+  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון בחינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
-
+const learnMoreAdults = [
+  { "payload": 'schedule-free-week', "title": 'למימוש ההטבה: שבוע נסיון' },
+  { "type":"postback", "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+]
 const kidsInfo = learnMore
+const militaryInfo = learnMore
+const adultsInfo = learnMoreAdults
 
-const buttonSets = {}
+const buttonSets = {
+  "greetings-age": greetingsAge,
+  "kids-info": kidsInfo,
+  "military-info": militaryInfo,
+  "adults-info": adultsInfo,
+}
 
-buttonSets["greetings-age"] = greetingsAge
-buttonSets["kids-info"] = kidsInfo
+_.each(buttonSets, set => _.each(set.button, button => _.set(button, 'type', 'postback')))
 
 module.exports = buttonSets
