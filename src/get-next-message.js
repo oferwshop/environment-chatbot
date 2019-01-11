@@ -7,7 +7,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
-    console.log(`-----${JSON.stringify(webhook_event)}-----`)
+    console.log(`*** WEBHOOK EVENT ****: ${JSON.stringify(webhook_event)}`)
     if (webhook_event.message) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets.greetingsAge

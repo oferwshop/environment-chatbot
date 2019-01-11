@@ -5,6 +5,7 @@ const getNextMessage = require('./get-next-message')
 async function handleMessage(sender_psid, webhook_event) {
 
     const nextMessage = await getNextMessage(webhook_event, sender_psid)
+    console.log(`*** TO SEND : ****: ${JSON.stringify(webhook_event)}`)
 
     const response = {
       "attachment":{
