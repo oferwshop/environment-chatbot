@@ -45,16 +45,20 @@ async function getMessageResponse(message, sender_psid){
     return helloAgeTxt.replace('[user_name]', name)
 }
 
-const getPostbackResponse = (payload) => {
-    const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-    const elements = buttonSets[payload]
-    let quickReplies, buttons;
-    if (elements.length > 3) quickReplies = _.map(buttons, button => ({
+const getQuickReplies = elements => ({
+    quick_replies: _.map(elements, element => ({
         "content_type":"text",
         "title": element.text,
         "payload": element.payload
     }))
-    return _.assign({ text }, buttons ? { buttons } : null, quickReplies ? { quick_replies : quickReplies } :null)
+})
+
+const getPostbackResponse = (payload) => {
+    const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+    const elements = buttonSets[payload]
+    return _.assign({ text },
+        !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
+            : { buttons: elements }))
 }
 
 module.exports = getNextMessage
