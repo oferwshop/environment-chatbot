@@ -23,7 +23,6 @@ async function handleMessage(sender_psid, webhook_event) {
       : ( attachment ? { attachment }
         : _.assign({ text }, quick_replies ? { quick_replies } : null)
       )
-
      
   // Send the response message
   callSendAPI(sender_psid, response);   
