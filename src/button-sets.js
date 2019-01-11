@@ -7,7 +7,7 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון בחינם' },
+  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const militaryInfo = [
