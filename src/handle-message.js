@@ -5,18 +5,17 @@ const getNextMessage = require('./get-next-message')
 async function handleMessage(sender_psid, webhook_event) {
 
     const nextMessage = await getNextMessage(webhook_event, sender_psid)
-    console.log(`*** TO SEND : ****: ${JSON.stringify(nextMessage)}`)
-
-    const response = {
+    if (!nextMessage) return
+    const response = nextMessage.buttons ? {
       "attachment":{
         "type":"template",
         "payload":{
           "template_type":"button",
-          "text": nextMessage ? nextMessage.text : null,//`אהלן ${name}, מתי מתאים לך לבוא להתאמן \u23F3 ?`,
-          "buttons": nextMessage ? nextMessage.buttons: null
+          "text": nextMessage.text,
+          "buttons": nextMessage.buttons
         }
       }
-    }
+    } : { "text": nextMessage.text }
 
      
   // Send the response message
