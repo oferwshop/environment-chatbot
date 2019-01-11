@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const callSendAPI = require('./call-send-api')
 const getNextMessage = require('./get-next-message')
  
