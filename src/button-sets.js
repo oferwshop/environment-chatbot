@@ -26,7 +26,11 @@ const scheduleFreeWeek = [
   { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)' }
 ]
 
-const telAviv = greetingsAge;
+const signWaiver =  [
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+]
+
 
 const buttonSets = {
   "greetings-age": greetingsAge,
@@ -34,7 +38,10 @@ const buttonSets = {
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
   "schedule-free-week": scheduleFreeWeek,
-  "tel-aviv": telAviv
+  "tel-aviv": signWaiver,
+  "kadima": signWaiver,
+  "misgav": signWaiver,
+  "kfar-bilu": signWaiver
 }
 
 _.each(buttonSets, set => _.each(set, button => _.set(button, 'type', 'postback')))
