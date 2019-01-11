@@ -55,10 +55,15 @@ const getQuickReplies = elements => ({
 
 const getPostbackResponse = (payload) => {
     const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+    console.log("*** EXTRACTED TEXT: ", text)
     const elements = buttonSets[payload]
-    return _.assign({ text },
+    const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
             : { buttons: elements }))
+
+    console.log("*** RETURNING: ", JSON.stringify(retVal))
+
+    return retVal
 }
 
 module.exports = getNextMessage
