@@ -48,7 +48,7 @@ async function getMessageResponse(message, sender_psid){
 const getQuickReplies = elements => ({
     quick_replies: _.map(elements, element => ({
         "content_type":"text",
-        "title": element.text,
+        "title": element.title,
         "payload": element.payload
     }))
 })
