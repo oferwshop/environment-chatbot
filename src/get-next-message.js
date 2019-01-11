@@ -1,6 +1,7 @@
 const request = require('request');
 const fs = require('fs');
 const path = require("path");
+const _ = require('lodash')
 const buttonSets = require('./button-sets')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -14,7 +15,7 @@ async function getNextMessage(webhook_event, sender_psid) {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
     }
-    if (webhook_event.postback) return getPostbackResponse(webhook_event.postback.payload)
+    if (_.get(webhook_event, 'postback.payload')) return getPostbackResponse(webhook_event.postback.payload)
 }
 
 async function getMessageResponse(message, sender_psid){
