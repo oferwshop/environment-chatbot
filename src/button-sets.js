@@ -7,7 +7,7 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון' },
+  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון בחינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const militaryInfo = [
@@ -25,6 +25,9 @@ const scheduleFreeWeek = [
   { "payload": 'kadima', "title": 'קדימה (השרון)' },
   { "payload": 'kfar-bilu', "title": 'כפר בילו"ו (דרום)' }
 ]
+const scheduleFreeSession = [
+  { "payload": 'test', "title": 'test' }
+]
 
 const telAviv = greetingsAge;
 
@@ -33,7 +36,8 @@ const buttonSets = {
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
-  "scheduleFreeWeek": scheduleFreeWeek,
+  "schedule-free-session": scheduleFreeSession,
+  "schedule-free-week": scheduleFreeWeek,
   "tel-aviv": telAviv
 }
 
