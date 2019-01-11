@@ -8,15 +8,19 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
-    console.log("*** Getting next message ***")
-    console.log("Received webhook:")
+    console.log("**** Received webhook:")
     console.log(JSON.stringify(webhook_event))
-    if (webhook_event.message) return {
+
+    const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
+    const isButtonPostback = _.get(webhook_event, 'postback.payload')
+    const isTextMessage = webhook_event.message
+
+    if (isQuickReply) return getPostbackResponse(webhook_event.message.quick_reply.payload)
+    if (isButtonPostback) return getPostbackResponse(webhook_event.postback.payload)
+    if (isTextMessage) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
     }
-    if (_.get(webhook_event, 'postback.payload')) return getPostbackResponse(webhook_event.postback.payload)
-    if (_.get(webhook_event, 'message.quick_reply.payload')) return getPostbackResponse(webhook_event.message.quick_reply.payload)
 }
 
 async function getMessageResponse(message, sender_psid){
