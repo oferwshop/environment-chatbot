@@ -45,8 +45,11 @@ async function getMessageResponse(message, sender_psid){
 }
 
 const getPostbackResponse = (payload) => {
+    console.log("*** Extracting response text ****")
     const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+    console.log("*** Extracted text:****", text)
     const buttons = buttonSets[payload]
+    console.log("*** Buttons ****", JSON.stringify(buttons))
     return _.assign({ text }, buttons ? { buttons } : null )
 }
 
