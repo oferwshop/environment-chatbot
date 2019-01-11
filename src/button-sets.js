@@ -6,24 +6,35 @@ const greetingsAge = [
     { "payload": 'adults-info', "title": 'בוגרים' }
   ]
 
-const learnMore = [
+const kidsInfo = [
   { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון בחינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
-
-const learnMoreAdults = [
-  { "payload": 'schedule-free-week', "title": 'למימוש ההטבה: שבוע נסיון' },
-  { "type":"postback", "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+const militaryInfo = [
+  { "payload": 'schedule-free-week', "title": 'למימוש המבצע' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
-const kidsInfo = learnMore
-const militaryInfo = learnMore
-const adultsInfo = learnMoreAdults
+const adultsInfo = [
+  { "payload": 'schedule-free-week', "title": 'למימוש ההטבה: שבוע נסיון' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+]
+
+const scheduleFreeWeek = [
+  { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
+  { "payload": 'misgav', "title": 'משגב (צפון)' },
+  { "payload": 'kadima', "title": 'קדימה (השרון)' },
+  { "payload": 'kfar-bilu', "title": 'כפר בילו"ו (דרום)' }
+]
+
+const telAviv = greetingsAge;
 
 const buttonSets = {
   "greetings-age": greetingsAge,
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
+  "scheduleFreeWeek": scheduleFreeWeek,
+  "tel-aviv": telAviv
 }
 
 _.each(buttonSets, set => _.each(set, button => _.set(button, 'type', 'postback')))

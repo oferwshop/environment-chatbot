@@ -7,8 +7,6 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
-    console.log(`*** WEBHOOK EVENT ****: ${JSON.stringify(webhook_event)}`)
-    console.log(`*** Buttons Sets ****: ${JSON.stringify(buttonSets)}`)
     if (webhook_event.message) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
@@ -44,7 +42,7 @@ async function getMessageResponse(message, sender_psid){
 
 const getPostbackResponse = (payload) => {
     const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-    const buttons = buttonSets[payload]
+    const buttons = buttonSets[payload] || []
     return { text, buttons }
 }
 
