@@ -30,7 +30,7 @@ async function getNextMessage(webhook_event, sender_psid) {
 const isSchedule = webhook_event => {
     if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
     let schedule = false
-    ['לו\"ז','לוז','מערכת','שעות','מתי','אימו','שעה','chedule','שעה','שעה'].each(
+    ['לו\"ז','לוז','מערכת','שעות','מתי','אימו','שעה','chedule','שעה','שעה'].forEach(
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
     )
     return schedule
