@@ -46,8 +46,7 @@ async function getMessageResponse(message, sender_psid){
 
 const getPostbackResponse = (payload) => {
     const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-    const buttons = buttonSets[payload] || []
-    return { text, buttons }
+    return _.assign({ text }, buttonSets[payload] ? buttons : null )
 }
 
 module.exports = getNextMessage

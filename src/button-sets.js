@@ -25,9 +25,6 @@ const scheduleFreeWeek = [
   { "payload": 'kadima', "title": 'קדימה (השרון)' },
   { "payload": 'kfar-bilu', "title": 'כפר בילו"ו (דרום)' }
 ]
-const scheduleFreeSession = [
-  { "payload": 'test', "title": 'test' }
-]
 
 const telAviv = greetingsAge;
 
@@ -36,7 +33,6 @@ const buttonSets = {
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
-  "schedule-free-session": scheduleFreeSession,
   "schedule-free-week": scheduleFreeWeek,
   "tel-aviv": telAviv
 }
