@@ -11,12 +11,18 @@ async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:")
     console.log(JSON.stringify(webhook_event))
 
+    
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
+    const isSchedule = _.get(webhook_event, 'message.entities.datetime')
+    const isPhoneNumber = _.get(webhook_event, 'message.entities.phone_number')
     const isTextMessage = webhook_event.message
-
+    
+    if (isSchedule) return getPostbackResponse('schedule')
+    if (isPhoneNumber) return getPostbackResponse('thank-you')
     if (isQuickReply) return getPostbackResponse(webhook_event.message.quick_reply.payload)
     if (isButtonPostback) return getPostbackResponse(webhook_event.postback.payload)
+
     if (isTextMessage) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
@@ -57,8 +63,10 @@ const getQuickReplies = elements => ({
     }))
 })
 
+const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+
 const getPostbackResponse = (payload) => {
-    const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+    const text = getText(payload)
     console.log("*** EXTRACTED TEXT: ", text)
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
