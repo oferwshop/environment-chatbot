@@ -1,15 +1,41 @@
 
-const ageButtons = [
+const greetingsAge = [
     {
       "type":"postback",
-      "payload": 'AU_LOC_PROVIDED',
-      "title": 'בוקר'
+      "payload": 'kids-info',
+      "title": 'ילדים(עד גיל 14)'
     },
     {
       "type":"postback",
-      "payload": 'AUSTRA44LIA_YE',
-      "title": 'ערב'
+      "payload": 'military-info',
+      "title": 'חיילים בסדיר'
+    },
+    {
+      "type":"postback",
+      "payload": 'adults-info',
+      "title": 'בוגרים'
     }
   ]
 
-module.exports = { ageButtons }
+const learnMore = [
+  {
+    "type":"postback",
+    "payload": 'schedule-free-session',
+    "title": 'לקביעת אימון ניסיון בחינם'
+  },
+  {
+    "type":"postback",
+    "payload": 'more-info',
+    "title": 'לקבלת פרטים נוספים'
+  }
+]
+
+
+const kidsInfo = learnMore
+
+const buttonSets = {}
+
+buttonSets["greetins-age"] = greetingsAge
+buttonSets["kids-info"] = kidsInfo
+
+module.exports = buttonSets
