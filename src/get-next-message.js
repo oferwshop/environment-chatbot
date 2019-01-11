@@ -73,7 +73,7 @@ const getPostbackResponse = (payload) => {
             : ( elements[0].type === 'attachment' ? { attachment: elements[0] }
                 : { buttons: elements })))
 
-    console.log("*** RETURNING: ", JSON.stringify(retVal))
+    console.log("*** RETURNING:  ", JSON.stringify(retVal))
 
     return retVal
 }
