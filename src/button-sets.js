@@ -35,7 +35,7 @@ const kidsInfo = learnMore
 
 const buttonSets = {}
 
-buttonSets["greetins-age"] = greetingsAge
+buttonSets["greetings-age"] = greetingsAge
 buttonSets["kids-info"] = kidsInfo
 
 module.exports = buttonSets
