@@ -16,6 +16,7 @@ async function getNextMessage(webhook_event, sender_psid) {
         buttons: buttonSets["greetings-age"]
     }
     if (_.get(webhook_event, 'postback.payload')) return getPostbackResponse(webhook_event.postback.payload)
+    if (_.get(webhook_event, 'message.quick_reply.payload')) return getPostbackResponse(webhook_event.message.quick_reply.payload)
 }
 
 async function getMessageResponse(message, sender_psid){
@@ -45,12 +46,15 @@ async function getMessageResponse(message, sender_psid){
 }
 
 const getPostbackResponse = (payload) => {
-    console.log("*** Extracting response text ****")
     const text = fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-    console.log("*** Extracted text:****", text)
-    const buttons = buttonSets[payload]
-    console.log("*** Buttons ****", JSON.stringify(buttons))
-    return _.assign({ text }, buttons ? { buttons } : null )
+    const elements = buttonSets[payload]
+    let quickReplies, buttons;
+    if (elements.length > 3) quickReplies = _.map(buttons, button => ({
+        "content_type":"text",
+        "title": element.text,
+        "payload": element.payload
+    }))
+    return _.assign({ text }, buttons ? { buttons } : null, quickReplies ? { quick_replies : quickReplies } :null)
 }
 
 module.exports = getNextMessage
