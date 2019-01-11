@@ -26,6 +26,6 @@ const buttonSets = {
   "adults-info": adultsInfo,
 }
 
-_.each(buttonSets, set => _.each(set.button, button => _.set(button, 'type', 'postback')))
+_.each(buttonSets, set => _.each(set, button => _.set(button, 'type', 'postback')))
 
 module.exports = buttonSets
