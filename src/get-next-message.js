@@ -10,7 +10,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     console.log(`*** WEBHOOK EVENT ****: ${JSON.stringify(webhook_event)}`)
     if (webhook_event.message) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
-        buttons: buttonSets.greetingsAge
+        buttons: buttonSets["greetings-age"]
     }
     if (webhook_event.postback) return getPostbackResponse(webhook_event.postback.payload)
 }
