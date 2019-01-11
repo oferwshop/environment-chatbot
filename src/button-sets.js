@@ -23,7 +23,7 @@ const scheduleFreeWeek = [
   { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
   { "payload": 'misgav', "title": 'משגב (צפון)' },
   { "payload": 'kadima', "title": 'קדימה (השרון)' },
-  { "payload": 'kfar-bilu', "title": 'כפר בילו"ו (דרום)' }
+  { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)' }
 ]
 
 const telAviv = greetingsAge;
