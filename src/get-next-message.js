@@ -8,6 +8,7 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
     console.log(`*** WEBHOOK EVENT ****: ${JSON.stringify(webhook_event)}`)
+    console.log(`*** Buttons Sets ****: ${JSON.stringify(buttonSets)}`)
     if (webhook_event.message) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
