@@ -11,22 +11,31 @@ async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:")
     console.log(JSON.stringify(webhook_event))
 
-    const isSchedule = _.get(webhook_event, 'message.nlp.entities.datetime')    
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isTextMessage = webhook_event.message
     
-    if (isSchedule) return getPostbackResponse('schedule')
     if (isPhoneNumber) return getPostbackResponse('thank-you')
     if (isQuickReply) return getPostbackResponse(webhook_event.message.quick_reply.payload)
     if (isButtonPostback) return getPostbackResponse(webhook_event.postback.payload)
+    if (isSchedule(webhook_event)) return getPostbackResponse('schedule')
 
     if (isTextMessage) return {
         text: await getMessageResponse(webhook_event.message.text, sender_psid),
         buttons: buttonSets["greetings-age"]
     }
 }
+
+const isSchedule = webhook_event => {
+    if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
+    let schedule = false
+    ['לו\"ז','לוז','מערכת','שעות','מתי','אימו','שעה','chedule','שעה','שעה'].each(
+        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
+    )
+    return schedule
+}
+
 
 async function getMessageResponse(message, sender_psid){
     const name = await new Promise((resolve, reject) => {
