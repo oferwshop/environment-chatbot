@@ -27,9 +27,7 @@ const scheduleFreeWeek = [
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
-]
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }]
 
 
 const buttonSets = {
