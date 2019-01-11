@@ -14,8 +14,8 @@ async function getNextMessage(webhook_event, sender_psid) {
     
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
-    const isSchedule = _.get(webhook_event, 'message.entities.datetime')
-    const isPhoneNumber = _.get(webhook_event, 'message.entities.phone_number')
+    const isSchedule = _.get(webhook_event, 'message.nlp.entities.datetime')
+    const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isTextMessage = webhook_event.message
     
     if (isSchedule) return getPostbackResponse('schedule')
