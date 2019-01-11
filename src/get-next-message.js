@@ -70,10 +70,10 @@ const getPostbackResponse = (payload) => {
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
-            : ( elements[0].type === 'attachment' ? { attachment: elements[0] }
+            : ( elements[0].attachment ? { attachment: elements[0].attachment }
                 : { buttons: elements })))
 
-    console.log("*** RETURNING:  ", JSON.stringify(retVal))
+    console.log("*** RETURNING: ", JSON.stringify(retVal))
 
     return retVal
 }
