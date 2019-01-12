@@ -2,6 +2,7 @@ const request = require('request');
 const fs = require('fs');
 const path = require("path");
 const _ = require('lodash')
+var nodemailer = require('nodemailer');
 const buttonSets = require('./button-sets')
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -13,14 +14,16 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
+    const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
     const isTextMessage = webhook_event.message
     const isASchedule = isSchedule(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
 
     const quickReplyPayload = isQuickReply && webhook_event.message.quick_reply.payload
     const postbackPayload = isButtonPostback && webhook_event.postback.payload
+    const contactPayload = (isEmail || isPhoneNumber) &&  _.get(webhook_event, 'message.text')
     
-    if (isPhoneNumber) return getReply('thank-you')
+    if (isPhoneNumber || isEmail) return await getReplyAndEmail('thank-you', sender_psid, contactPayload)
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
     if (isButtonPostback) return getReply(postbackPayload)
@@ -89,5 +92,58 @@ const getReplyWithUser = async (payload, sender_psid) => {
     )})
     return getReply(payload, name)
 }
+
+
+const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
+    const info = await new Promise((resolve, reject) => {
+        request({
+        url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
+        qs: {
+          access_token: PAGE_ACCESS_TOKEN,
+          fields: ["name", "id"]
+        },
+        method: "GET"
+      }, function(error, response, body) {
+        if (error) {
+          console.log("Error getting user's name: " +  error);
+          reject(error)
+        } else {
+          var bodyObj = JSON.parse(body);
+          const { name, id } = bodyObj;
+          resolve({ name, id })
+        }
+        }
+    )})
+
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
+    }
+  });
+  
+  const content = `${name} (${id}) : 4{contactPayload}`
+  
+  var mailOptions = {
+    from: 'saulmma@gmail.com',
+    to: 'ofer.c@hotmail.com',
+    subject: 'התקבלו פרטי התקשרות',
+    text: `שלום רב, נראה שהתקבלו פרטי יצירת קשר מ${ content } `
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  }); 
+
+    return getReply(payload)
+}
+
+
 
 module.exports = getNextMessage

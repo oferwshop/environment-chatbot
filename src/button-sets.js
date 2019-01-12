@@ -7,7 +7,7 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'לקביעת אימון ניסיון בחינם' },
+  { "payload": 'schedule-free-session', "title": 'לאימון ניסיון בחינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const militaryInfo = [
@@ -15,7 +15,7 @@ const militaryInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'למימוש ההטבה: שבוע נסיון' },
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
@@ -30,7 +30,7 @@ const signWaiver =  [
   { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
 ]
 
-const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק של הקבוצה", "webview_height_ratio": "full" }]
+const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
 
 const kadima = _.concat(getRegionButton('https://www.facebook.com/groups/151885048674207'), signWaiver)
 const kfarBilu = _.concat(getRegionButton('https://www.facebook.com/BJJ.in.Israel/'), signWaiver)

@@ -19,6 +19,7 @@
     "express-debug": "^1.1.1",
     "lodash": "^4.17.11",
     "mongoose": "^5.0.0-rc0",
+    "nodemailer": "^5.1.1",
     "request": "^2.83.0"
   },
   "devDependencies": {
