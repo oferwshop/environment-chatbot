@@ -8,23 +8,24 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
-    console.log("**** Received webhook:")
-    console.log(JSON.stringify(webhook_event))
+    console.log("**** Received webhook:", JSON.stringify(webhook_event))
 
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
     const isButtonPostback = _.get(webhook_event, 'postback.payload')
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isTextMessage = webhook_event.message
-    
-    if (isPhoneNumber) return getPostbackResponse('thank-you')
-    if (isQuickReply) return getPostbackResponse(webhook_event.message.quick_reply.payload)
-    if (isButtonPostback) return getPostbackResponse(webhook_event.postback.payload)
-    if (isSchedule(webhook_event)) return getPostbackResponse('schedule')
+    const isASchedule = isSchedule(webhook_event)
+    const isAWaiver = isWaiver(webhook_event)
 
-    if (isTextMessage) return {
-        text: await getMessageResponse(webhook_event.message.text, sender_psid),
-        buttons: buttonSets["greetings-age"]
-    }
+    const quickReplyPayload = isQuickReply && webhook_event.message.quick_reply.payload
+    const postbackPayload = isButtonPostback && webhook_event.postback.payload
+    
+    if (isPhoneNumber) return getReply('thank-you')
+    if (isAWaiver) return getReply('get-waiver')
+    if (isQuickReply) return getReply(quickReplyPayload)
+    if (isButtonPostback) return getReply(postbackPayload)
+    if (isASchedule) return getReply('schedule')
+    if (isTextMessage) return await getReplyWithUser('greetings-location')
 }
 
 const isSchedule = webhook_event => {
@@ -36,8 +37,37 @@ const isSchedule = webhook_event => {
     return schedule
 }
 
+const isWaiver = webhook_event => {
+    let waiver = false
+    _.each(['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך'],
+        waiverStr => { if (_.get(webhook_event, 'message.text', '').indexOf(waiverStr)  > -1) waiver = true }
+    )
+    return waiver
+}
 
-async function getMessageResponse(message, sender_psid){
+
+const getQuickReplies = elements => ({
+    quick_replies: _.map(elements, element => ({
+        "content_type":"text",
+        "title": element.title,
+        "payload": element.payload
+    }))
+})
+
+const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+
+const getReply = (payload, userName) => {
+    console.log("*** Getting response for payload:", payload)
+    const text = getText(payload).replace('[user_name]', userName)
+    const elements = buttonSets[payload]
+    const retVal =  _.assign({ text },
+        !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
+            : ( elements[0].attachment ? { attachment: elements[0].attachment }
+                : { buttons: elements })))
+    return retVal
+}
+
+const getReplyWithUser = async (payload) => {
     const name = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -57,34 +87,7 @@ async function getMessageResponse(message, sender_psid){
         }
         }
     )})
-
-    const helloAgeTxt = fs.readFileSync(path.resolve(__dirname, './messages/greetings-age.txt')).toString()
-
-    return helloAgeTxt.replace('[user_name]', name)
-}
-
-const getQuickReplies = elements => ({
-    quick_replies: _.map(elements, element => ({
-        "content_type":"text",
-        "title": element.title,
-        "payload": element.payload
-    }))
-})
-
-const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-
-const getPostbackResponse = (payload) => {
-    const text = getText(payload)
-    console.log("*** EXTRACTED TEXT: ", text)
-    const elements = buttonSets[payload]
-    const retVal =  _.assign({ text },
-        !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
-            : ( elements[0].attachment ? { attachment: elements[0].attachment }
-                : { buttons: elements })))
-
-    console.log("*** RETURNING: ", JSON.stringify(retVal))
-
-    return retVal
+    return getReply(payload, name)
 }
 
 module.exports = getNextMessage

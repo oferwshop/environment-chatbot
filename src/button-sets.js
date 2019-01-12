@@ -19,7 +19,7 @@ const adultsInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
-const scheduleFreeWeek = [
+const greetingsLocation = [
   { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
   { "payload": 'misgav', "title": 'משגב (צפון)' },
   { "payload": 'kadima', "title": 'קדימה (השרון)' },
@@ -27,26 +27,34 @@ const scheduleFreeWeek = [
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }]
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
+]
 
+const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק של הקבוצה", "webview_height_ratio": "full" }]
+
+const kadima = _.concat(getRegionButton('https://www.facebook.com/groups/151885048674207'), signWaiver)
+const kfarBilu = _.concat(getRegionButton('https://www.facebook.com/BJJ.in.Israel/'), signWaiver)
+const misgav = _.concat(getRegionButton('https://www.facebook.com/groups/671463266251881'), signWaiver)
 
 const schedule =  [
   { "attachment":
       { "type": 'image',
       "payload":
         { "url": 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/49582259_466669327194872_3268003713167392768_n.jpg?_nc_cat=108&_nc_ht=scontent.fsdv3-1.fna&oh=5b09572dd7267b5826b69078dee9494e&oe=5CC35B97',
-          "is_reusable":true } } } ]
+          "is_reusable": true } } } ]
 
 const buttonSets = {
-  "greetings-age": greetingsAge,
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
-  "schedule-free-week": scheduleFreeWeek,
-  "tel-aviv": signWaiver,
-  "kadima": signWaiver,
-  "misgav": signWaiver,
-  "kfar-bilu": signWaiver,
+  "schedule-free-session": signWaiver,
+  "schedule-free-week": signWaiver,
+  "greetings-location": greetingsLocation,
+  "tel-aviv": greetingsAge,
+  kadima,
+  misgav,
+  "kfar-bilu": kfarBilu,
+  "get-waiver": signWaiver,
   schedule
 }
 
