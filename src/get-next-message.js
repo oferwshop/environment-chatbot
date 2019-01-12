@@ -25,7 +25,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isQuickReply) return getReply(quickReplyPayload)
     if (isButtonPostback) return getReply(postbackPayload)
     if (isASchedule) return getReply('schedule')
-    if (isTextMessage) return await getReplyWithUser('greetings-location')
+    if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
 
 const isSchedule = webhook_event => {
@@ -67,7 +67,7 @@ const getReply = (payload, userName) => {
     return retVal
 }
 
-const getReplyWithUser = async (payload) => {
+const getReplyWithUser = async (payload, sender_psid) => {
     const name = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
