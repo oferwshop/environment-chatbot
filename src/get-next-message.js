@@ -109,8 +109,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
           reject(error)
         } else {
           var bodyObj = JSON.parse(body);
-          const { name, id } = bodyObj;
-          resolve({ name, id })
+          resolve({ name: bodyObj.name, id: bodyObj.id })
         }
         }
     )})
@@ -124,8 +123,8 @@ var transporter = nodemailer.createTransport({
     }
   });
   
-  const content = `${name} (${id}) : 4{contactPayload}`
-  
+  const content = `${info.name} (${info.id}) : ${contactPayload}`
+
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
