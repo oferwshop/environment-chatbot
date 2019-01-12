@@ -124,7 +124,7 @@ var transporter = nodemailer.createTransport({
   });
   
   const content = `${info.name} (${info.id}) : ${contactPayload}`
-
+  console.log("*** SENDING EMAIL: ", content)
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
