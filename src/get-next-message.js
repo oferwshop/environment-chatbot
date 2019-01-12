@@ -123,7 +123,6 @@ var transporter = nodemailer.createTransport({
     }
   });
   
-  console.log("*** SENDING EMAIL: ",JSON.stringify(info), content)
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
