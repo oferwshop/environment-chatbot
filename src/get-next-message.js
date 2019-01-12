@@ -109,7 +109,6 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
           reject(error)
         } else {
           var bodyObj = JSON.parse(body);
-          console.log("** RECIEVED GRAPH INFO", JSON.stringify(bodyObj))
           resolve({ name: bodyObj.name, id: bodyObj.id })
         }
         }
@@ -124,13 +123,12 @@ var transporter = nodemailer.createTransport({
     }
   });
   
-  const content = `${info.name} (${info.id}) : ${contactPayload}`
   console.log("*** SENDING EMAIL: ",JSON.stringify(info), content)
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
     subject: 'התקבלו פרטי יצירת קשר',
-    text: `שלום רב, נראה שהתקבלו פרטי יצירת קשר מ${ content } `
+    text: `שלום רב, נראה שהתקבלו פרטי יצירת קשר מ  ${info.name} (${info.id}) : <CR><LF> הפרטים: ${contactPayload} `
   };
   
   transporter.sendMail(mailOptions, function(error, info){
