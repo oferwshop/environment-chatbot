@@ -135,6 +135,7 @@ var transporter = nodemailer.createTransport({
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
+      console.log('Email text: ' + mailOptions.text)
     }
   }); 
 
