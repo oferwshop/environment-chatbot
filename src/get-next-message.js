@@ -100,7 +100,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
         qs: {
           access_token: PAGE_ACCESS_TOKEN,
-          fields: ["name", "id"]
+          fields: "name,id"
         },
         method: "GET"
       }, function(error, response, body) {
@@ -109,6 +109,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
           reject(error)
         } else {
           var bodyObj = JSON.parse(body);
+          console.log("** RECIEVED GRAPH INFO", JSON.stringify(bodyObj))
           resolve({ name: bodyObj.name, id: bodyObj.id })
         }
         }
@@ -124,7 +125,7 @@ var transporter = nodemailer.createTransport({
   });
   
   const content = `${info.name} (${info.id}) : ${contactPayload}`
-  console.log("*** SENDING EMAIL: ", content)
+  console.log("*** SENDING EMAIL: ",JSON.stringify(info), content)
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
