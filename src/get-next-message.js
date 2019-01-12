@@ -125,9 +125,9 @@ var transporter = nodemailer.createTransport({
   
   var mailOptions = {
     from: 'saulmma@gmail.com',
-    to: 'ofer.c@hotmail.com',
-    subject: 'Contact details accepted',
-    text: `Hi! ${info.name} (facebook #id ${info.id}) sent contact details : ${contactPayload} `
+    to: 'saulmma@gmail.com',
+    subject: 'Contact details accepted !',
+    text: `Hi, ${info.name} (#id ${info.id}) sent contact details! The details are: ${contactPayload} `
   };
   
   transporter.sendMail(mailOptions, function(error, info){
