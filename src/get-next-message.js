@@ -129,7 +129,7 @@ var transporter = nodemailer.createTransport({
   var mailOptions = {
     from: 'saulmma@gmail.com',
     to: 'ofer.c@hotmail.com',
-    subject: 'התקבלו פרטי התקשרות',
+    subject: 'התקבלו פרטי יצירת קשר',
     text: `שלום רב, נראה שהתקבלו פרטי יצירת קשר מ${ content } `
   };
   
