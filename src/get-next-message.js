@@ -37,17 +37,21 @@ async function getNextMessage(webhook_event, sender_psid) {
 const isSchedule = webhook_event => {
     if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
     let schedule = false
-    _.each(['לו"ז','לוז','מערכת','שעות','מתי','שעה','chedule','שעה','שעה','שבוע'],
+    _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
     )
     return schedule
 }
 
 const getDate = webhook_event => {
+    let today = false
+    _.each(['לו"ז','לוז'],
+        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) today = true }
+    )
     const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
-    if (datetime) {
+    if (datetime || today) {
         const val = _.get(datetime, '[0].values[0]')
-        const date = new Date(_.get(val, 'from.value') || val.value).getDay() 
+        const date = (today ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
         switch (date){
             case 0:
                 return "weekday/sunday"
