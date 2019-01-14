@@ -17,7 +17,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
     const isTextMessage = webhook_event.message
-    isDate(webhook_event)
+    const date = getDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
     
@@ -29,6 +29,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
     if (isButtonPostback) return getReply(postbackPayload)
+    if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
@@ -36,22 +37,35 @@ async function getNextMessage(webhook_event, sender_psid) {
 const isSchedule = webhook_event => {
     if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
     let schedule = false
-    _.each(['לו\"ז','לוז','מערכת','שעות','מתי','שעה','chedule','שעה','שעה'],
+    _.each(['לו"ז','לוז','מערכת','שעות','מתי','שעה','chedule','שעה','שעה','שבוע'],
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
     )
     return schedule
 }
 
-const isDate = webhook_event => {
-    console.log("DateCheck*****", JSON.stringify(_.get(webhook_event, 'message.nlp.entities')))
-
+const getDate = webhook_event => {
     const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     if (datetime) {
         const val = _.get(datetime, '[0].values[0]')
-        const date = new Date(val.from || val.value).getDay() 
-        console.log("Date*****", date)
-        return date
-
+        const date = new Date(val.from.value || val.value).getDay() 
+        switch (date){
+            case 0:
+                return "weekday/sunday"
+            case 1:
+                return "weekday/monday"
+            case 2:
+                return "weekday/tuesday"
+            case 3:
+                return "weekday/wednsday"
+            case 4:
+                return "weekday/thursday"
+            case 5:
+                return "weekday/friday"
+            case 6:
+                return "weekday/saturday"
+            default:
+                return false
+        }
     }
     return false
 }
