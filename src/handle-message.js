@@ -20,7 +20,7 @@ async function handleMessage(sender_psid, webhook_event) {
         }
       }
     }
-      : ( attachment ? { attachment }
+      : ( attachment ? { text, attachment }
         : _.assign({ text }, quick_replies ? { quick_replies } : null)
       )
   console.log("**** RESPONDING WITH: ", JSON.stringify(response))
