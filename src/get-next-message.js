@@ -17,9 +17,10 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
     const isTextMessage = webhook_event.message
+    isDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
-
+    
     const quickReplyPayload = isQuickReply && webhook_event.message.quick_reply.payload
     const postbackPayload = isButtonPostback && webhook_event.postback.payload
     const contactPayload = (isEmail || isPhoneNumber) &&  _.get(webhook_event, 'message.text')
@@ -39,6 +40,19 @@ const isSchedule = webhook_event => {
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
     )
     return schedule
+}
+
+const isDate = webhook_event => {
+    const { datetime } = _.get(webhook_event, 'message.nlp.entities')
+    console.log("DateCheck*****", JSON.stringify(datetime))
+    if (datetime) {
+        const val = _.get(datetime, '[0].values[0]')
+        const date = newDate(val.from || val.value).getDay() 
+        console.log("Date*****", date)
+        return date
+
+    }
+    return false
 }
 
 const isWaiver = webhook_event => {
