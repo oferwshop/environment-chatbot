@@ -43,8 +43,9 @@ const isSchedule = webhook_event => {
 }
 
 const isDate = webhook_event => {
-    const { datetime } = _.get(webhook_event, 'message.nlp.entities')
-    console.log("DateCheck*****", JSON.stringify(datetime))
+    console.log("DateCheck*****", JSON.stringify(_.get(webhook_event, 'message.nlp.entities')))
+
+    const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     if (datetime) {
         const val = _.get(datetime, '[0].values[0]')
         const date = new Date(val.from || val.value).getDay() 
