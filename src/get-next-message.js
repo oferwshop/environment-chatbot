@@ -47,7 +47,7 @@ const isDate = webhook_event => {
     console.log("DateCheck*****", JSON.stringify(datetime))
     if (datetime) {
         const val = _.get(datetime, '[0].values[0]')
-        const date = newDate(val.from || val.value).getDay() 
+        const date = new Date(val.from || val.value).getDay() 
         console.log("Date*****", date)
         return date
 
