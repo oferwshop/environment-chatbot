@@ -5,7 +5,8 @@ const _ = require('lodash')
 var nodemailer = require('nodemailer');
 const buttonSets = require('./button-sets')
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
+
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
