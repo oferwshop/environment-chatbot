@@ -51,7 +51,7 @@ const getDate = webhook_event => {
     const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     if (datetime || today) {
         const val = _.get(datetime, '[0].values[0]')
-        const date = (today ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
+        const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
         switch (date){
             case 0:
                 return "weekday/sunday"
