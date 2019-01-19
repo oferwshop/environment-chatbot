@@ -93,9 +93,9 @@ const getQuickReplies = elements => ({
 
 const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
 
-const getReply = (payload, userName) => {
+const getReply = (payload, userName, gender) => {
     console.log("*** Getting response for payload:", payload)
-    const text = getText(payload).replace('[user_name]', userName)
+    const text = getText(payload).replace('[user_name]', userName).replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
@@ -120,12 +120,12 @@ const getReplyWithUser = async (payload, sender_psid) => {
         } else {
           var bodyObj = JSON.parse(body);
           const name1 = bodyObj.first_name;
-          console.log("*****************", JSON.stringify(bodyObj))
+          const gender = bodyObj.gender
           resolve(name1)
         }
         }
     )})
-    return getReply(payload, name)
+    return getReply(payload, name, gender)
 }
 
 
