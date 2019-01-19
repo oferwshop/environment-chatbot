@@ -106,7 +106,7 @@ const getReply = (payload, userName, gender) => {
 }
 
 const getReplyWithUser = async (payload, sender_psid) => {
-    const name = await new Promise((resolve, reject) => {
+    const info = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
         qs: {
@@ -120,13 +120,13 @@ const getReplyWithUser = async (payload, sender_psid) => {
           reject(error)
         } else {
           var bodyObj = JSON.parse(body);
-          const name1 = bodyObj.first_name;
+          const name = bodyObj.first_name;
           const gender = bodyObj.gender
-          resolve(name1)
+          resolve( { name,gender })
         }
         }
     )})
-    return getReply(payload, name, gender)
+    return getReply(payload, info.name, info.gender)
 }
 
 
