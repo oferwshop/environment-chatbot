@@ -95,7 +95,8 @@ const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/$
 
 const getReply = (payload, userName, gender) => {
     console.log("*** Getting response for payload:", payload)
-    const text = getText(payload).replace('[user_name]', userName).replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
+    let text = getText(payload).replace('[user_name]', userName)
+    if (gender) text = text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
