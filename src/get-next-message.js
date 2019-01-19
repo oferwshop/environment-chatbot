@@ -110,7 +110,7 @@ const getReplyWithUser = async (payload, sender_psid) => {
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
         qs: {
           access_token: PAGE_ACCESS_TOKEN,
-          fields: "first_name"
+          fields: "first_name,gender"
         },
         method: "GET"
       }, function(error, response, body) {
@@ -120,6 +120,7 @@ const getReplyWithUser = async (payload, sender_psid) => {
         } else {
           var bodyObj = JSON.parse(body);
           const name1 = bodyObj.first_name;
+          console.log("*****************", JSON.stringify(bodyObj))
           resolve(name1)
         }
         }
