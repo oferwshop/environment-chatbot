@@ -30,6 +30,11 @@ const signWaiver =  [
   { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
 ]
 
+const registerClass =  [
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "Book", "webview_height_ratio": "full" }
+]
+
+
 const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
 
 const kadima = _.concat(getRegionButton('https://www.facebook.com/groups/151885048674207'), signWaiver)
@@ -55,7 +60,14 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
-  schedule
+  schedule,
+  "weekday/sunday": registerClass,
+  "weekday/monday": registerClass,
+  "weekday/tuesday": registerClass,
+  "weekday/wednsday": registerClass,
+  "weekday/thursday": registerClass,
+  "weekday/friday": registerClass,
+  "weekday/saturday": registerClass
 }
 
 _.each(buttonSets, set => _.each(set, button => !button.type && _.set(button, 'type', 'postback')))
