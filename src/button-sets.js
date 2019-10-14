@@ -45,7 +45,7 @@ const schedule =  [
   { "attachment":
       { "type": 'image',
       "payload":
-        { "url": 'https://scontent.fsdv3-1.fna.fbcdn.net/v/t1.0-9/49582259_466669327194872_3268003713167392768_n.jpg?_nc_cat=108&_nc_ht=scontent.fsdv3-1.fna&oh=5b09572dd7267b5826b69078dee9494e&oe=5CC35B97',
+        { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg',
           "is_reusable": true } } } ]
 
 const buttonSets = {
