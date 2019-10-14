@@ -19,11 +19,11 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isTextMessage = webhook_event.message
     const date = getDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
-    const isPriceInquiry = isPriceInquiry(webhook_event)
+    const isAPriceInquiry = isPriceInquiry(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
 
     console.log("*** isQuickReply: " + isQuickReply)
-    console.log("*** isPriceInquiry: " + isPriceInquiry)
+    console.log("*** isPriceInquiry: " + isAPriceInquiry)
     console.log("*** isButtonPostback: " + isButtonPostback)
     console.log("*** isPhoneNumber: " + isPhoneNumber)
     console.log("*** isEmail: " + isEmail)
@@ -42,7 +42,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isButtonPostback) return getReplyWithUser(postbackPayload, sender_psid)
     if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
-    if (isPriceInquiry) return getReply('price-inquiry')
+    if (isAPriceInquiry) return getReply('price-inquiry')
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
 
