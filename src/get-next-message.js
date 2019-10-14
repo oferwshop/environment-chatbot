@@ -97,12 +97,15 @@ const getReply = (payload, userName, gender) => {
     console.log("*** Getting response for payload:", payload)
     let text = getText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (gender) text = text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
-    if (gender) text = text.replace('ברוך/ה', gender === "male" ? "מתעניין" : "מתעניינת")
-    if (gender) text = text.replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
-    if (gender) text = text.replace('את/ה', gender === "male" ? "אתה" : "את")
-    if (gender) text = text.replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
-    if (gender) text = text.replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
+    if (gender) {
+      console.log("*** TEXT: " + text)
+      text = text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
+      text = text.replace('ברוך/ה', gender === "male" ? "מתעניין" : "מתעניינת")
+      text = text.replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
+      text = text.replace('את/ה', gender === "male" ? "אתה" : "את")
+      text = text.replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
+      text = text.replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
+    }
     const elements = buttonSets[payload]
     const retVal =  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
