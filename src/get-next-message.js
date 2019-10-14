@@ -98,9 +98,9 @@ const getReply = (payload, userName, gender) => {
     let text = getText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) {
-      console.log("*** TEXT: " + text)
+      console.log("*** GENDER: " + gender)
       text = text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
-      text = text.replace('ברוך/ה', gender === "male" ? "מתעניין" : "מתעניינת")
+      text = text.replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
       text = text.replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
       text = text.replace('את/ה', gender === "male" ? "אתה" : "את")
       text = text.replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
