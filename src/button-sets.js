@@ -41,12 +41,12 @@ const kadima = _.concat(getRegionButton('https://www.facebook.com/groups/1518850
 const kfarBilu = _.concat(getRegionButton('https://www.facebook.com/BJJ.in.Israel/'), signWaiver)
 const misgav = _.concat(getRegionButton('https://www.facebook.com/groups/671463266251881'), signWaiver)
 
-const schedule = 
+const schedule =  [
   { "attachment":
       { "type": 'image',
       "payload":
         { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg',
-          "is_reusable": true } } }
+          "is_reusable": true } } } ]
 
 const buttonSets = {
   "kids-info": kidsInfo,
@@ -60,7 +60,7 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
-  schedule: [schedule, registerClass],
+  schedule,
   "weekday/sunday": registerClass,
   "weekday/monday": registerClass,
   "weekday/tuesday": registerClass,
