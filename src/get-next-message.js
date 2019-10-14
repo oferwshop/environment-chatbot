@@ -40,10 +40,9 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
     if (isButtonPostback) return getReplyWithUser(postbackPayload, sender_psid)
-    // if (isWeeklySchedule) return getReply('schedule')
     if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
-    if (isAPriceInquiry) return getReply('price-inquiry')
+    if (isAPriceInquiry) return getReplyWithUser('price-inquiry', sender_psid)
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
 
@@ -51,15 +50,6 @@ const isSchedule = webhook_event => {
   if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
   let schedule = false
   _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
-      timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
-  )
-  return schedule
-}
-
-const isWeeklySchedule = webhook_event => {
-  if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
-  let schedule = false
-  _.each(['מערכת','שבוע','week'],
       timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
   )
   return schedule
