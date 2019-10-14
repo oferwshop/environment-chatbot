@@ -57,7 +57,7 @@ const isSchedule = webhook_event => {
 
 const isPriceInquiry = webhook_event => {
   let price = false
-  _.each(['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','כסף'],
+  _.each(['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף'],
       priceStr => { if (_.get(webhook_event, 'message.text', '').indexOf(priceStr)  > -1) price = true }
   )
   return price
