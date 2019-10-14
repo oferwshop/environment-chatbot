@@ -28,7 +28,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isPhoneNumber || isEmail) return await getReplyAndEmail('thank-you', sender_psid, contactPayload)
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
-    if (isButtonPostback) return getReply(postbackPayload)
+    if (isButtonPostback) return getReplyWithUser(postbackPayload)
     if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
