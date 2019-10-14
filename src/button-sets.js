@@ -19,6 +19,11 @@ const adultsInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
+const priceInquiry = [
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+]
+
 const greetingsLocation = [
   { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
   { "payload": 'misgav', "title": 'משגב (צפון)' },
@@ -33,7 +38,6 @@ const signWaiver =  [
 const registerClass =  [
   { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" }
 ]
-
 
 const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
 
@@ -61,6 +65,7 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  "price-inquiry": priceInquiry,
   "weekday/sunday": registerClass,
   "weekday/monday": registerClass,
   "weekday/tuesday": registerClass,

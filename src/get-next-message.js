@@ -19,9 +19,11 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isTextMessage = webhook_event.message
     const date = getDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
+    const isPriceInquiry = isPriceInquiry(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
 
     console.log("*** isQuickReply: " + isQuickReply)
+    console.log("*** isPriceInquiry: " + isPriceInquiry)
     console.log("*** isButtonPostback: " + isButtonPostback)
     console.log("*** isPhoneNumber: " + isPhoneNumber)
     console.log("*** isEmail: " + isEmail)
@@ -37,19 +39,28 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isPhoneNumber || isEmail) return await getReplyAndEmail('thank-you', sender_psid, contactPayload)
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
-    if (isButtonPostback) return getReply(postbackPayload)
+    if (isButtonPostback) return getReplyWithUser(postbackPayload, sender_psid)
     if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
+    if (isPriceInquiry) return getReply('price-inquiry')
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
 
 const isSchedule = webhook_event => {
-    if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
-    let schedule = false
-    _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
-        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
-    )
-    return schedule
+  if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
+  let schedule = false
+  _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
+      timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
+  )
+  return schedule
+}
+
+const isPriceInquiry = webhook_event => {
+  let price = false
+  _.each(['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','כסף'],
+      priceStr => { if (_.get(webhook_event, 'message.text', '').indexOf(priceStr)  > -1) price = true }
+  )
+  return price
 }
 
 const getDate = webhook_event => {
