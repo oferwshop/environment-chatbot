@@ -20,6 +20,15 @@ async function getNextMessage(webhook_event, sender_psid) {
     const date = getDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
+
+    console.log("*** isQuickReply: " + isQuickReply)
+    console.log("*** isButtonPostback: " + isButtonPostback)
+    console.log("*** isPhoneNumber: " + isPhoneNumber)
+    console.log("*** isEmail: " + isEmail)
+    console.log("*** isTextMessage: " + isTextMessage)
+    console.log("*** date: " + date )
+    console.log("*** isASchedule: " + isASchedule)
+    console.log("*** isAWaiver: " + isAWaiver)
     
     const quickReplyPayload = isQuickReply && webhook_event.message.quick_reply.payload
     const postbackPayload = isButtonPostback && webhook_event.postback.payload
@@ -27,8 +36,8 @@ async function getNextMessage(webhook_event, sender_psid) {
     
     if (isPhoneNumber || isEmail) return await getReplyAndEmail('thank-you', sender_psid, contactPayload)
     if (isAWaiver) return getReply('get-waiver')
-    if (isQuickReply) return getReplyWithUser(quickReplyPayload)
-    if (isButtonPostback) return getReplyWithUser(postbackPayload)
+    if (isQuickReply) return getReply(quickReplyPayload)
+    if (isButtonPostback) return getReply(postbackPayload)
     if (date) return getReply(date)
     if (isASchedule) return getReply('schedule')
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
