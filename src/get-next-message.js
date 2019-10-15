@@ -1,12 +1,10 @@
 const request = require('request');
-const fs = require('fs');
-const path = require("path");
+
 const _ = require('lodash')
-var nodemailer = require('nodemailer');
-const buttonSets = require('./button-sets')
-
+const { sendEmail, createResponse, handleGender, getFileText
+  , hasLongText, hasDateTime, textContains, scheduleWords
+  , priceWords, getWeekDay, waiverWords } = require('./helpers')
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
-
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 async function getNextMessage(webhook_event, sender_psid) {
@@ -21,16 +19,6 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isASchedule = isSchedule(webhook_event)
     const isAPriceInquiry = isPriceInquiry(webhook_event)
     const isAWaiver = isWaiver(webhook_event)
-
-    console.log("*** isQuickReply: " + isQuickReply)
-    console.log("*** isPriceInquiry: " + isAPriceInquiry)
-    console.log("*** isButtonPostback: " + isButtonPostback)
-    console.log("*** isPhoneNumber: " + isPhoneNumber)
-    console.log("*** isEmail: " + isEmail)
-    console.log("*** isTextMessage: " + isTextMessage)
-    console.log("*** date: " + date )
-    console.log("*** isASchedule: " + isASchedule)
-    console.log("*** isAWaiver: " + isAWaiver)
     
     const quickReplyPayload = isQuickReply && webhook_event.message.quick_reply.payload
     const postbackPayload = isButtonPostback && webhook_event.postback.payload
@@ -45,101 +33,30 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isAPriceInquiry) return getReplyWithUser('price-inquiry', sender_psid)
     if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
 }
+const isSchedule = webhook_event =>
+  !hasLongText(webhook_event)
+  && (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords))
 
-const isSchedule = webhook_event => {
-  if (_.get(webhook_event, 'message.text', '').length > 25) return false
-  if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
-  let schedule = false
-  _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
-      timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) schedule = true }
-  )
-  return schedule
-}
-
-const isPriceInquiry = webhook_event => {
-  let price = false
-  _.each(['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף'],
-      priceStr => { if (_.get(webhook_event, 'message.text', '').indexOf(priceStr)  > -1) price = true }
-  )
-  return price
-}
+const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
 const getDate = webhook_event => {
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
+    if (textContains(webhook_event, ['לו"ז','לוז'] )) { today = true; datetime = true }
+    if (textContains(webhook_event, ['צהריים','בוקר', 'ערב']) || hasLongText(webhook_event)) {  datetime = false }
 
-    _.each(['לו"ז','לוז'],
-        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) { today = true; datetime = true } }
-    )
-
-    _.each(['טוב'],
-        (timeStr) => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1)  { datetime = false } }
-    )
-    if (_.get(webhook_event, 'message.text', '').length > 25) datetime = false
-
-    if (datetime || today) {
-        const val = _.get(datetime, '[0].values[0]')
-        const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
-        switch (date){
-            case 0:
-                return "weekday/sunday"
-            case 1:
-                return "weekday/monday"
-            case 2:
-                return "weekday/tuesday"
-            case 3:
-                return "weekday/wednsday"
-            case 4:
-                return "weekday/thursday"
-            case 5:
-                return "weekday/friday"
-            case 6:
-                return "weekday/saturday"
-            default:
-                return false
-        }
-    }
+    if (datetime || today) return getWeekDay(datetime)
     return false
 }
 
-const isWaiver = webhook_event => {
-    let waiver = false
-    _.each(['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך'],
-        waiverStr => { if (_.get(webhook_event, 'message.text', '').indexOf(waiverStr)  > -1) waiver = true }
-    )
-    return waiver
-}
-
-
-const getQuickReplies = elements => ({
-    quick_replies: _.map(elements, element => ({
-        "content_type":"text",
-        "title": element.title,
-        "payload": element.payload
-    }))
-})
-
-const getText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
+const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const getReply = (payload, userName, gender) => {
-    console.log("*** Getting response for payload:", payload)
-    let text = getText(payload)
+    console.log("*** Getting response for payload:", JSON.stringify(payload))
+    let text = getFileText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (gender) {
-      console.log("*** GENDER: " + gender)
-      text = text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
-      text = text.replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
-      text = text.replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
-      text = text.replace('את/ה', gender === "male" ? "אתה" : "את")
-      text = text.replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
-      text = text.replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
-    }
-    const elements = buttonSets[payload]
-    const retVal =  _.assign({ text },
-        !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
-            : ( elements[0].attachment ? { attachment: elements[0].attachment }
-                : { buttons: elements })))
-    return retVal
+    if (gender) text = handleGender(text)
+    return createResponse(text)
 }
 
 const getReplyWithUser = async (payload, sender_psid) => {
@@ -187,30 +104,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
         }
     )})
 
-
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    }
-  });
-  
-  var mailOptions = {
-    from: 'saulmma@gmail.com',
-    to: 'saulmma@gmail.com',
-    subject: 'Contact details accepted !',
-    text: `Hi, ${info.name} (#id ${info.id}) sent contact details! The details are: ${contactPayload} `
-  };
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-      console.log('Email text: ' + mailOptions.text)
-    }
-  }); 
+    sendEmail(info)
 
     return getReply(payload)
 }
