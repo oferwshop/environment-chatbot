@@ -56,7 +56,7 @@ const getReply = (payload, userName, gender) => {
     let text = getFileText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(text, gender)
-    return createResponse(text)
+    return createResponse(text, payload)
 }
 
 const getReplyWithUser = async (payload, sender_psid) => {

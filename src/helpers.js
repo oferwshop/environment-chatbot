@@ -58,7 +58,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
 
-const createResponse = (text) => {
+const createResponse = (text, payload) => {
     const elements = buttonSets[payload]
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
