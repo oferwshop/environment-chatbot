@@ -66,9 +66,15 @@ const isPriceInquiry = webhook_event => {
 const getDate = webhook_event => {
     let today = false
     _.each(['לו"ז','לוז'],
-        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) today = true }
+        timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) { today = true; datetime = true } }
     )
+    
     const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
+
+    _.each(['טוב'],
+        () => { datetime = false }
+    )
+    
     if (datetime || today) {
         const val = _.get(datetime, '[0].values[0]')
         const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
