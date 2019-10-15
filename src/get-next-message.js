@@ -2,7 +2,7 @@ const request = require('request');
 
 const _ = require('lodash')
 const { sendEmail, createResponse, handleGender, getFileText
-  , hasLongText, hasDateTime, textContains, scheduleWords
+  , hasLongText, hasDateTime, textContains, scheduleWords, notHebrew
   , priceWords, getWeekDay, waiverWords, generalInfoWords} = require('./helpers')
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
