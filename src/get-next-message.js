@@ -47,6 +47,7 @@ async function getNextMessage(webhook_event, sender_psid) {
 }
 
 const isSchedule = webhook_event => {
+  if (_.get(webhook_event, 'message.text', '').length > 25) return false
   if (_.get(webhook_event, 'message.nlp.entities.datetime')) return true
   let schedule = false
   _.each(['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע'],
@@ -75,7 +76,7 @@ const getDate = webhook_event => {
         (timeStr) => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1)  { datetime = false } }
     )
     if (_.get(webhook_event, 'message.text', '').length > 25) datetime = false
-    
+
     if (datetime || today) {
         const val = _.get(datetime, '[0].values[0]')
         const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
