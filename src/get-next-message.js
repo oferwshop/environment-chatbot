@@ -70,11 +70,11 @@ const getDate = webhook_event => {
     _.each(['לו"ז','לוז'],
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) { today = true; datetime = true } }
     )
-    
 
     _.each(['טוב'],
-        () => { datetime = false }
+        (timeStr) => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1)  { datetime = false } }
     )
+    if (_.get(webhook_event, 'message.text', '').length > 25) datetime = false
     
     if (datetime || today) {
         const val = _.get(datetime, '[0].values[0]')
