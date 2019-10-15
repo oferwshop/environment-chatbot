@@ -6,6 +6,13 @@ const greetingsAge = [
     { "payload": 'adults-info', "title": 'בוגרים' }
   ]
 
+
+  const greetingsAgeEnglish = [
+    { "payload": 'kids-info-english', "title": 'Kids - up to 14'},
+    { "payload": 'military-info-english', "title": 'Soldiers(active service)' },
+    { "payload": 'adults-info-english', "title": 'Adults' }
+  ]
+
 const kidsInfo = [
   { "payload": 'schedule-free-session', "title": 'לאימון ניסיון בחינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
@@ -31,6 +38,13 @@ const greetingsLocation = [
   { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)' }
 ]
 
+const greetingsLocationEnglish = [
+  { "payload": 'tel-aviv-english', "title": 'Tel Aviv (center)' },
+  { "payload": 'misgav-english', "title": 'Misgav (north)' },
+  { "payload": 'kadima-english', "title": 'Kadima (hasharon)' },
+  { "payload": 'kfar-bilu-english', "title": 'Kfar Bilu (south)' }
+]
+
 const signWaiver =  [
   { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
 ]
@@ -39,7 +53,7 @@ const registerClass =  [
   { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" }
 ]
 const generalInfo =  [
-  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "תוכנית האימונים", "webview_height_ratio": "full" }
 ]
 
 const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
@@ -58,11 +72,14 @@ const schedule =  [
 const buttonSets = {
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
+  "military-info": militaryInfo,
   "adults-info": adultsInfo,
+  "adults-info-english": adultsInfoEnglish,
   "schedule-free-session": signWaiver,
   "schedule-free-week": signWaiver,
   "greetings-location": greetingsLocation,
   "tel-aviv": greetingsAge,
+  "tel-aviv-english": greetingsAgeEnglish,
   kadima,
   misgav,
   "kfar-bilu": kfarBilu,

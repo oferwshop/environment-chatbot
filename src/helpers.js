@@ -93,5 +93,7 @@ const sendEmail = (info) => {
       }); 
 }
 
-module.exports = { generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+const notHebrew = msg => msg.search(/[\u0590-\u05FF]/) === -1
+
+module.exports = { notHebrew, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  

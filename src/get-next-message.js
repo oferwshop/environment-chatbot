@@ -15,6 +15,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
     const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
     const isTextMessage = webhook_event.message
+    const eng = isTextMessage && notHebrew(webhook_event.message)
     const date = getDate(webhook_event)
     const isASchedule = isSchedule(webhook_event)
     const isAPriceInquiry = isPriceInquiry(webhook_event)
@@ -25,15 +26,15 @@ async function getNextMessage(webhook_event, sender_psid) {
     const postbackPayload = isButtonPostback && webhook_event.postback.payload
     const contactPayload = (isEmail || isPhoneNumber) &&  _.get(webhook_event, 'message.text')
     
-    if (isPhoneNumber || isEmail) return await getReplyAndEmail('thank-you', sender_psid, contactPayload)
-    if (isAWaiver) return getReply('get-waiver')
-    if (isQuickReply) return getReply(quickReplyPayload)
-    if (isButtonPostback) return getReplyWithUser(postbackPayload, sender_psid)
-     if (isAGeneralInfo) return getReply('general-info')
-    if (isASchedule) return getReply('schedule')
-    if (date) return getReply(date)
-    if (isAPriceInquiry) return getReplyWithUser('price-inquiry', sender_psid)
-    if (isTextMessage) return await getReplyWithUser('greetings-location', sender_psid)
+    if (isPhoneNumber || isEmail) return await getReplyAndEmail(eng, 'thank-you', sender_psid, contactPayload)
+    if (isAWaiver) return getReply(eng, 'get-waiver')
+    if (isQuickReply) return getReply(eng, quickReplyPayload)
+    if (isButtonPostback) return getReplyWithUser(eng, postbackPayload, sender_psid)
+    if (isAGeneralInfo) return getReply(eng, 'general-info')
+    if (isASchedule) return getReply(eng, 'schedule')
+    if (date) return getReply(eng, date)
+    if (isAPriceInquiry) return getReplyWithUser(eng, 'price-inquiry', sender_psid)
+    if (isTextMessage) return await getReplyWithUser(eng, 'greetings-location', sender_psid )
 }
 const isSchedule = webhook_event =>
   !hasLongText(webhook_event)
@@ -55,15 +56,21 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 
-const getReply = (payload, userName, gender) => {
+const getReply = (english, payload, userName, gender) => {
     console.log("*** Getting response for payload:", JSON.stringify(payload))
-    let text = getFileText(payload)
+    let text
+    try{
+      text = getFileText(`${payload}${english ? '-english': ''}`)
+    } catch(e) {
+      text = getFileText(payload)
+      console.log("*** FILE NOT FOUND "+ JSON.stringify(e))
+    }
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(text, gender)
     return createResponse(text, payload)
 }
 
-const getReplyWithUser = async (payload, sender_psid) => {
+const getReplyWithUser = async (english, payload, sender_psid) => {
     const info = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -84,11 +91,11 @@ const getReplyWithUser = async (payload, sender_psid) => {
         }
         }
     )})
-    return getReply(payload, info.name, info.gender)
+    return getReply(english, payload, info.name, info.gender)
 }
 
 
-const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
+const getReplyAndEmail = async (english, payload, sender_psid, contactPayload) => {
     const info = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -110,7 +117,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
 
     sendEmail(info)
 
-    return getReply(payload)
+    return getReply(english, payload)
 }
 
 
