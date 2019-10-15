@@ -20,7 +20,7 @@ const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ',
 
 const getWeekDay = (datetime) => {
     const val = _.get(datetime, '[0].values[0]')
-    const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || val.value)).getDay() 
+    const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
     switch (date){
         case 0:
             return "weekday/sunday"
