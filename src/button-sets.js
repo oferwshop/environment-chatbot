@@ -74,7 +74,7 @@ const buttonSets = {
   "military-info": militaryInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
-  "adults-info-english": adultsInfoEnglish,
+  "adults-info-english": adultsInfo,
   "schedule-free-session": signWaiver,
   "schedule-free-week": signWaiver,
   "greetings-location": greetingsLocation,
