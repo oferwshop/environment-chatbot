@@ -65,11 +65,12 @@ const isPriceInquiry = webhook_event => {
 
 const getDate = webhook_event => {
     let today = false
+    let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
+
     _.each(['לו"ז','לוז'],
         timeStr => { if (_.get(webhook_event, 'message.text', '').indexOf(timeStr)  > -1) { today = true; datetime = true } }
     )
     
-    const datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
 
     _.each(['טוב'],
         () => { datetime = false }
