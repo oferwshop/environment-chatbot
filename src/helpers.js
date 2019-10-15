@@ -51,7 +51,7 @@ const getQuickReplies = elements => ({
 
 const getFileText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
 
-const handleGender = text => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
+const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
     .replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
     .replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
     .replace('את/ה', gender === "male" ? "אתה" : "את")

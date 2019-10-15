@@ -55,7 +55,7 @@ const getReply = (payload, userName, gender) => {
     console.log("*** Getting response for payload:", JSON.stringify(payload))
     let text = getFileText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (gender) text = handleGender(text)
+    if (gender) text = handleGender(text, gender)
     return createResponse(text)
 }
 
