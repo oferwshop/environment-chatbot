@@ -29,7 +29,7 @@ async function getNextMessage(webhook_event, sender_psid) {
     if (isAWaiver) return getReply('get-waiver')
     if (isQuickReply) return getReply(quickReplyPayload)
     if (isButtonPostback) return getReplyWithUser(postbackPayload, sender_psid)
-    // if (isAGeneralInfo) return getReply('general-info')
+     if (isAGeneralInfo) return getReply('general-info')
     if (isASchedule) return getReply('schedule')
     if (date) return getReply(date)
     if (isAPriceInquiry) return getReplyWithUser('price-inquiry', sender_psid)
