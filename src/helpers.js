@@ -5,18 +5,19 @@ var nodemailer = require('nodemailer');
 const _ = require('lodash')
 const buttonSets = require('./button-sets')
 
-
 const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 25
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
 const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.get(webhook_event, 'message.text', '').indexOf(str) > -1, false )
 
-const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע']
+const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
 
 const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף']
 
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
+
+const generalInfoWords = ['מה זה']
 
 const getWeekDay = (datetime) => {
     const val = _.get(datetime, '[0].values[0]')
@@ -92,5 +93,5 @@ const sendEmail = (info) => {
       }); 
 }
 
-module.exports = { createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+module.exports = { generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  
