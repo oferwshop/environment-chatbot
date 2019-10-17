@@ -24,18 +24,8 @@ const
   handleMessage = require('./src/handle-message'), // creates express http server
   handlePostback = require('./src/handle-postback'); // creates express http server
   
-  const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (key, value) => {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-      }
-      return value;
-    };
-  };
+  const JSON = require('circular-json');
+  
 require('express-debug')(app);
 
 // Sets server port and logs message on success
@@ -44,8 +34,8 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {  
 
-  console.log("**** REQ: " + JSON.stringify(req, getCircularReplacer()))
-  console.log("**** RES: " + JSON.stringify(res, getCircularReplacer()))
+  console.log("**** REQ: " + JSON.stringify(req))
+  console.log("**** RES: " + JSON.stringify(res))
   // Parse the request body from the POST
   let body = req.body;
   // Check the webhook event is from a Page subscription
