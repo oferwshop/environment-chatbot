@@ -8,7 +8,7 @@ let lastUserInputTS = 0
 async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
     
-    const hasMids = _.get(webhook_event, 'recipient.delivery.mids')
+    const hasMids = _.get(webhook_event, 'delivery.mids')
     const userInputWithinLast500ms = webhook_event.timestamp - lastUserInputTS < 500
     const isAdmin = (!userInputWithinLast500ms && hasMids)
     if (!hasMids) lastUserInputTS = webhook_event.timestamp
