@@ -51,7 +51,7 @@ const initConversation = webhook_event => {
 const setLastUserInput = (webhook_event) => {
     const conversation = getConversation(webhook_event)
     _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) ? _.get(conversation, 'lastUserInputTS'): webhook_event.timestamp )
-    _.set(conversation, 'nonUserHookCount', hasMids(webhook_event) ? _.get(conversation, 'nonUserHookCount', 0)++ : 0 )
+    _.set(conversation, 'nonUserHooksCount', hasMids(webhook_event) ? _.get(conversation, 'nonUserHooksCount', 0)++ : 0 )
 }
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
