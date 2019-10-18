@@ -40,6 +40,9 @@ const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDi
 
 const getMainScriptStarted = webhook_event => _.get(getConversation(webhook_event), 'mainScriptStarted')
 
-const setMainScriptStarted = (webhook_event, val) => _.set(getConversation(webhook_event), 'mainScriptStarted', val)
+const setMainScriptStarted = (webhook_event, val) => {
+    const conversation = getConversation(webhook_event)
+    _.set(conversation, 'mainScriptStarted', val)
+}
 
 module.exports = { handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
