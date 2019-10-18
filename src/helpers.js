@@ -204,7 +204,7 @@ const getResponseType = (webhook_event) => {
     || (isAGeneralInfo && 'general-info')
     || (isASchedule && 'schedule')
     || (date && 'date')
-    || (isAPriceInquiry && 'price-inquiry)
+    || (isAPriceInquiry && 'price-inquiry')
     || (isTextMessage && 'greetings-location')
 }
 module.exports = { getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
