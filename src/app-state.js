@@ -1,5 +1,6 @@
-const conversations = {}
+const _ = require('lodash')
 
+const conversations = {}
 const botDisablePeriod =  1000 * 15// * 60 * 5
 
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
