@@ -10,15 +10,18 @@ const getConversation = webhook_event => conversations[webhook_event.recipient.i
 
 const initConversation = webhook_event => {
     _.set(conversations, webhook_event.recipient.id, {} )
+    setLastUserInput(webhook_event)
     return getConversation(webhook_event)
 }
+
+const setLastUserInput = webhook_event =>
+  _.set(getConversation(webhook_event), 'lastUserInputTS', hasMids ? _.get(conversation, 'lastUserInputTS'): webhook_event.timestamp )
 
 const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
 
   let conversation = getConversation(webhook_event) || initConversation(webhook_event)
 
-  const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
   const timeSinceLastUserInput = webhook_event.timestamp - lastUserInputTS
   const converstationExpired = timeSinceLastUserInput > expirationPeriod
   if (converstationExpired) conversation = initConversation(webhook_event)
@@ -30,8 +33,8 @@ const handleConversationState = (webhook_event) => {
 
   _.set(conversation, 'botDisabledTS', newBotDisabledTS)
 
-  _.set(conversation, 'lastUserInputTS', hasMids ? lastUserInputTS: webhook_event.timestamp )
-  
+  setLastUserInput(webhook_event)
+
   const isAdmin = !userInputHookLately && hasMids
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
