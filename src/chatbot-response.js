@@ -36,6 +36,7 @@ const getActualType = (type, webhook_event) => {
     setMainScriptStarted(webhook_event, false)
     return 'greetings-location'
   }
+  return type
 }
 
 module.exports = getChatbotResponse
