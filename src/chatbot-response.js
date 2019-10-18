@@ -34,7 +34,7 @@ const getActualType = (type, webhook_event) => {
   }
   if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart'){
     initConversation(webhook_event)
-    setMainScriptStarted(webhook_event, false)
+    setMainScriptStarted(webhook_event, true)
     return 'greetings-location'
   }
   return type
