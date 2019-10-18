@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { handleConversationState, isDisabled, getMainScriptStarted } = require('./app-state')
+const { handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
