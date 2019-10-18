@@ -9,10 +9,10 @@ async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
     
     const hasMids = _.get(webhook_event, 'delivery.mids')
-    const userInputWithinLast500ms = webhook_event.timestamp - lastUserInputTS < 500
+    const userInputWithinLast500ms = webhook_event.timestamp - lastUserInputTS < 2000
     const isAdmin = (!userInputWithinLast500ms && hasMids)
     if (!hasMids) lastUserInputTS = webhook_event.timestamp
-    console.log("lastUserInputTS: " + lastUserInputTS)
+    console.log("lastUserInputTS: " + lastUserInputTS +"  webhook_event.timestamp: " + webhook_event.timestamp)
     if (isAdmin) console.log("*** IS ADMIN !!!!!!!")
 
     const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
