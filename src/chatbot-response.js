@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { handleConversationState, isDisabled, mainScriptStarted } = require('./app-state')
+const { handleConversationState, isDisabled, getMainScriptStarted } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
@@ -29,7 +29,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
 
 const getActualType = (type, webhook_event) => {
   if (type === 'greetings-location'){
-    if (getMinScriptStarted(webhook_event)) return 'back-to-beginning'
+    if (getMainScriptStarted(webhook_event)) return 'back-to-beginning'
     setMainScriptStarted(webhook_event, true)
   }
   if (type === 'restart'){
