@@ -49,7 +49,7 @@ const initConversation = webhook_event => {
 }
 
 const setLastUserInput = webhook_event =>
-  _.set(getConversation(webhook_event), 'lastUserInputTS', hasMids(webhook_event) ? _.get(conversation, 'lastUserInputTS'): webhook_event.timestamp )
+  _.set(getConversation(webhook_event), 'lastUserInputTS', hasMids(webhook_event) ? _.get(getConversation(webhook_event), 'lastUserInputTS'): webhook_event.timestamp )
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
