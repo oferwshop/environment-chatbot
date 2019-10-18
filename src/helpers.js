@@ -184,6 +184,28 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
 }
 
 
+const getResponseType = (webhook_event) => {
+  
+  const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
+  const isButtonPostback = _.get(webhook_event, 'postback.payload')
+  const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
+  const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
+  const isTextMessage = webhook_event.message
+  const date = getDate(webhook_event)
+  const isASchedule = isSchedule(webhook_event)
+  const isAPriceInquiry = isPriceInquiry(webhook_event)
+  const isAWaiver = isWaiver(webhook_event)
+  const isAGeneralInfo = isGeneralInfo(webhook_event)
 
-module.exports = { getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+  return (isPhoneNumber || isEmail) && 'thank-you' 
+    || (isAWaiver && 'get-waiver')
+    || (isQuickReply && 'quick-reply')
+    || (isButtonPostback && 'button-postback')
+    || (isAGeneralInfo && 'general-info')
+    || (isASchedule && 'schedule')
+    || (date && 'date')
+    || (isAPriceInquiry && 'price-inquiry)
+    || (isTextMessage && 'greetings-location')
+}
+module.exports = { getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  

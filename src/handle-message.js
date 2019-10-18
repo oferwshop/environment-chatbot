@@ -1,14 +1,14 @@
 const _ = require('lodash')
 const callSendAPI = require('./call-send-api')
-const getNextMessage = require('./get-next-message')
+const getChatbotResponse = require('./chatbot-response')
  
 // Handles messages events
 async function handleMessage(sender_psid, webhook_event) {
 
-    const nextMessage = await getNextMessage(webhook_event, sender_psid)
-    if (!nextMessage) return
+    const chatbotResponse = await getChatbotResponse(webhook_event, sender_psid)
+    if (!chatbotResponse) return
 
-    const { buttons, quick_replies, text, attachment } = nextMessage
+    const { buttons, quick_replies, text, attachment } = chatbotResponse
 
     const response = buttons ? {
       "attachment":{
