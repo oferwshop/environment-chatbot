@@ -3,7 +3,7 @@ const { isSchedule, isPriceInquiry, getDate,
   isWaiver, getReply, isGeneralInfo, getReplyWithUser,
   getReplyAndEmail } = require('./helpers')
 
-const lastUserInputTS = 0
+let lastUserInputTS = 0
 
 async function getNextMessage(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
