@@ -26,7 +26,6 @@ const handleConversationState = (webhook_event) => {
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
   }
-
 }
 
 const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDisabledTS')
@@ -50,8 +49,10 @@ const initConversation = webhook_event => {
 
 const setLastUserInput = (webhook_event) => {
     const conversation = getConversation(webhook_event)
-    _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) ? _.get(conversation, 'lastUserInputTS'): webhook_event.timestamp )
-    _.set(conversation, 'nonUserHooksCount', hasMids(webhook_event) ? _.get(conversation, 'nonUserHooksCount', 0)++ : 0 )
+    const nonUserHooksCount = _.get(conversation, 'nonUserHooksCount', 0)
+    const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
+    _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) ? lastUserInputTS : webhook_event.timestamp )
+    _.set(conversation, 'nonUserHooksCount', hasMids(webhook_event) ? nonUserHooksCount++ : 0 )
 }
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
