@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { isSchedule, isPriceInquiry, getDate,
   isWaiver, getReply, isGeneralInfo, getReplyWithUser,
-  getReplyAndEmail, isPriceInquiry,} = require('./helpers')
+  getReplyAndEmail } = require('./helpers')
 
 
 async function getNextMessage(webhook_event, sender_psid) {
