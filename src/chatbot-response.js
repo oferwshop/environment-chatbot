@@ -32,7 +32,7 @@ const getActualType = (type, webhook_event) => {
     if (getMainScriptStarted(webhook_event)) return 'back-to-beginning'
     setMainScriptStarted(webhook_event, true)
   }
-  if (type === 'restart'){
+  if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart'){
     setMainScriptStarted(webhook_event, false)
     return 'greetings-location'
   }
