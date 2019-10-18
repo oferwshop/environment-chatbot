@@ -6,12 +6,14 @@ const botDisablePeriod =  1000 * 15// * 60 * 5
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 
 const getConversation = webhook_event => conversations[webhook_event.recipient.id]
-const setConversation = webhook_event => _.set(conversations, webhook_event.recipient.id, {} )
+
+const initConversation = webhook_event => _.set(conversations, webhook_event.recipient.id, {} ) || getConversation(webhook_event)
+
 const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
-  if (!getConversation(webhook_event)) setConversation(webhook_event)
 
-  const conversation = getConversation(webhook_event) 
+  const conversation = getConversation(webhook_event) || initConversation(webhook_event)
+
   const hasMids = _.get(webhook_event, 'delivery.mids')
   const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
   const timeSinceLastUserInput = webhook_event.timestamp - lastUserInputTS
