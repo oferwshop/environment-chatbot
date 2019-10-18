@@ -10,6 +10,7 @@ const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
 
   const conversation = getConversation(webhook_event)
+  if (!conversation) _.set(conversations, webhook_event.recipient.id, {} )
   const hasMids = _.get(webhook_event, 'delivery.mids')
   const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
   const timeSinceLastUserInput = webhook_event.timestamp - lastUserInputTS
