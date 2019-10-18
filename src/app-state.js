@@ -7,7 +7,10 @@ const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledT
 
 const getConversation = webhook_event => conversations[webhook_event.recipient.id]
 
-const initConversation = webhook_event => _.set(conversations, webhook_event.recipient.id, {} ) || getConversation(webhook_event)
+const initConversation = webhook_event => {
+    _.set(conversations, webhook_event.recipient.id, {} )
+    return getConversation(webhook_event)
+}
 
 const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
