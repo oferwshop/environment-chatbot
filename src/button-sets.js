@@ -19,6 +19,10 @@ const adultsInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
+const backToBeginning = [
+  { "payload": 'restart', "title": 'חזרה לתפריט התחלה' },
+]
+
 const priceInquiry = [
   { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
@@ -68,6 +72,7 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
   "weekday/sunday": registerClass,

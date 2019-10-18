@@ -1,7 +1,7 @@
 const _ = require('lodash')
-const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
+const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail, getActualType } = require('./helpers')
 
-const { handleConversationState, isDisabled } = require('./app-state')
+const { handleConversationState, isDisabled, mainScriptStarted } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
@@ -10,7 +10,8 @@ function getChatbotResponse(webhook_event, sender_psid) {
 
     if (isDisabled(webhook_event)) return console.log("*** BOT DISABLED ") 
     
-    const type = getResponseType(webhook_event)
+    const initialType = getResponseType(webhook_event)
+    const type = getActualType(initialType, webhook_event)
     console.log("**** Response Type: " + type)
 
     return type === 'thank-you' && getReplyAndEmail('thank-you', sender_psid, _.get(webhook_event, 'message.text'))
@@ -22,6 +23,19 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'date' && getReply(getDate(webhook_event))
       || type === 'price-inquiry' && getReplyWithUser('price-inquiry', sender_psid)
       || type === 'greetings-location' && getReplyWithUser('greetings-location', sender_psid)
+      || type === 'back-to-beginning' && getReplyWithUser('back-to-beginning', sender_psid)
     }
+
+
+const getActualType = (type, webhook_event) => {
+  if (type === 'greetings-location'){
+    if (getMinScriptStarted(webhook_event)) return 'back-to-beginning'
+    setMainScriptStarted(webhook_event, true)
+  }
+  if (type === 'restart'){
+    setMainScriptStarted(webhook_event, false)
+    return 'greetings-location'
+  }
+}
 
 module.exports = getChatbotResponse

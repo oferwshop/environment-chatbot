@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const conversations = {}
-const botDisablePeriod =  1000 * 15// * 60 * 5
+const botDisablePeriod =  1000 * 60 * 30
 
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 
@@ -38,4 +38,8 @@ const handleConversationState = (webhook_event) => {
 
 const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDisabledTS')
 
-module.exports = { handleConversationState, isDisabled }
+const getMainScriptStarted = webhook_event => _.get(getConversation(webhook_event), 'mainScriptStarted')
+
+const setMainScriptStarted = (webhook_event, val) => _.set(getConversation(webhook_event), 'mainScriptStarted', val)
+
+module.exports = { handleConversationState, isDisabled, getMainScriptStarted }
