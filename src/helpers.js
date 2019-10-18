@@ -82,7 +82,7 @@ const sendEmail = (info) => {
       
       var mailOptions = {
         from: 'saulmma@gmail.com',
-        to: 'saulmma@gmail.com',
+        to: process.env.EMAIL_TO,
         subject: 'Contact details accepted !',
         text: `Hi, ${info.name} (#id ${info.id}) sent contact details! The details are: ${contactPayload} `
       };
@@ -127,7 +127,6 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 
 const getReply = (payload, userName, gender) => {
-    console.log("*** Getting response for payload:", JSON.stringify(payload))
     let text = getFileText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(text, gender)
