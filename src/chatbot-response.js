@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail, getActualType } = require('./helpers')
+const { getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
 const { handleConversationState, isDisabled, mainScriptStarted } = require('./app-state')
 
