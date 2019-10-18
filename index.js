@@ -22,8 +22,8 @@ const
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()),
   handleMessage = require('./src/handle-message'), // creates express http server
-  handlePostback = require('./src/handle-postback'); // creates express http server
-    
+ // handlePostback = require('./src/handle-postback'); // creates express http server
+  { parse, stringify } = require('flatted/cjs');
 require('express-debug')(app);
 
 // Sets server port and logs message on success
@@ -33,9 +33,9 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.post('/webhook', (req, res) => {  
 
   console.log("**** REQ: ")
-  console.log(req)
+  console.log(stringify(req))
   console.log("**** RES: ")
-  console.log(res)
+  console.log(stringify(res))
   // Parse the request body from the POST
   let body = req.body;
   // Check the webhook event is from a Page subscription
