@@ -2,7 +2,7 @@ const _ = require('lodash')
 
 const greetingsAge = [
     { "payload": 'kids-info', "title": 'Kids (up to 14)'},
-    { "payload": 'military-info', "title": 'Soldiers - active service' },
+    { "payload": 'military-info', "title": 'Soldiers (Active)' },
     { "payload": 'adults-info', "title": 'Adults' }
   ]
 
