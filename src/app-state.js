@@ -21,7 +21,7 @@ const handleConversationState = (webhook_event) => {
 
   setLastUserInput(webhook_event)
 
-  const isAdmin = !userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 2
+  const isAdmin = !userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 3
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
