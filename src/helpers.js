@@ -209,5 +209,10 @@ const getResponseType = (webhook_event) => {
     || (isTextMessage && 'greetings-location')
 }
 
-module.exports = { getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+const isHebrew = (webhook_event) =>{
+  HebrewChars = new RegExp("[\u0590-\u05FF]");
+  const msg = _.get(webhook_event, 'message.text', 'English')
+  return HebrewChars.test(msg)
+}
+module.exports = { isHebrew, getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  
