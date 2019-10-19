@@ -20,7 +20,7 @@ const adultsInfo = [
 ]
 
 const backToBeginning = [
-  { "payload": 'restart', "title": 'Back to main menu' },
+  { "payload": 'restart', "title": 'חזרה לתפריט ראשי' },
 ]
 
 const priceInquiry = [
