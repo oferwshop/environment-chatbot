@@ -56,13 +56,13 @@ const getQuickReplies = elements => ({
 
 const getFileText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
 
-const handleGender = (text, gender) => text.replace(/מתעניין/ת/g, gender === "male" ? "מתעניין" : "מתעניינת")
-    .replace(/ברוך/ה/g, gender === "male" ? "ברוך" : "ברוכה")
-    .replace(/הבא/ה/g, gender === "male" ? "הבא" : "הבאה")
-    .replace(/את/ה/g, gender === "male" ? "אתה" : "את")
-    .replace(/מחפש/ת/g, gender === "male" ? "מחפש" : "מחפשת")
-    .replace(/מקצועני/ת/g, gender === "male" ? "מקצועני" : "מקצוענית")
-    .replace(/ספורטאי/ת/g, gender === "male" ? "ספורטאי" : "ספורטאית")
+const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
+    .replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
+    .replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
+    .replace('את/ה', gender === "male" ? "אתה" : "את")
+    .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
+    .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
+    .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
 
 const createResponse = (text, payload) => {
     const elements = buttonSets[payload]
@@ -130,7 +130,7 @@ const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWo
 const getReply = (payload, userName, gender) => {
     let text = getFileText(payload)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (gender) text = handleGender(text, gender)
+    if (gender) text = handleGender(handleGender(text, gender), gender)
     return createResponse(text, payload)
 }
 
