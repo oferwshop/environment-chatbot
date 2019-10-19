@@ -51,7 +51,7 @@ const getWeekDay = (datetime) => {
 const getQuickReplies = (elements, webhook_event) => ({
     quick_replies: _.map(elements, element => ({
         "content_type":"text",
-        "title": getEnglish(webhook_event) ? element.titleEn: element.title,
+        "title": getEnglish(webhook_event) ? element.title: element.title,
         "payload": element.payload
     }))
 })

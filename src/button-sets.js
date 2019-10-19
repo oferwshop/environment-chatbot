@@ -1,52 +1,48 @@
 const _ = require('lodash')
 
 const greetingsAge = [
-    { "payload": 'kids-info', "title": 'ילדים (עד גיל 14)', "titleEn": 'Kids (up to 14)'},
-    { "payload": 'military-info', "title": 'חיילים בסדיר', "titleEn": 'Soldiers - active service' },
-    { "payload": 'adults-info', "title": 'בוגרים', "titleEn": 'Adults' }
+    { "payload": 'kids-info', "title": 'ילדים (עד גיל 14)'},
+    { "payload": 'military-info', "title": 'חיילים בסדיר' },
+    { "payload": 'adults-info', "title": 'בוגרים' }
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'לאימון ניסיון בחינם', "titleEn": 'To free trainig session' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים', "titleEn": 'More info' }
+  { "payload": 'schedule-free-session', "title": 'לאימון ניסיון בחינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const militaryInfo = [
-  { "payload": 'schedule-free-week', "title": 'למימוש המבצע', "titleEn": 'Get free week of training' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים', "titleEn": 'More info' }
+  { "payload": 'schedule-free-week', "title": 'למימוש המבצע' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם', "titleEn": 'Get free week of training' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים', "titleEn": 'More info' }
-]
-
-const backToBeginning = [
-  { "payload": 'restart', "title": 'חזרה לתפריט התחלה', "titleEn": 'Back to main menu' },
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
 const priceInquiry = [
-  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם', "titleEn": 'Get free week of training' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים', "titleEn": 'More info' }
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
 const greetingsLocation = [
-  { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)', "titleEn": 'Tel Aviv (center)' },
-  { "payload": 'misgav', "title": 'משגב (צפון)' , "titleEn": 'Misgav (north)'},
-  { "payload": 'kadima', "title": 'קדימה (השרון)' , "titleEn": 'Kadima (Hasharon)'},
-  { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)', "titleEn": 'Kfar Bilu (south)' }
+  { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
+  { "payload": 'misgav', "title": 'משגב (צפון)' },
+  { "payload": 'kadima', "title": 'קדימה (השרון)' },
+  { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)' }
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "titleEn": 'Registration form', "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
 ]
 
 const registerClass =  [
-  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "titleEn": 'Register to class', "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" }
 ]
 const generalInfo =  [
-  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "titleEn": 'About', "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "webview_height_ratio": "full" }
 ]
 
-const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "titleEn": 'To facebook page', "webview_height_ratio": "full" }]
+const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
 
 const kadima = _.concat(getRegionButton('https://www.facebook.com/groups/151885048674207'), signWaiver)
 const kfarBilu = _.concat(getRegionButton('https://www.facebook.com/BJJ.in.Israel/'), signWaiver)
@@ -72,7 +68,6 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
-  'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
   "weekday/sunday": registerClass,
