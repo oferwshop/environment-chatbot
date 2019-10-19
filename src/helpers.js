@@ -56,12 +56,13 @@ const getQuickReplies = elements => ({
 
 const getFileText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
 
-const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
-    .replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
-    .replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
-    .replace('את/ה', gender === "male" ? "אתה" : "את")
-    .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
-    .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
+const handleGender = (text, gender) => text.replace(/מתעניין/ת/g, gender === "male" ? "מתעניין" : "מתעניינת")
+    .replace(/ברוך/ה/g, gender === "male" ? "ברוך" : "ברוכה")
+    .replace(/הבא/ה/g, gender === "male" ? "הבא" : "הבאה")
+    .replace(/את/ה/g, gender === "male" ? "אתה" : "את")
+    .replace(/מחפש/ת/g, gender === "male" ? "מחפש" : "מחפשת")
+    .replace(/מקצועני/ת/g, gender === "male" ? "מקצועני" : "מקצוענית")
+    .replace(/ספורטאי/ת/g, gender === "male" ? "ספורטאי" : "ספורטאית")
 
 const createResponse = (text, payload) => {
     const elements = buttonSets[payload]
@@ -116,7 +117,7 @@ const getDate = webhook_event => {
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     if (textContains(webhook_event, ['לו"ז','לוז'] )) { today = true; datetime = true }
-    if (textContains(webhook_event, ['צהריים','בוקר', 'ערב']) || hasLongText(webhook_event)) {  datetime = false }
+    if (textContains(webhook_event, ['צהריים','בוקר', 'ערב']) || hasLongText(webhook_event) || textContains(webhook_event, scheduleWords)) {  datetime = false }
 
     if (datetime || today) return getWeekDay(datetime)
     return false
@@ -202,8 +203,8 @@ const getResponseType = (webhook_event) => {
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGeneralInfo && 'general-info')
-    || (isASchedule && 'schedule')
     || (date && 'date')
+    || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
     || (isTextMessage && 'greetings-location')
 }
