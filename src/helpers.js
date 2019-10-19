@@ -5,6 +5,7 @@ const path = require("path");
 var nodemailer = require('nodemailer');
 const _ = require('lodash')
 const buttonSets = require('./button-sets')
+const buttonSetsEng = require('./button-sets-eng')
 const { getEnglish } = require('./app-state')
 
 
@@ -51,7 +52,7 @@ const getWeekDay = (datetime) => {
 const getQuickReplies = (elements, webhook_event) => ({
     quick_replies: _.map(elements, element => ({
         "content_type":"text",
-        "title": getEnglish(webhook_event) ? element.title: element.title,
+        "title": element.title,
         "payload": element.payload
     }))
 })
@@ -73,7 +74,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
 
 const createResponse = (text, payload, webhook_event) => {
-    const elements = buttonSets[payload]
+    const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
