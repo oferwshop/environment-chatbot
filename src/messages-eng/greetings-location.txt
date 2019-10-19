@@ -1,4 +1,4 @@
-Hello [user_name]! 
-תודה על ההתעניינות באקדמיית אוקטופוס - ג׳יוג׳יטסו וMMA. 🥊🥋
-לפניך מערכת ממוחשבת אשר תסייע לך לקבל מידע ופרטים רלוונטיים עוד לפני השיחה עם נציג של האקדמיה.
-באיזה סניף הינך מתעניין/ת?
+Hello [user_name]!
+Thank you for your interest in Octopus Academy - Jiujitsu and MMA. 🥊🥋
+Our system will try to help you get information and relevant details even before a conversation with an Academy's representative,
+Which branch are you interested in ?

@@ -48,10 +48,10 @@ const getWeekDay = (datetime) => {
     }
 }
 
-const getQuickReplies = elements => ({
+const getQuickReplies = (elements, webhook_event) => ({
     quick_replies: _.map(elements, element => ({
         "content_type":"text",
-        "title": element.title,
+        "title": getEnglish(webhook_event) ? element.titleEn: element.title,
         "payload": element.payload
     }))
 })
@@ -72,10 +72,10 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
 
-const createResponse = (text, payload) => {
+const createResponse = (text, payload, webhook_event) => {
     const elements = buttonSets[payload]
     return  _.assign({ text },
-        !elements ? null : (elements.length > 3 ? getQuickReplies(elements)
+        !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
                 : { buttons: elements })))
     }
@@ -131,7 +131,7 @@ const getReply = (webhook_event, payload, userName, gender) => {
     let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
-    return createResponse(text, payload)
+    return createResponse(text, payload, webhook_event)
 }
 
 const getReplyWithUser = async (webhook_event, payload, sender_psid) => {

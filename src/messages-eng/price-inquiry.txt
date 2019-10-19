@@ -1,3 +1,3 @@
-שלום [user_name], 
-מנוי חופשי חודשי עולה 350₪
-מוזמן לשבוע נסיון ללא עלות.
+Hello [user_name], 
+A monthly subscription is 350 NIS per month
+You are welcome to a free week of training.
