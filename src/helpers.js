@@ -212,8 +212,7 @@ const getResponseType = (webhook_event) => {
 
 const isTextInput = type => (type === 'greetings-location'
   || type === 'date'
-  || type === 'price-inquiry'
-  || type === 'back-to-beginning')
+  || type === 'price-inquiry')
 
 const isHebrew = (webhook_event) =>{
   HebrewChars = new RegExp("[\u0590-\u05FF]");
