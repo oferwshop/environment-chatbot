@@ -13,7 +13,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
     const initialType = getResponseType(webhook_event)
     const type = getActualType(initialType, webhook_event)
     console.log("**** Response Type: " + type)
-    setEnglish(webhook_event, isTextInput(type) && !isHebrew(webhook_event))
+    if (isTextInput(type)) setEnglish(webhook_event, !isHebrew(webhook_event))
     return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
       || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
       || type === 'quick-reply' && getReply(webhook_event, webhook_event.message.quick_reply.payload)
