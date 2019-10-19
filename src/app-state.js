@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const conversations = {}
-const botDisablePeriod =  1000 * 60 * 30
+const botDisablePeriod =  1000 * 60 * 5
 const expirationPeriod = 1000 * 60 * 30
 
 const handleConversationState = (webhook_event) => {
@@ -63,4 +63,4 @@ const setLastUserInput = (webhook_event) => {
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
-module.exports = { setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
+module.exports = { hasMids, setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }

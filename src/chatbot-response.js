@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { isTextInput, isHebrew, getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { setEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
+const { hasMids, setEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
@@ -13,7 +13,8 @@ function getChatbotResponse(webhook_event, sender_psid) {
     const initialType = getResponseType(webhook_event)
     const type = getActualType(initialType, webhook_event)
     console.log("**** Response Type: " + type)
-    if (isTextInput(type)) setEnglish(webhook_event, !isHebrew(webhook_event))
+    if (isTextInput(type) && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
+
     return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
       || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
       || type === 'quick-reply' && getReply(webhook_event, webhook_event.message.quick_reply.payload)
