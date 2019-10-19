@@ -1,3 +1,5 @@
 Hello [user_name], 
+
 A monthly subscription is 350 NIS per month
+
 You are welcome to a free week of training.
