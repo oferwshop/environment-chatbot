@@ -22,8 +22,8 @@ const
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()),
   handleMessage = require('./src/handle-message'), // creates express http server
-  handlePostback = require('./src/handle-postback'); // creates express http server
-    
+ // handlePostback = require('./src/handle-postback'); // creates express http server
+  { parse, stringify } = require('flatted/cjs');
 require('express-debug')(app);
 
 // Sets server port and logs message on success
@@ -41,13 +41,10 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function(entry) {
 
       // Gets the body of the webhook event
-      let webhook_event = (entry.messaging || entry.standby)[0];
-      console.log(webhook_event);
-    
+      let webhook_event = (entry.messaging || entry.standby)[0];   
     
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
-      console.log('Sender PSID: ' + sender_psid);
 
       handleMessage(sender_psid, webhook_event);        
     
