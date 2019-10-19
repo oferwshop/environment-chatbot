@@ -37,6 +37,12 @@ const setMainScriptStarted = (webhook_event, val) => {
     _.set(conversation, 'mainScriptStarted', val)
 }
 
+const setEnglish = (webhook_event, val) => {
+    const conversation = getConversation(webhook_event)
+    _.set(conversation, 'english', val)
+}
+const getEnglish = webhook_event => _.get(getConversation(webhook_event), 'english')
+
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 
 const getConversation = webhook_event => conversations[webhook_event.recipient.id]
@@ -57,4 +63,4 @@ const setLastUserInput = (webhook_event) => {
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
-module.exports = { initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
+module.exports = { setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }

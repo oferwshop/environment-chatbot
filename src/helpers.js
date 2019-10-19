@@ -5,6 +5,8 @@ const path = require("path");
 var nodemailer = require('nodemailer');
 const _ = require('lodash')
 const buttonSets = require('./button-sets')
+const { getEnglish } = require('./app-state')
+
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
@@ -53,9 +55,15 @@ const getQuickReplies = elements => ({
         "payload": element.payload
     }))
 })
+const readFile = (payload, english) => fs.readFileSync(path.resolve(__dirname, `./messages${english ? '-eng': ''}/${payload}.txt`)).toString()
 
-const getFileText = payload => fs.readFileSync(path.resolve(__dirname, `./messages/${payload}.txt`)).toString()
-
+const getFileText = (payload, english) => {
+  try{
+    return readFile(payload, english)
+  }catch(e){
+    return readFile(payload, false)
+  }
+}
 const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
     .replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
     .replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
@@ -105,14 +113,6 @@ const isSchedule = webhook_event =>
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
-
-
-
-
-
-
-
-
 const getDate = webhook_event => {
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
@@ -127,14 +127,14 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 
-const getReply = (payload, userName, gender) => {
-    let text = getFileText(payload)
+const getReply = (webhook_event, payload, userName, gender) => {
+    let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
     return createResponse(text, payload)
 }
 
-const getReplyWithUser = async (payload, sender_psid) => {
+const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
     const info = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -155,11 +155,11 @@ const getReplyWithUser = async (payload, sender_psid) => {
         }
         }
     )})
-    return getReply(payload, info.name, info.gender)
+    return getReply(webhook_event, payload, info.name, info.gender)
 }
 
 
-const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
+const getReplyAndEmail = async (webhook_event, payload, sender_psid, contactPayload) => {
     const info = await new Promise((resolve, reject) => {
         request({
         url: `${FACEBOOK_GRAPH_API_BASE_URL}${sender_psid}`,
@@ -181,7 +181,7 @@ const getReplyAndEmail = async (payload, sender_psid, contactPayload) => {
 
     sendEmail(info)
 
-    return getReply(payload)
+    return getReply(webhook_event, payload)
 }
 
 
@@ -209,10 +209,15 @@ const getResponseType = (webhook_event) => {
     || (isTextMessage && 'greetings-location')
 }
 
+const isTextInput = type => (type === 'greetings-location'
+  || type === 'date'
+  || type === 'price-inquiry'
+  || type === 'back-to-beginning')
+
 const isHebrew = (webhook_event) =>{
   HebrewChars = new RegExp("[\u0590-\u05FF]");
   const msg = _.get(webhook_event, 'message.text', 'English')
   return HebrewChars.test(msg)
 }
-module.exports = { isHebrew, getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+module.exports = { isTextInput, isHebrew, getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  
