@@ -7,15 +7,15 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'To free trainig session' },
+  { "payload": 'schedule-free-session', "title": 'Get free class' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const militaryInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week of training' },
+  { "payload": 'schedule-free-week', "title": 'Get free week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week of training' },
+  { "payload": 'schedule-free-week', "title": 'Get free week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
@@ -24,7 +24,7 @@ const backToBeginning = [
 ]
 
 const priceInquiry = [
-  { "payload": 'schedule-free-week', "title": 'Get free week of training' },
+  { "payload": 'schedule-free-week', "title": 'Get free week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
@@ -40,7 +40,7 @@ const signWaiver =  [
 ]
 
 const registerClass =  [
-  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc', "title": 'Register to class', "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc', "title": 'Register class', "webview_height_ratio": "full" }
 ]
 const generalInfo =  [
   { "type": 'web_url', "url": 'https://www.jja.co.il', "title": 'About', "webview_height_ratio": "full" }
