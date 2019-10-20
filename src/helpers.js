@@ -18,8 +18,10 @@ const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '')
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
-const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
-
+const textContains = (webhook_event, strArray) =>{
+  console.log("*** LOWERCASE: " + _.toLower(_.get(webhook_event, 'message.text', '')))
+  return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
+}
 const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
 
 const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף']
