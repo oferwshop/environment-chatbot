@@ -12,7 +12,7 @@ const { getEnglish } = require('./app-state')
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
-const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 40
+const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 180
 
 const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 15
 
@@ -115,7 +115,7 @@ const sendEmail = (info) => {
       }); 
 }
 
-const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
+const isSchedule = webhook_event => !hasLongText(webhook_event) && (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords))
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
@@ -128,6 +128,7 @@ const getHebrewWeekday = (webhook_event) => {
 }
 const greetings = ['צהריים','בוקר', 'ערב']
 const getDate = webhook_event => {
+    if (hasLongText(webhook_event)) return false
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     let withoutGreeting = _.get(webhook_event, 'message.text', '')
