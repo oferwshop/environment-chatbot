@@ -120,7 +120,7 @@ const isSchedule = webhook_event =>
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
-const getHebrewWeekDay = (webhook_event) => {
+const getHebrewWeekday = (webhook_event) => {
   const text = _.get(webhook_event, 'message.text', '')
   for(var i=0; i<englishWeekdays.length; i++){
      if (text.indexOf(englishWeekdays[i]) > -1) return 'weekday/' + englishWeekdays[i]
