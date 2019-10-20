@@ -37,6 +37,7 @@ const getActualType = (type, webhook_event) => {
   }
   if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart'){
     initConversation(webhook_event)
+    setEnglish(webhook_event, !isHebrew(webhook_event))
     setMainScriptStarted(webhook_event, true)
     return 'greetings-location'
   }
