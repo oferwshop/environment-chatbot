@@ -59,7 +59,6 @@ const getQuickReplies = (elements, webhook_event) => ({
 const readFile = (payload, english) => fs.readFileSync(path.resolve(__dirname, `./messages${english ? '-eng': ''}/${payload}.txt`)).toString()
 
 const getFileText = (payload, english) => {
-  console.log("**** Getting text file. Payload, English: "+ payload +"," + english)
   try{
     return readFile(payload, english)
   }catch(e){
@@ -130,6 +129,8 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
+  console.log("**** Getting text file. Payload, Webhook: "+ payload +"," + JSON.stringify(webhook_event))
+
     let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
