@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const { isTextInput, isHebrew, getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { hasMids, setEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
+const { hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
@@ -36,8 +36,9 @@ const getActualType = (type, webhook_event) => {
     setMainScriptStarted(webhook_event, true)
   }
   if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart'){
+    const english = getEnglish(webhook_event)
     initConversation(webhook_event)
-    setEnglish(webhook_event, !isHebrew(webhook_event))
+    setEnglish(webhook_event, english)
     setMainScriptStarted(webhook_event, true)
     return 'greetings-location'
   }

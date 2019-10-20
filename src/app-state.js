@@ -42,7 +42,6 @@ const setEnglish = (webhook_event, val) => {
     _.set(conversation, 'english', val)
 }
 const getEnglish = webhook_event => {
-    console.log("Getting English. conversations: " + JSON.stringify(conversations))
     return _.get(getConversation(webhook_event), 'english')
 }
 
