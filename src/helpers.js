@@ -91,7 +91,7 @@ const createResponse = (text, payload, webhook_event) => {
                 : { buttons: elements })))
     }
 
-const sendEmail = (info) => {
+const sendEmail = (info, contactPayload) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -201,7 +201,7 @@ const getReplyAndEmail = async (webhook_event, payload, sender_psid, contactPayl
         }
     )})
 
-    sendEmail(info)
+    sendEmail(info, contactPayload)
 
     return getReply(webhook_event, payload)
 }
