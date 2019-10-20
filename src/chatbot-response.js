@@ -24,6 +24,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'general-info' && getReply(webhook_event, 'general-info')
       || type === 'end-conversation' && getReply(webhook_event, 'end-conversation')
       || type === 'schedule' && getReply(webhook_event, 'schedule')
+      || type === 'gi-no-gi' && getReply(webhook_event, 'gi-no-gi')
       || type === 'date' && getReply(webhook_event, getDate(webhook_event))
       || type === 'price-inquiry' && getReplyWithUser(webhook_event, 'price-inquiry', sender_psid)
       || type === 'greetings-location' && getReplyWithUser(webhook_event, 'greetings-location', sender_psid)

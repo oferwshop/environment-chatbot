@@ -72,6 +72,7 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  "gi-no-gi": generalInfo,
   "end-conversation": backToBeginning,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,

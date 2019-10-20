@@ -29,6 +29,8 @@ const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ',
 
 const generalInfoWords = ['מה זה', "hat is"]
 
+const giNoGiWords = ['ההבדל',"נו גי", "סוגי", "no gi", "the difference"]
+
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
@@ -143,6 +145,7 @@ const getDate = webhook_event => {
 const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
+const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
   console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
@@ -217,6 +220,7 @@ const getResponseType = (webhook_event) => {
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
+  const isAGiNoGi = isGiNoGi(webhook_event)
   const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
   return (isEndConversation || isSticker) && 'end-conversation'
@@ -228,6 +232,7 @@ const getResponseType = (webhook_event) => {
     || (date && 'date')
     || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
+    || (isAGiNoGi && 'gi-no-gi')
     || (isTextMessage && 'greetings-location')
 }
 
