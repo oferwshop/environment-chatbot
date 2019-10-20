@@ -29,7 +29,7 @@ const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ',
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
-const giNoGiWords = ['ההבדל',"נו גי", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
+const giNoGiWords = ['הבדל',"נו גי", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
 
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
