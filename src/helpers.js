@@ -23,13 +23,13 @@ const textContains = (webhook_event, strArray) =>{
 }
 const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
 
-const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף']
+const priceWords = ['price','cost','pay','fee','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס']
 
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
-const giNoGiWords = ['הבדל',"נו גי", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
+const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
 
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
