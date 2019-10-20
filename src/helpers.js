@@ -117,7 +117,7 @@ const sendEmail = (info) => {
       }); 
 }
 
-const isSchedule = webhook_event => !hasLongText(webhook_event) && (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords))
+const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
