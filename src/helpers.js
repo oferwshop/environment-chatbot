@@ -18,7 +18,7 @@ const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '')
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
-const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.toLowerCase(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
+const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 
 const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
 
