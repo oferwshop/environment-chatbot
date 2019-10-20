@@ -19,7 +19,6 @@ const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '')
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
 const textContains = (webhook_event, strArray) =>{
-  console.log("*** LOWERCASE: " + _.toLower(_.get(webhook_event, 'message.text', '')))
   return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 }
 const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
@@ -123,7 +122,7 @@ const isSchedule = webhook_event =>
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
 const getHebrewWeekday = (webhook_event) => {
-  const text = _.get(webhook_event, 'message.text', '')
+  const text = _.toLower(_.get(webhook_event, 'message.text', ''))
   for(var i=0; i<englishWeekdays.length; i++){
      if (text.indexOf(englishWeekdays[i]) > -1) return 'weekday/' + englishWeekdays[i]
   }
