@@ -18,7 +18,7 @@ const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '')
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
-const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.get(webhook_event, 'message.text', '').indexOf(str) > -1, false )
+const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.lowerCase(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 
 const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
 
@@ -26,31 +26,34 @@ const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תש�
 
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
 
-const generalInfoWords = ['מה זה']
+const generalInfoWords = ['מה זה', "hat is"]
 
-const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'thank', 'bye']
+const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
+
+const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
+
 
 const getWeekDay = (datetime) => {
-    const val = _.get(datetime, '[0].values[0]')
-    const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
-    switch (date){
-        case 0:
-            return "weekday/sunday"
-        case 1:
-            return "weekday/monday"
-        case 2:
-            return "weekday/tuesday"
-        case 3:
-            return "weekday/wednsday"
-        case 4:
-            return "weekday/thursday"
-        case 5:
-            return "weekday/friday"
-        case 6:
-            return "weekday/saturday"
-        default:
-            return false
-    }
+  const val = _.get(datetime, '[0].values[0]')
+  const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
+  switch (date){
+      case 0:
+          return "weekday/sunday"
+      case 1:
+          return "weekday/monday"
+      case 2:
+          return "weekday/tuesday"
+      case 3:
+          return "weekday/wednsday"
+      case 4:
+          return "weekday/thursday"
+      case 5:
+          return "weekday/friday"
+      case 6:
+          return "weekday/saturday"
+      default:
+          return false
+  }
 }
 
 const getQuickReplies = (elements, webhook_event) => ({
@@ -115,15 +118,22 @@ const isSchedule = webhook_event =>
   !hasLongText(webhook_event)
   && (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords))
 
-
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
+
+const getHebrewWeekDay = (webhook_event) => {
+  const text = _.get(webhook_event, 'message.text', '')
+  for(var i=0; i<englishWeekdays.length; i++){
+     if (text.indexOf(englishWeekdays[i]) > -1) return 'weekday/' + englishWeekdays[i]
+  }
+  return false
+}
 
 const getDate = webhook_event => {
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     if (textContains(webhook_event, ['לו"ז','לוז'] )) { today = true; datetime = true }
     if (textContains(webhook_event, ['צהריים','בוקר', 'ערב']) || hasLongText(webhook_event) || textContains(webhook_event, scheduleWords)) {  datetime = false }
-
+    if (textContains(webhook_event, englishWeekdays)) return getHebrewWeekday(webhook_event)
     if (datetime || today) return getWeekDay(datetime)
     return false
 }
