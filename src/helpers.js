@@ -129,7 +129,7 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
-  console.log("**** Getting text file. Payload, Webhook: "+ payload +"," + JSON.stringify(webhook_event))
+  console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
 
     let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
