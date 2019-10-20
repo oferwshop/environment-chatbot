@@ -12,41 +12,51 @@ const { getEnglish } = require('./app-state')
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
 const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
-const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 40
+const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 180
+
+const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 20
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
-const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.get(webhook_event, 'message.text', '').indexOf(str) > -1, false )
+const textContains = (webhook_event, strArray) =>{
+  return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
+}
+const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
 
-const scheduleWords = ['לו"ז','לוז','מערכת','שעות',' מתי','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening"]
-
-const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף']
+const priceWords = ['price','cost','pay','fee','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס']
 
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
 
-const generalInfoWords = ['מה זה']
+const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
+
+const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
+
+const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
+
+const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
+
 
 const getWeekDay = (datetime) => {
-    const val = _.get(datetime, '[0].values[0]')
-    const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
-    switch (date){
-        case 0:
-            return "weekday/sunday"
-        case 1:
-            return "weekday/monday"
-        case 2:
-            return "weekday/tuesday"
-        case 3:
-            return "weekday/wednsday"
-        case 4:
-            return "weekday/thursday"
-        case 5:
-            return "weekday/friday"
-        case 6:
-            return "weekday/saturday"
-        default:
-            return false
-    }
+  const val = _.get(datetime, '[0].values[0]')
+  const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
+  switch (date){
+      case 0:
+          return "weekday/sunday"
+      case 1:
+          return "weekday/monday"
+      case 2:
+          return "weekday/tuesday"
+      case 3:
+          return "weekday/wednsday"
+      case 4:
+          return "weekday/thursday"
+      case 5:
+          return "weekday/friday"
+      case 6:
+          return "weekday/saturday"
+      default:
+          return false
+  }
 }
 
 const getQuickReplies = (elements, webhook_event) => ({
@@ -81,7 +91,7 @@ const createResponse = (text, payload, webhook_event) => {
                 : { buttons: elements })))
     }
 
-const sendEmail = (info) => {
+const sendEmail = (info, contactPayload) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -107,19 +117,27 @@ const sendEmail = (info) => {
       }); 
 }
 
-const isSchedule = webhook_event =>
-  !hasLongText(webhook_event)
-  && (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords))
-
+const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
+const getHebrewWeekday = (webhook_event) => {
+  const text = _.toLower(_.get(webhook_event, 'message.text', ''))
+  for(var i=0; i<englishWeekdays.length; i++){
+     if (text.indexOf(englishWeekdays[i]) > -1) return 'weekday/' + englishWeekdays[i]
+  }
+  return false
+}
+const greetings = ['צהריים','בוקר', 'ערב']
 const getDate = webhook_event => {
+    if (hasLongText(webhook_event)) return false
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
+    let withoutGreeting = _.get(webhook_event, 'message.text', '')
+    greetings.forEach( greet => withoutGreeting = withoutGreeting.replace(greet, ''))
     if (textContains(webhook_event, ['לו"ז','לוז'] )) { today = true; datetime = true }
-    if (textContains(webhook_event, ['צהריים','בוקר', 'ערב']) || hasLongText(webhook_event) || textContains(webhook_event, scheduleWords)) {  datetime = false }
-
+    if (textContains({ message: { text: withoutGreeting }}, scheduleWords)) {  datetime = false }
+    if (textContains(webhook_event, englishWeekdays)) return getHebrewWeekday(webhook_event)
     if (datetime || today) return getWeekDay(datetime)
     return false
 }
@@ -127,8 +145,11 @@ const getDate = webhook_event => {
 const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
+const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
+  console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
+
     let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
@@ -180,15 +201,16 @@ const getReplyAndEmail = async (webhook_event, payload, sender_psid, contactPayl
         }
     )})
 
-    sendEmail(info)
+    sendEmail(info, contactPayload)
 
     return getReply(webhook_event, payload)
 }
 
 
 const getResponseType = (webhook_event) => {
-  
+    
   const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
+  const isSticker = _.get(webhook_event, 'message.sticker_id')
   const isButtonPostback = _.get(webhook_event, 'postback.payload')
   const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
   const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
@@ -198,11 +220,15 @@ const getResponseType = (webhook_event) => {
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
+  const isAGiNoGi = isGiNoGi(webhook_event)
+  const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
-  return (isPhoneNumber || isEmail) && 'thank-you' 
+  return (isEndConversation || isSticker) && 'end-conversation'
+    || (isPhoneNumber || isEmail) && 'thank-you' 
     || (isAWaiver && 'get-waiver')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
+    || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (isAGeneralInfo && 'general-info')
     || (date && 'date')
     || (isASchedule && 'schedule')
@@ -212,6 +238,7 @@ const getResponseType = (webhook_event) => {
 
 const isTextInput = type => (type === 'greetings-location'
   || type === 'date'
+  || type === 'schedule'
   || type === 'price-inquiry'
   || type === 'back-to-beginning')
 

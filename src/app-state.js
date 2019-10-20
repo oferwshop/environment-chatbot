@@ -41,7 +41,9 @@ const setEnglish = (webhook_event, val) => {
     const conversation = getConversation(webhook_event)
     _.set(conversation, 'english', val)
 }
-const getEnglish = webhook_event => _.get(getConversation(webhook_event), 'english')
+const getEnglish = webhook_event => {
+    return _.get(getConversation(webhook_event), 'english')
+}
 
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 

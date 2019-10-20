@@ -7,15 +7,15 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'Get free class' },
+  { "payload": 'schedule-free-session', "title": 'Get Free Class' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const militaryInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
@@ -24,7 +24,7 @@ const backToBeginning = [
 ]
 
 const priceInquiry = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
@@ -56,7 +56,7 @@ const schedule =  [
   { "attachment":
       { "type": 'image',
       "payload":
-        { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg',
+        { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/octeng.jpg',
           "is_reusable": true } } } ]
 
 const buttonSets = {
@@ -72,6 +72,8 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  "gi-no-gi": generalInfo,
+  "end-conversation": backToBeginning,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
