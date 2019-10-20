@@ -7,15 +7,15 @@ const greetingsAge = [
   ]
 
 const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'Get free class' },
+  { "payload": 'schedule-free-session', "title": 'Get Free Class' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const militaryInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
@@ -24,7 +24,7 @@ const backToBeginning = [
 ]
 
 const priceInquiry = [
-  { "payload": 'schedule-free-week', "title": 'Get free week' },
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 
