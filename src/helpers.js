@@ -14,6 +14,8 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 40
 
+const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 15
+
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
 const textContains = (webhook_event, strArray) => _.reduce( strArray, (hasStr, str) => hasStr || _.get(webhook_event, 'message.text', '').indexOf(str) > -1, false )
@@ -25,6 +27,8 @@ const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תש�
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
 
 const generalInfoWords = ['מה זה']
+
+const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'thank', 'bye']
 
 const getWeekDay = (datetime) => {
     const val = _.get(datetime, '[0].values[0]')
@@ -189,8 +193,9 @@ const getReplyAndEmail = async (webhook_event, payload, sender_psid, contactPayl
 
 
 const getResponseType = (webhook_event) => {
-  
+    
   const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
+  const isSticker = _.get(webhook_event, 'message.sticker_id')
   const isButtonPostback = _.get(webhook_event, 'postback.payload')
   const isPhoneNumber = _.get(webhook_event, 'message.nlp.entities.phone_number')
   const isEmail = _.get(webhook_event, 'message.nlp.entities.email')
@@ -200,8 +205,10 @@ const getResponseType = (webhook_event) => {
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
+  const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
-  return (isPhoneNumber || isEmail) && 'thank-you' 
+  return (isEndConversation || isSticker) && 'end-conversation'
+    || (isPhoneNumber || isEmail) && 'thank-you' 
     || (isAWaiver && 'get-waiver')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
