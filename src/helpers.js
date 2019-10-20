@@ -228,11 +228,11 @@ const getResponseType = (webhook_event) => {
     || (isAWaiver && 'get-waiver')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
+    || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (isAGeneralInfo && 'general-info')
     || (date && 'date')
     || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
-    || (isAGiNoGi && 'gi-no-gi')
     || (isTextMessage && 'greetings-location')
 }
 
