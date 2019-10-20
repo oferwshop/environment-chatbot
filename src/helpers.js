@@ -21,7 +21,7 @@ const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.
 const textContains = (webhook_event, strArray) =>{
   return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 }
-const scheduleWords = ['לו"ז','לוז','מערכת','שעות','מתי ','שעה','chedule','שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
+const scheduleWords = ['לו"ז','לוז','מערכת','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
 
 const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף']
 
