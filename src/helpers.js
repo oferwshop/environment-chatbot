@@ -232,6 +232,7 @@ const getResponseType = (webhook_event) => {
 
 const isTextInput = type => (type === 'greetings-location'
   || type === 'date'
+  || type === 'schedule'
   || type === 'price-inquiry'
   || type === 'back-to-beginning')
 
