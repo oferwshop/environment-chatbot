@@ -56,7 +56,7 @@ const schedule =  [
   { "attachment":
       { "type": 'image',
       "payload":
-        { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg',
+        { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/octeng.jpg',
           "is_reusable": true } } } ]
 
 const buttonSets = {
