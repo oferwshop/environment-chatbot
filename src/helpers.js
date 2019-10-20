@@ -27,7 +27,7 @@ const priceWords = ['price','cost','pay','מחיר','עלות','מנוי','תש�
 
 const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
 
-const generalInfoWords = ['מה זה', "hat is"]
+const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
 const giNoGiWords = ['ההבדל',"נו גי", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
 
