@@ -38,6 +38,7 @@ const setMainScriptStarted = (webhook_event, val) => {
 }
 
 const setEnglish = (webhook_event, val) => {
+    console.log("*** Setting english to " + val)
     const conversation = getConversation(webhook_event)
     _.set(conversation, 'english', val)
 }
