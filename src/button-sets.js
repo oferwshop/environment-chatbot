@@ -57,7 +57,16 @@ const schedule =  [
       { "type": 'image',
       "payload":
         { "url": 'https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg',
-          "is_reusable": true } } } ]
+          "is_reusable": true } } },
+      { "attachment": {
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+           "type": 'web_url',
+            "url": 'https://www.jja.co.il',
+            "title": "על האימונים",
+             "webview_height_ratio": "full" }
+      } } ] 
 
 const buttonSets = {
   "kids-info": kidsInfo,
