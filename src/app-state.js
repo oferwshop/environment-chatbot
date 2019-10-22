@@ -47,10 +47,10 @@ const getEnglish = webhook_event => {
 
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 
-const getConversation = webhook_event => conversations[webhook_event.recipient.id]
+const getConversation = webhook_event => conversations[webhook_event.sender.id]
 
 const initConversation = webhook_event => {
-    _.set(conversations, webhook_event.recipient.id, {} )
+    _.set(conversations, webhook_event.sender.id, {} )
     setLastUserInput(webhook_event)
     return getConversation(webhook_event)
 }
