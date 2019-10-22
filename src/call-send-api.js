@@ -5,8 +5,9 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCE
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
   const responseArray = new Array()
-  if (response.first) { responseArray.concat(response.first, response.second) }
-    else { responseArray.push(response)}
+  if (response.first) responseArray.push(response.first)
+  if (response.second) responseArray.push(response.second)
+  if (!(response.first || response.second)) responseArray.push(response)
 
     responseArray.forEach( (response) => {
 
