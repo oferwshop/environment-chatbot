@@ -62,10 +62,7 @@ const schedule =  [
         "type":"template",
         "payload":{
           "template_type":"button",
-           "type": 'web_url',
-            "url": 'https://www.jja.co.il',
-            "title": "על האימונים",
-             "webview_height_ratio": "full" }
+          "text":"<MESSAGE_TEXT>"}
       } } ] 
 
 const buttonSets = {
