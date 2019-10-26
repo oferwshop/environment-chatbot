@@ -157,7 +157,7 @@ const getReply = (webhook_event, payload, userName, gender) => {
   const english = getEnglish(webhook_event)
   const buttonSet = english ? buttonSetsEng:  buttonSets
 
-  const responses = payload.first ? [buttonSet[payload].first, buttonSet[payload].next] : [payload]
+  const responses = buttonSet[payload].first ? [buttonSet[payload].first, buttonSet[payload].next] : [payload]
   return _.map(responses, response => {
     console.log("**** Getting text file. Payload, Response, Webhook: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event))
     let text = getFileText(response, english)
