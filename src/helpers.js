@@ -64,9 +64,8 @@ const getQuickReplies = (elements, webhook_event) => ({
         "content_type":"text",
         "title": element.title,
         "payload": element.payload
-    })), "attachment":{"type":"image",
-"payload":{"url":"https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg",
-"is_reusable":true}}})
+    }))
+})
 const readFile = (payload, english) => fs.readFileSync(path.resolve(__dirname, `./messages${english ? '-eng': ''}/${payload}.txt`)).toString()
 
 const getFileText = (payload, english) => {
@@ -86,7 +85,11 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
-    return  _.assign({ text },
+    return  _.assign({ text,
+      "attachment":{"type":"image",
+      "payload":{"url":"https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg",
+      "is_reusable":true}}
+     },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
                 : { buttons: elements })))
