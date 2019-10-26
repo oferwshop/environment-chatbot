@@ -43,8 +43,7 @@ const registerClass =  [
   { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" }
 ]
 const generalInfo =  [
-  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "webview_height_ratio": "full" },
-  { "payload": 'restart', "title": 'לתפריט ראשי' }
+  { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "webview_height_ratio": "full" }
 ]
 
 const getRegionButton = url => [  { "type": 'web_url', url, "title": "לעמוד הפייסבוק", "webview_height_ratio": "full" }]
