@@ -22,7 +22,7 @@ const sendSingleResponse = async (chatbotResponse, sender_psid) => {
   console.log("**** RESPONDING WITH: ", JSON.stringify(response))
 
   // Send the response message
-  await callSendAPI(sender_psid, response);   
+  return callSendAPI(sender_psid, response);   
 }
 
 async function handleMessage(sender_psid, webhook_event) {
@@ -30,6 +30,7 @@ async function handleMessage(sender_psid, webhook_event) {
     const chatbotResponse = await getChatbotResponse(webhook_event, sender_psid)
     if (!chatbotResponse) return
     const responseArray = [].concat(chatbotResponse)
+    console.log("*** RESPONSE ARRAY ***" + JSON.stringify(responseArray))
     await Promise.all(_.map(responseArray, (chatbotResponse) => sendSingleResponse(chatbotResponse, sender_psid)))
     
   }
