@@ -22,7 +22,7 @@ const sendSingleResponse = async (chatbotResponse, sender_psid) => {
   console.log("**** RESPONDING WITH: ", JSON.stringify(response))
 
   // Send the response message
-  return callSendAPI(sender_psid, response);   
+  return await callSendAPI(sender_psid, response);   
 }
 
 async function handleMessage(sender_psid, webhook_event) {
