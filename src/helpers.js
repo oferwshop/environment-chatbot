@@ -72,7 +72,11 @@ const getFileText = (payload, english) => {
   try{
     return readFile(payload, english)
   }catch(e){
-    return readFile(payload, false)
+    try{
+     return readFile(payload, false)
+    }catch(e){
+      return ''
+    }
   }
 }
 const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
@@ -85,6 +89,8 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
+    console.log("*** Creating response for: " + JSON.stringify(payload) + " ELEMENTS: " + JSON.stringify(elements))
+
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
@@ -148,12 +154,17 @@ const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWo
 const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
-  console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
+  const english = getEnglish(webhook_event)
+  const buttonSet = english ? buttonSetsEng:  buttonSets
 
-    let text = getFileText(payload, getEnglish(webhook_event))
+  const responses = buttonSet[payload].first ? [buttonSet[payload].first, buttonSet[payload].next] : [payload]
+  return _.map(responses, response => {
+    console.log("**** Getting text file. Payload, Response, Webhook: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event))
+    let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
-    return createResponse(text, payload, webhook_event)
+    return createResponse(text, response, webhook_event)
+  }  )
 }
 
 const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
