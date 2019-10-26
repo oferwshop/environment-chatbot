@@ -21,7 +21,10 @@ async function handleMessage(sender_psid, webhook_event) {
       }
     }
       : ( attachment ? { attachment }
-        : _.assign({ text }, quick_replies ? { quick_replies } : null)
+        : _.assign({ text,
+          "attachment":{"type":"image",
+          "payload":{"url":"https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg",
+          "is_reusable":true}} }, quick_replies ? { quick_replies } : null)
       )
   console.log("**** RESPONDING WITH: ", JSON.stringify(response))
 

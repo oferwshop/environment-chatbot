@@ -85,11 +85,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
-    return  _.assign({ text,
-      "attachment":{"type":"image",
-      "payload":{"url":"https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg",
-      "is_reusable":true}}
-     },
+    return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
                 : { buttons: elements })))
