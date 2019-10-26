@@ -84,6 +84,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
 
 const createResponse = (text, payload, webhook_event) => {
+  console.log("*** Creating response for: " + JSON.stringify(payload))
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
