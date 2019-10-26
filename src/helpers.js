@@ -72,7 +72,11 @@ const getFileText = (payload, english) => {
   try{
     return readFile(payload, english)
   }catch(e){
-    return readFile(payload, false)
+    try{
+     return readFile(payload, false)
+    }catch(e){
+      return ''
+    }
   }
 }
 const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
