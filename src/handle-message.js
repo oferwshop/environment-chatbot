@@ -30,7 +30,7 @@ async function handleMessage(sender_psid, webhook_event) {
     const chatbotResponse = await getChatbotResponse(webhook_event, sender_psid)
     if (!chatbotResponse) return
     const responseArray = [].concat(chatbotResponse)
-    await Promise.all(_.map(responseArray, sendSingleResponse)))
+    await Promise.all(_.map(responseArray, sendSingleResponse))
     
   }
 
