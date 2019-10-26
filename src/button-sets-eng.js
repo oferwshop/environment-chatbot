@@ -72,6 +72,8 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
+  "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
   "end-conversation": backToBeginning,
   'back-to-beginning': backToBeginning,
