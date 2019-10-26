@@ -154,10 +154,12 @@ const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWo
 const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
+  const english = getEnglish(webhook_event)
+
   const responses = payload.first ? [payload.first, payload.next] : [payload]
   return _.map(responses, response => {
     console.log("**** Getting text file. Payload, Response, Webhook: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event))
-    let text = getFileText(response, getEnglish(webhook_event))
+    let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
     return createResponse(text, response, webhook_event)

@@ -73,7 +73,7 @@ const buttonSets = {
   "get-waiver": signWaiver,
   "end-conversation": backToBeginning,
   schedule,
-  'schedule-combined': { first: schedule, next: generalInfo },
+  'schedule-combined': { first: 'schedule', next: 'general-info' },
   "gi-no-gi": generalInfo,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
