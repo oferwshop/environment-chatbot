@@ -3,7 +3,7 @@ const callSendAPI = require('./call-send-api')
 const getChatbotResponse = require('./chatbot-response')
  
 
-const sendSingleResponse = async (chatbotResponse) => {
+const sendSingleResponse = async (chatbotResponse, sender_psid) => {
   const { buttons, quick_replies, text, attachment } = chatbotResponse
 
   const response = buttons ? {
@@ -30,7 +30,7 @@ async function handleMessage(sender_psid, webhook_event) {
     const chatbotResponse = await getChatbotResponse(webhook_event, sender_psid)
     if (!chatbotResponse) return
     const responseArray = [].concat(chatbotResponse)
-    await Promise.all(_.map(responseArray, sendSingleResponse))
+    await Promise.all(_.map(responseArray, (chatbotResponse) => sendSingleResponse(chatbotResponse, sender_psid)))
     
   }
 
