@@ -84,8 +84,9 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
 
 const createResponse = (text, payload, webhook_event) => {
-  console.log("*** Creating response for: " + JSON.stringify(payload))
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
+    console.log("*** Creating response for: " + JSON.stringify(payload) + " ELEMENTS: " + JSON.stringify(elements))
+
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
@@ -151,13 +152,11 @@ const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 const getReply = (webhook_event, payload, userName, gender) => {
   const responses = payload.first ? [payload.first, payload.next] : [payload]
   return _.map(responses, response => {
-    console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
+    console.log("**** Getting text file. Payload, Webhook, Conversations: "+ response +"," + JSON.stringify(webhook_event))
     let text = getFileText(response, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
     return createResponse(text, response, webhook_event)
-
-  
   }  )
 }
 
