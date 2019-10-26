@@ -29,9 +29,9 @@ async function handleMessage(sender_psid, webhook_event) {
 
     const chatbotResponse = await getChatbotResponse(webhook_event, sender_psid)
     if (!chatbotResponse) return
-    const responseArray = [].concat(chatbotResponse).reverse()
+    const responseArray = [].concat(chatbotResponse)
     for (let index = 0; index < responseArray.length; index++) {
-      await sendSingleResponse(responseArray[index], sender_psid)    
+      setTimeout(() => sendSingleResponse(responseArray[index], sender_psid), index * 400)
   }
 }
 
