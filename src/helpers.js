@@ -149,13 +149,16 @@ const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWo
 const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
-  console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
-
-    let text = getFileText(payload, getEnglish(webhook_event))
+  const responses = payload.first ? [payload.first, payload.next] : [payload]
+  return _.map(responses, response => {
+    console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
+    let text = getFileText(response, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
-    const responses = payload.first ? [payload.first, payload.next] : [payload]
-    return _.map(responses, response => createResponse(text, response, webhook_event))
+    return createResponse(text, response, webhook_event)
+
+  
+  }  )
 }
 
 const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
