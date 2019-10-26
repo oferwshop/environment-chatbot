@@ -153,7 +153,8 @@ const getReply = (webhook_event, payload, userName, gender) => {
     let text = getFileText(payload, getEnglish(webhook_event))
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
-    return createResponse(text, payload, webhook_event)
+    const responses = payload.first ? [payload.first, payload.next] : [payload]
+    return _.map(responses, response => createResponse(text, response, webhook_event))
 }
 
 const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
