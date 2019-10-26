@@ -64,8 +64,9 @@ const getQuickReplies = (elements, webhook_event) => ({
         "content_type":"text",
         "title": element.title,
         "payload": element.payload
-    }))
-})
+    })), "attachment":{"type":"image",
+"payload":{"url":"https://octopusmartialartsfitness.files.wordpress.com/2019/10/luz.jpg",
+"is_reusable":true}}})
 const readFile = (payload, english) => fs.readFileSync(path.resolve(__dirname, `./messages${english ? '-eng': ''}/${payload}.txt`)).toString()
 
 const getFileText = (payload, english) => {
