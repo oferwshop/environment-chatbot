@@ -25,7 +25,8 @@ const backToBeginning = [
 
 const priceInquiry = [
   { "payload": 'schedule-free-week', "title": 'Get Free Week' },
-  { "payload": 'more-info', "title": 'More info' }
+  { "payload": 'military-info', "title": 'Soldiers (Active)' },
+  { "payload": 'adults-info', "title": 'Adults' }
 ]
 
 const greetingsLocation = [
