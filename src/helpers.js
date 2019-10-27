@@ -87,6 +87,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
     .replace('מוזמנ/ת', gender === "male" ? "מוזמן" : "מוזמנת")
+    .replace('מלא/י', gender === "male" ? "מלא" : "מלאי")
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
