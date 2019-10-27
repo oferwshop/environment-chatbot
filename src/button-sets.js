@@ -16,7 +16,8 @@ const militaryInfo = [
 ]
 const adultsInfo = [
   { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+  { "payload": 'military-info', "title": 'חיילים בסדיר' },
+  { "payload": 'adults-info', "title": 'בוגרים' }
 ]
 
 const backToBeginning = [

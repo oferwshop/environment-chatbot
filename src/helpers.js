@@ -23,9 +23,9 @@ const textContains = (webhook_event, strArray) =>{
 }
 const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
 
-const priceWords = ['price','cost','pay','fee','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס']
+const priceWords = ['price','cost','pay','fee','discount','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח']
 
-const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
+const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך','form','regist','sign']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
@@ -86,6 +86,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
+    .replace('מוזמנ/ת', gender === "male" ? "מוזמן" : "מוזמנת")
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
