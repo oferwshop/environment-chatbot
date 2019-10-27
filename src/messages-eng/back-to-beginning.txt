@@ -1,0 +1,3 @@
+Hello [user_name]! 
+Thank you for your interest in Octopus Academy
+Please leave your phone number and an academy representative will contact you shortly.

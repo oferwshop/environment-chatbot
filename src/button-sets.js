@@ -15,17 +15,18 @@ const militaryInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 const adultsInfo = [
-  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'schedule-free-week', "title": 'למימוש המבצע' },
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
 const backToBeginning = [
-  { "payload": 'restart', "title": 'חזרה לתפריט התחלה' },
+  { "payload": 'restart', "title": 'לתפריט ראשי' },
 ]
 
 const priceInquiry = [
   { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
-  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
+  { "payload": 'military-info', "title": 'חיילים בסדיר' },
+  { "payload": 'adults-info', "title": 'בוגרים' }
 ]
 
 const greetingsLocation = [
@@ -63,6 +64,7 @@ const buttonSets = {
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
+  "more-info": backToBeginning,
   "schedule-free-session": signWaiver,
   "schedule-free-week": signWaiver,
   "greetings-location": greetingsLocation,
@@ -71,7 +73,11 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
+  "end-conversation": backToBeginning,
   schedule,
+  'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
+  "weekly-schedule": backToBeginning,
+  "gi-no-gi": generalInfo,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,

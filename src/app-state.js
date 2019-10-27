@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const conversations = {}
-const botDisablePeriod =  1000 * 60 * 30
+const botDisablePeriod =  1000 * 60 * 5
 const expirationPeriod = 1000 * 60 * 30
 
 const handleConversationState = (webhook_event) => {
@@ -21,7 +21,7 @@ const handleConversationState = (webhook_event) => {
 
   setLastUserInput(webhook_event)
 
-  const isAdmin = !userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 2
+  const isAdmin = !userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 6
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
@@ -37,12 +37,20 @@ const setMainScriptStarted = (webhook_event, val) => {
     _.set(conversation, 'mainScriptStarted', val)
 }
 
+const setEnglish = (webhook_event, val) => {
+    const conversation = getConversation(webhook_event)
+    _.set(conversation, 'english', val)
+}
+const getEnglish = webhook_event => {
+    return _.get(getConversation(webhook_event), 'english')
+}
+
 const shouldReEnableBot = (timestamp, botDisabledTS) => timestamp - botDisabledTS > botDisablePeriod
 
-const getConversation = webhook_event => conversations[webhook_event.recipient.id]
+const getConversation = webhook_event => conversations[webhook_event.sender.id]
 
 const initConversation = webhook_event => {
-    _.set(conversations, webhook_event.recipient.id, {} )
+    _.set(conversations, webhook_event.sender.id, {} )
     setLastUserInput(webhook_event)
     return getConversation(webhook_event)
 }
@@ -57,4 +65,4 @@ const setLastUserInput = (webhook_event) => {
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
-module.exports = { initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
+module.exports = { hasMids, setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
