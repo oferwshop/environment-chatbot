@@ -35,7 +35,6 @@ const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב'
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
-
 const getWeekDay = (datetime) => {
   const val = _.get(datetime, '[0].values[0]')
   const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
