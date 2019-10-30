@@ -64,7 +64,7 @@ const buttonSets = {
   "kids-info": kidsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
-  "more-info": backToBeginning,
+//  "more-info": moreInfo,
   "schedule-free-session": signWaiver,
   "schedule-free-week": signWaiver,
   "greetings-location": greetingsLocation,
