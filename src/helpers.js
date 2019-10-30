@@ -236,7 +236,7 @@ const getResponseType = (webhook_event) => {
   const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
   return (isEndConversation || isSticker) && 'end-conversation'
-    || (isPhoneNumber || isEmail) && 'thank-you' 
+    || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
