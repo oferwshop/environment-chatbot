@@ -33,6 +33,8 @@ const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi",
 
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
+const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'idf', 'military', 'soldier', 'duty']
+
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
 const getWeekDay = (datetime) => {
@@ -87,6 +89,7 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
     .replace('מוזמנ/ת', gender === "male" ? "מוזמן" : "מוזמנת")
     .replace('מלא/י', gender === "male" ? "מלא" : "מלאי")
+    .replace('השאר/י', gender === "male" ? "השאר" : "השאירי")
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
@@ -125,6 +128,8 @@ const sendEmail = (info, contactPayload) => {
 }
 
 const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
+
+const isActiveDuty = webhook_event => textContains(webhook_event, activeDutyWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
@@ -229,6 +234,7 @@ const getResponseType = (webhook_event) => {
   const isTextMessage = webhook_event.message
   const date = getDate(webhook_event)
   const isASchedule = isSchedule(webhook_event)
+  const isAnActiveDuty = isActiveDuty(webhook_event)
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
@@ -245,6 +251,7 @@ const getResponseType = (webhook_event) => {
     || (date && 'date')
     || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
+    || (isAnActiveDuty && 'military-info')
     || (isTextMessage && 'greetings-location')
 }
 
