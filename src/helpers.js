@@ -33,7 +33,7 @@ const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi",
 
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
-const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'idf', 'military', 'soldier', 'duty']
+const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'idf', ' military', 'soldier', ' duty']
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
