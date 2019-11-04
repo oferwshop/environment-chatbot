@@ -14,14 +14,14 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 
 const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').length > 180
 
-const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 20
+const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 30
 
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
 const textContains = (webhook_event, strArray) =>{
   return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 }
-const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when"]
+const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when", "זמן", "time"]
 
 const priceWords = ['price','cost','pay','fee','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס']
 
