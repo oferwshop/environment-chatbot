@@ -244,6 +244,7 @@ const getResponseType = (webhook_event) => {
   return (isEndConversation || isSticker) && 'end-conversation'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
+    || (isAnActiveDuty && 'military-info')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
@@ -251,7 +252,6 @@ const getResponseType = (webhook_event) => {
     || (date && 'date')
     || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
-    || (isAnActiveDuty && 'military-info')
     || (isTextMessage && 'greetings-location')
 }
 
