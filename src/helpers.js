@@ -23,9 +23,9 @@ const textContains = (webhook_event, strArray) =>{
 }
 const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות','מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', "morning", "noon", "evening", "when", "זמן", "time"]
 
-const priceWords = ['price','cost','pay','fee','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס']
+const priceWords = ['price','cost','pay','fee','discount','how much','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
-const waiverWords = ['רשם','טופס','בריאות','להירשם','רשמ','הצהרת','מסמך']
+const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך','form','regist','sign']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
@@ -34,7 +34,6 @@ const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi",
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
-
 
 const getWeekDay = (datetime) => {
   const val = _.get(datetime, '[0].values[0]')
@@ -72,7 +71,11 @@ const getFileText = (payload, english) => {
   try{
     return readFile(payload, english)
   }catch(e){
-    return readFile(payload, false)
+    try{
+     return readFile(payload, false)
+    }catch(e){
+      return ''
+    }
   }
 }
 const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
@@ -82,9 +85,13 @@ const handleGender = (text, gender) => text.replace('מתעניין/ת', gender 
     .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")
     .replace('ספורטאי/ת', gender === "male" ? "ספורטאי" : "ספורטאית")
+    .replace('מוזמנ/ת', gender === "male" ? "מוזמן" : "מוזמנת")
+    .replace('מלא/י', gender === "male" ? "מלא" : "מלאי")
 
 const createResponse = (text, payload, webhook_event) => {
     const elements = getEnglish(webhook_event) ? buttonSetsEng[payload]:  buttonSets[payload]
+    console.log("*** Creating response for: " + JSON.stringify(payload) + " ELEMENTS: " + JSON.stringify(elements))
+
     return  _.assign({ text },
         !elements ? null : (elements.length > 3 ? getQuickReplies(elements, webhook_event)
             : ( elements[0].attachment ? { attachment: elements[0].attachment }
@@ -148,12 +155,17 @@ const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWo
 const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
-  console.log("**** Getting text file. Payload, Webhook, Conversations: "+ payload +"," + JSON.stringify(webhook_event))
+  const english = getEnglish(webhook_event)
+  const buttonSet = english ? buttonSetsEng:  buttonSets
 
-    let text = getFileText(payload, getEnglish(webhook_event))
+  const responses = _.get(buttonSet[payload], 'first') ? [buttonSet[payload].first, _.get(buttonSet[payload], 'next')] : [payload]
+  return _.map(responses, response => {
+    console.log("**** Getting text file. Payload, Response, Webhook: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event))
+    let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
     if (gender) text = handleGender(handleGender(text, gender), gender)
-    return createResponse(text, payload, webhook_event)
+    return createResponse(text, response, webhook_event)
+  }  )
 }
 
 const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
@@ -224,7 +236,7 @@ const getResponseType = (webhook_event) => {
   const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
   return (isEndConversation || isSticker) && 'end-conversation'
-    || (isPhoneNumber || isEmail) && 'thank-you' 
+    || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')

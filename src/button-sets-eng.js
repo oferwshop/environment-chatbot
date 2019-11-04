@@ -20,12 +20,13 @@ const adultsInfo = [
 ]
 
 const backToBeginning = [
-  { "payload": 'restart', "title": 'Back to main menu' },
+  { "payload": 'restart', "title": 'To main menu' },
 ]
 
 const priceInquiry = [
   { "payload": 'schedule-free-week', "title": 'Get Free Week' },
-  { "payload": 'more-info', "title": 'More info' }
+  { "payload": 'military-info', "title": 'Soldiers (Active)' },
+  { "payload": 'adults-info', "title": 'Adults' }
 ]
 
 const greetingsLocation = [
@@ -72,6 +73,8 @@ const buttonSets = {
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
   schedule,
+  'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
+  "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
   "end-conversation": backToBeginning,
   'back-to-beginning': backToBeginning,
