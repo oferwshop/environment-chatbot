@@ -67,6 +67,7 @@ const schedule =  [
 const buttonSets = {
   "kids-info": kidsInfo,
   "parking-info": parkingInfo,
+  "muay-thai-info": adultsInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
   "schedule-free-session": signWaiver,
