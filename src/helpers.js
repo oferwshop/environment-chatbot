@@ -37,6 +37,8 @@ const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'id
 
 const kidsWords = ['kids', 'ילדים', ' לילד', ' child', ' ילד']
 
+const parkingWords = ['park', 'חניה', 'לחנות', 'חנייה']
+
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
 const getWeekDay = (datetime) => {
@@ -134,6 +136,8 @@ const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(w
 const isActiveDuty = webhook_event => textContains(webhook_event, activeDutyWords)
 
 const isKids = webhook_event => textContains(webhook_event, kidsWords)
+
+const isParking = webhook_event => textContains(webhook_event, parkingWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
@@ -240,6 +244,7 @@ const getResponseType = (webhook_event) => {
   const isASchedule = isSchedule(webhook_event)
   const isAnActiveDuty = isActiveDuty(webhook_event)
   const isAKidsQuery = isKids(webhook_event)
+  const isAParkingQuery = isParking(webhook_event)
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
@@ -251,6 +256,7 @@ const getResponseType = (webhook_event) => {
     || (isAWaiver && 'get-waiver')
     || (isAnActiveDuty && 'military-info')
     || (isAKidsQuery && 'kids-info')
+    || (isAParkingQuery && 'parking-info')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')

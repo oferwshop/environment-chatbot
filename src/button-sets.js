@@ -19,6 +19,11 @@ const adultsInfo = [
   { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
+const parkingInfo = [
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
+  { "payload": 'more-info', "title": 'More info' }
+]
+
 const backToBeginning = [
   { "payload": 'restart', "title": 'לתפריט ראשי' },
 ]
@@ -62,6 +67,7 @@ const schedule =  [
 
 const buttonSets = {
   "kids-info": kidsInfo,
+  "parking-info": parkingInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
   "schedule-free-session": signWaiver,

@@ -6,8 +6,12 @@ const greetingsAge = [
     { "payload": 'adults-info', "title": 'Adults' }
   ]
 
-const kidsInfo = [
-  { "payload": 'schedule-free-session', "title": 'Get Free Class' },
+  const kidsInfo = [
+    { "payload": 'schedule-free-session', "title": 'Get Free Class' },
+    { "payload": 'more-info', "title": 'More info' }
+  ]
+const parkingInfo = [
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
   { "payload": 'more-info', "title": 'More info' }
 ]
 const militaryInfo = [
@@ -62,6 +66,7 @@ const schedule =  [
 
 const buttonSets = {
   "kids-info": kidsInfo,
+  "parking-info": parkingInfo,
   "military-info": militaryInfo,
   "adults-info": adultsInfo,
   "schedule-free-session": signWaiver,
