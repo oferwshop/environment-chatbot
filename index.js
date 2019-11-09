@@ -15,7 +15,7 @@
  */
 
 'use strict';
-return
+
 // Imports dependencies and set up http server
 const 
   express = require('express'),
@@ -33,7 +33,7 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.post('/webhook', (req, res) => {  
 
   console.log("POST REQUEST RECIEVED: " + stringify(req))
-  return
+  
   // console.log(stringify(res))
 
   // Parse the request body from the POST
@@ -80,7 +80,6 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
   console.log("GET REQUEST RECIEVED: " + stringify(req))
-  return
 
   /** UPDATE YOUR VERIFY TOKEN **/
   const VERIFY_TOKEN = process.env.VERIFICATION_TOKEN;
