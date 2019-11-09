@@ -20,12 +20,13 @@ const adultsInfo = [
 ]
 
 const parkingInfo = [
-  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
-  { "payload": 'more-info', "title": 'More info' }
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'more-info', "title": 'לקבלת פרטים נוספים' }
 ]
 
 const backToBeginning = [
   { "payload": 'restart', "title": 'לתפריט ראשי' },
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' }
 ]
 
 const priceInquiry = [
