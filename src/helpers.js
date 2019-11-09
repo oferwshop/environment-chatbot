@@ -259,7 +259,7 @@ const getResponseType = (webhook_event) => {
   const isAGeneralInfo = isGeneralInfo(webhook_event)
   const isAGiNoGi = isGiNoGi(webhook_event)
   const isEndConversation = isVeryShortMessage(webhook_event) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
-//
+
   return (isEndConversation || isSticker) && 'end-conversation'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
@@ -286,6 +286,7 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'get-waiver'
   || type === 'parking-info'
   || type === 'muay-thai-info'
+  || type === 'end-conversation'
   || type === 'back-to-beginning')
 
 const isHebrew = (webhook_event) =>{

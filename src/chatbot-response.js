@@ -12,12 +12,16 @@ function getChatbotResponse(webhook_event, sender_psid) {
     
     const initialType = getResponseType(webhook_event)
 
-    if (isTextInput(initialType) && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
+    if (isTextInput(initialType)
+        && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
+
+    const isEcho = isTextInput(initialType) && !_.get(webhook_event, 'message.text', )
 
     const type = getActualType(initialType, webhook_event)
     console.log("**** Response Initial and Actual Type: " + initialType + "," + type)
 
-    return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
+    return isEcho && null
+      || type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
       || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
       || type === 'contact-details-left' && getReply(webhook_event, 'contact-details-left')
       || type === 'quick-reply' && getReply(webhook_event, webhook_event.message.quick_reply.payload)
