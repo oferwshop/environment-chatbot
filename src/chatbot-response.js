@@ -5,7 +5,7 @@ const { hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, ge
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
-
+   
     handleConversationState(webhook_event)
 
     if (isDisabled(webhook_event)) return console.log("*** BOT DISABLED ") 
