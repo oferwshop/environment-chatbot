@@ -77,6 +77,7 @@ app.post('/webhook', (req, res) => {
 
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
+  
   console.log("GET REQUEST RECIEVED: " + stringify(req))
 
   /** UPDATE YOUR VERIFY TOKEN **/
