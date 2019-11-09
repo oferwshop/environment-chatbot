@@ -275,8 +275,8 @@ const getResponseType = (webhook_event) => {
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (isAGeneralInfo && 'general-info')
     || (date && 'date')
-    || (isASchedule && 'schedule')
     || (isAPriceInquiry && 'price-inquiry')
+    || (isASchedule && 'schedule')
     || (isTextMessage && 'greetings-location')
 }
 
