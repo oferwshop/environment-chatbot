@@ -35,6 +35,8 @@ const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב'
 
 const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'idf', ' military', 'soldier', ' duty']
 
+const kidsWords = ['kids', 'ילדים', ' לילד', ' child', ' ילד']
+
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
 const getWeekDay = (datetime) => {
@@ -130,6 +132,8 @@ const sendEmail = (info, contactPayload) => {
 const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
 
 const isActiveDuty = webhook_event => textContains(webhook_event, activeDutyWords)
+
+const isKids = webhook_event => textContains(webhook_event, kidsWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
@@ -235,6 +239,7 @@ const getResponseType = (webhook_event) => {
   const date = getDate(webhook_event)
   const isASchedule = isSchedule(webhook_event)
   const isAnActiveDuty = isActiveDuty(webhook_event)
+  const isKids = isKids(webhook_event)
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
@@ -245,6 +250,7 @@ const getResponseType = (webhook_event) => {
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
     || (isAnActiveDuty && 'military-info')
+    || (isKids && 'kids-info')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
@@ -260,6 +266,7 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'schedule'
   || type === 'price-inquiry'
   || type === 'military-info'
+  || type === 'kids-info'
   || type === 'back-to-beginning')
 
 const isHebrew = (webhook_event) =>{

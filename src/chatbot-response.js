@@ -25,6 +25,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'gi-no-gi' && getReply(webhook_event, 'gi-no-gi')
       || type === 'general-info' && getReply(webhook_event, 'general-info')
       || type === 'military-info' && getReply(webhook_event, 'military-info')
+      || type === 'kids-info' && getReply(webhook_event, 'kids-info')
       || type === 'end-conversation' && getReply(webhook_event, 'end-conversation')
       || type === 'schedule' && getReply(webhook_event, 'schedule-combined')
       || type === 'date' && getReply(webhook_event, getDate(webhook_event))
