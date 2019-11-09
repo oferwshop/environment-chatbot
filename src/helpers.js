@@ -25,7 +25,7 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
 
 const priceWords = ['price','cost','pay','fee','discount','how much','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
-const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך','form','regist','sign']
+const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
@@ -273,6 +273,8 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'price-inquiry'
   || type === 'military-info'
   || type === 'kids-info'
+  || type === 'get-waiver'
+  || type === 'parking-info'
   || type === 'back-to-beginning')
 
 const isHebrew = (webhook_event) =>{
