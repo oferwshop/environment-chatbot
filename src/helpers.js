@@ -239,7 +239,7 @@ const getResponseType = (webhook_event) => {
   const date = getDate(webhook_event)
   const isASchedule = isSchedule(webhook_event)
   const isAnActiveDuty = isActiveDuty(webhook_event)
-  const isKids = isKids(webhook_event)
+  const isAKidsQuery = isKids(webhook_event)
   const isAPriceInquiry = isPriceInquiry(webhook_event)
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
@@ -250,7 +250,7 @@ const getResponseType = (webhook_event) => {
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
     || (isAnActiveDuty && 'military-info')
-    || (isKids && 'kids-info')
+    || (isAKidsQuery && 'kids-info')
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
