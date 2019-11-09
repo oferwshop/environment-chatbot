@@ -273,10 +273,10 @@ const getResponseType = (webhook_event) => {
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
-    || (isAGeneralInfo && 'general-info')
     || (date && 'date')
     || (isAPriceInquiry && 'price-inquiry')
     || (isASchedule && 'schedule')
+    || (isAGeneralInfo && 'general-info')
     || (isTextMessage && 'greetings-location')
 }
 
