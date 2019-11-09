@@ -261,7 +261,8 @@ const getResponseType = (webhook_event) => {
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = isAVeryShortMessage || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
-  return (isEndConversation || isSticker) && 'end-conversation'
+  return (isEndConversation) && 'end-conversation'
+    || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
     || (isAnActiveDuty && 'military-info')

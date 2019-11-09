@@ -21,7 +21,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Response Initial and Actual Type: " + initialType + "," + type)
 
     if (isEcho) return
-    
+
     return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
       || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
       || type === 'contact-details-left' && getReply(webhook_event, 'contact-details-left')
@@ -34,6 +34,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'parking-info' && getReply(webhook_event, 'parking-info')
       || type === 'muay-thai-info' && getReply(webhook_event, 'muay-thai-info')
       || type === 'end-conversation' && getReply(webhook_event, 'end-conversation')
+      || type === 'sticker' && getReply(webhook_event, 'end-conversation')
       || type === 'schedule' && getReply(webhook_event, 'schedule-combined')
       || type === 'date' && getReply(webhook_event, getDate(webhook_event))
       || type === 'price-inquiry' && getReplyWithUser(webhook_event, 'price-inquiry', sender_psid)
