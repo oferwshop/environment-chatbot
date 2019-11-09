@@ -28,6 +28,9 @@ const backToBeginning = [
   { "payload": 'restart', "title": 'לתפריט ראשי' },
   { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' }
 ]
+const endConversation = [
+  { "payload": 'restart', "title": 'לתפריט ראשי' }
+]
 
 const priceInquiry = [
   { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
@@ -80,7 +83,7 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
-  "end-conversation": backToBeginning,
+  "end-conversation": endConversation,
   schedule,
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   "weekly-schedule": backToBeginning,
