@@ -37,6 +37,7 @@ app.post('/webhook', (req, res) => {
 
   // Parse the request body from the POST
   let body = req.body;
+  const responses = []
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
@@ -49,7 +50,7 @@ app.post('/webhook', (req, res) => {
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
 
-      const hasResponse = handleMessage(sender_psid, webhook_event);        
+      const response = handleMessage(sender_psid, webhook_event);        
     
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
@@ -60,11 +61,12 @@ app.post('/webhook', (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       }
       */
+     if (response) responses.push(response)
       
     });
 
     // Return a '200 OK' response to all events
-    if (hasResponse) res.status(200).send('EVENT_RECEIVED');
+    if (responses.length > 0) res.status(200).send('EVENT_RECEIVED');
 
   } else {
     // Return a '404 Not Found' if event is not from a page subscription
