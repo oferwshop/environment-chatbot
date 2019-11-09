@@ -16,6 +16,8 @@ const hasLongText = webhook_event => _.get(webhook_event, 'message.text', '').le
 
 const isShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 30
 
+const isVeryShortMessage = webhook_event => _.get(webhook_event, 'message.text', '').length < 6
+
 const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.datetime')
 
 const textContains = (webhook_event, strArray) =>{
@@ -256,7 +258,7 @@ const getResponseType = (webhook_event) => {
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
   const isAGiNoGi = isGiNoGi(webhook_event)
-  const isEndConversation = textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
+  const isEndConversation = isVeryShortMessage(webhook_event) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
   return (isEndConversation || isSticker) && 'end-conversation'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
