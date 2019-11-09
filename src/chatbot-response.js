@@ -20,8 +20,9 @@ function getChatbotResponse(webhook_event, sender_psid) {
     const type = getActualType(initialType, webhook_event)
     console.log("**** Response Initial and Actual Type: " + initialType + "," + type)
 
-    return isEcho && null
-      || type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
+    if (isEcho) return
+    
+    return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
       || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
       || type === 'contact-details-left' && getReply(webhook_event, 'contact-details-left')
       || type === 'quick-reply' && getReply(webhook_event, webhook_event.message.quick_reply.payload)
