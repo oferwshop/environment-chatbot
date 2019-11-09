@@ -25,7 +25,12 @@ const parkingInfo = [
 ]
 
 const backToBeginning = [
-  { "payload": 'restart', "title": 'לתפריט ראשי' },
+  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
+  { "payload": 'restart', "title": 'לתפריט ראשי' }
+]
+
+const endConversation = [
+  { "payload": 'restart', "title": 'לתפריט ראשי' }
 ]
 
 const priceInquiry = [
@@ -79,7 +84,7 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
-  "end-conversation": backToBeginning,
+  "end-conversation": endConversation,
   schedule,
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   "weekly-schedule": backToBeginning,

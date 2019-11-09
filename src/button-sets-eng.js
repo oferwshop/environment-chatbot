@@ -24,6 +24,11 @@ const adultsInfo = [
 ]
 
 const backToBeginning = [
+  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
+  { "payload": 'restart', "title": 'To main menu' }
+]
+
+const endConversation = [
   { "payload": 'restart', "title": 'To main menu' },
 ]
 
@@ -82,7 +87,7 @@ const buttonSets = {
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
-  "end-conversation": backToBeginning,
+  "end-conversation": endConversation,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
