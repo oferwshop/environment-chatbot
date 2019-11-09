@@ -24,8 +24,8 @@ const textContains = (webhook_event, strArray) =>{
   return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 }
 const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות',
-'מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים',
-"morning", "noon", "evening", "when", "זמן", "time", "today", "יום"]
+'מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', " free ",
+"morning", "noon", "evening", "when", "זמן", "time", "today", "יום", "drop by", "attend", "לקפוץ", "נסיון", "ניסיון"]
 
 const priceWords = ['price','cost','pay','fee','discount','how much','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
