@@ -24,11 +24,6 @@ const adultsInfo = [
 ]
 
 const backToBeginning = [
-  { "payload": 'schedule-free-week', "title": 'Get Free Week' },
-  { "payload": 'restart', "title": 'To main menu' }
-]
-
-const endConversation = [
   { "payload": 'restart', "title": 'To main menu' },
 ]
 
@@ -46,8 +41,7 @@ const greetingsLocation = [
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3', "title": 'Registration form', "webview_height_ratio": "full" },
-  { "payload": 'restart', "title": 'To main menu' }
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3', "title": 'Registration form', "webview_height_ratio": "full" }
 ]
 
 const registerClass =  [
@@ -88,7 +82,7 @@ const buttonSets = {
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
-  "end-conversation": endConversation,
+  "end-conversation": backToBeginning,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,

@@ -25,12 +25,7 @@ const parkingInfo = [
 ]
 
 const backToBeginning = [
-  { "payload": 'schedule-free-week', "title": 'לשבוע נסיון חינם' },
-  { "payload": 'restart', "title": 'לתפריט ראשי' }
-]
-
-const endConversation = [
-  { "payload": 'restart', "title": 'לתפריט ראשי' }
+  { "payload": 'restart', "title": 'לתפריט ראשי' },
 ]
 
 const priceInquiry = [
@@ -47,8 +42,7 @@ const greetingsLocation = [
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" },
-  { "payload": 'restart', "title": 'לתפריט ראשי' }
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
 ]
 
 const registerClass =  [
@@ -85,7 +79,7 @@ const buttonSets = {
   misgav,
   "kfar-bilu": kfarBilu,
   "get-waiver": signWaiver,
-  "end-conversation": endConversation,
+  "end-conversation": backToBeginning,
   schedule,
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   "weekly-schedule": backToBeginning,
