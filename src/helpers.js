@@ -40,7 +40,7 @@ const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב'
 
 const activeDutyWords = ['חייל', 'חילת ', ' בסדיר', ' חיל ', 'idf', ' military', 'soldier', ' duty']
 
-const kidsWords = ['kids', 'ילדים', ' לילד', ' child', ' ילד']
+const kidsWords = ['kids', 'ילדים', ' לילד', ' child', 'ילד ']
 
 const parkingWords = ['park', 'חניה', 'לחנות', 'חנייה']
 
