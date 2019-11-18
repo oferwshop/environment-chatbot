@@ -28,7 +28,7 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
 "morning", "noon", "evening", "when", "זמן", "time", "today", "יום", "drop by", "attend"
 , "לקפוץ", "נסיון", "ניסיון", "drop in", "שעור", "שיעור", "class"]
 
-const priceWords = ['price','cost','pay','fee','discount','how much','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
+const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
 
