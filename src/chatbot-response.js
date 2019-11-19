@@ -49,7 +49,7 @@ const getActualType = (type, webhook_event) => {
     if (getMainScriptStarted(webhook_event)) return 'back-to-beginning'
     setMainScriptStarted(webhook_event, true)
   }
-  if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart'){
+  if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart' || type === 'restart'){
     const english = getEnglish(webhook_event)
     initConversation(webhook_event)
     setEnglish(webhook_event, english)

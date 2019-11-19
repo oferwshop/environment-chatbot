@@ -34,6 +34,8 @@ const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נר
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
+const addressWords = ['כתובת','היכן','ממוק','מיקום', "location", "address", "where"]
+
 const giNoGiWords = ['הבדל',"נו גי","השניים", "סוגי", "no gi", "the difference", "שני סוגי", "kinds of", "types of"]
 
 const possibleEndWords = ['תודה', 'ok', 'אוקי', 'סבבה', 'מגניב', 'hank', 'bye']
@@ -175,6 +177,7 @@ const isWaiver = webhook_event => textContains(webhook_event, waiverWords)
 
 const isGeneralInfo = webhook_event => textContains(webhook_event, generalInfoWords)
 const isGiNoGi = webhook_event => textContains(webhook_event, giNoGiWords)
+const isAnAddressQuery = webhook_event => textContains(webhook_event, addressWords)
 
 const getReply = (webhook_event, payload, userName, gender) => {
   const english = getEnglish(webhook_event)
@@ -259,6 +262,7 @@ const getResponseType = (webhook_event) => {
   const isAWaiver = isWaiver(webhook_event)
   const isAGeneralInfo = isGeneralInfo(webhook_event)
   const isAGiNoGi = isGiNoGi(webhook_event)
+  const isAddressQuery = isAnAddressQuery(webhook_event)
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
 
@@ -277,6 +281,7 @@ const getResponseType = (webhook_event) => {
     || (isAPriceInquiry && isASchedule && 'price-schedule')
     || (isAPriceInquiry && 'price-inquiry')
     || (isASchedule && 'schedule')
+    || (isAddressQuery && 'restart')
     || (isAGeneralInfo && 'general-info')
     || (isTextMessage && 'greetings-location')
 }

@@ -85,7 +85,7 @@ const buttonSets = {
   "get-waiver": signWaiver,
   schedule,
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
-  'price-schedule-combined': { first: 'schedule', next: 'price-inquiry' },
+  'price-schedule-combined': { first: 'schedule', next: 'schedule-price' },
   "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
   "end-conversation": endConversation,
