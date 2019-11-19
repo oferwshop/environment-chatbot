@@ -278,7 +278,7 @@ const getResponseType = (webhook_event) => {
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (date && 'date')
-    || (isAPriceInquiry && isASchedule && 'price-schedule')
+    || (isAPriceInquiry && isASchedule && 'schedule-price')
     || (isAPriceInquiry && 'price-inquiry')
     || (isASchedule && 'schedule')
     || (isAddressQuery && 'restart')
