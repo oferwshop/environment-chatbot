@@ -296,6 +296,7 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'parking-info'
   || type === 'muay-thai-info'
   || type === 'end-conversation'
+  || type === 'schedule-price'
   || type === 'back-to-beginning')
 
 const isHebrew = (webhook_event) =>{

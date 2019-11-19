@@ -90,6 +90,7 @@ const buttonSets = {
   "weekly-schedule": backToBeginning,
   "gi-no-gi": generalInfo,
   'back-to-beginning': backToBeginning,
+  'schedule-price': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
   "weekday/sunday": registerClass,

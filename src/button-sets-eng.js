@@ -92,6 +92,7 @@ const buttonSets = {
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
   "price-inquiry": priceInquiry,
+  'schedule-price': backToBeginning,
   "weekday/sunday": registerClass,
   "weekday/monday": registerClass,
   "weekday/tuesday": registerClass,
