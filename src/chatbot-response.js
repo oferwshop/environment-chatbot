@@ -36,6 +36,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'end-conversation' && getReply(webhook_event, 'end-conversation')
       || type === 'sticker' && getReply(webhook_event, 'end-conversation')
       || type === 'schedule' && getReply(webhook_event, 'schedule-combined')
+      || type === 'price-schedule' && getReply(webhook_event, 'price-schedule-combined')
       || type === 'date' && getReply(webhook_event, getDate(webhook_event))
       || type === 'price-inquiry' && getReplyWithUser(webhook_event, 'price-inquiry', sender_psid)
       || type === 'greetings-location' && getReplyWithUser(webhook_event, 'greetings-location', sender_psid)
