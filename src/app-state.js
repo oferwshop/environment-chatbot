@@ -58,11 +58,15 @@ const initConversation = webhook_event => {
 const setLastUserInput = (webhook_event) => {
     const conversation = getConversation(webhook_event)
     let nonUserHooksCount = _.get(conversation, 'nonUserHooksCount', 0)
+    let userHooksCount = _.get(conversation, 'userHooksCount', 0)
     const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
     _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) ? lastUserInputTS : webhook_event.timestamp )
     _.set(conversation, 'nonUserHooksCount', hasMids(webhook_event) ? nonUserHooksCount + 1 : 0 )
+    _.set(conversation, 'userHooksCount', hasMids(webhook_event) ? userHooksCount : userHooksCount + 1 )
 }
+
+const getUserHooksCount = webhook_event => _.get(getConversation(webhook_event), 'userHooksCount', 0)
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
-module.exports = { hasMids, setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
+module.exports = { getUserHooksCount, hasMids, setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }

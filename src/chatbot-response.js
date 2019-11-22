@@ -1,16 +1,18 @@
 const _ = require('lodash')
 const { isTextInput, isHebrew, getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
+const { getUserHooksCount, hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
-   
+    
+    const isFirstMessage = getUserHooksCount(webhook_event) > 0
+    
     handleConversationState(webhook_event)
 
     if (isDisabled(webhook_event)) return console.log("*** BOT DISABLED ") 
     
-    const initialType = getResponseType(webhook_event)
+    const initialType = getResponseType(webhook_event, { isFirstMessage })
 
     if (isTextInput(initialType)
         && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))

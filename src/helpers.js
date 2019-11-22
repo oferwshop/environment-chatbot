@@ -244,7 +244,7 @@ const getReplyAndEmail = async (webhook_event, payload, sender_psid, contactPayl
 }
 
 
-const getResponseType = (webhook_event) => {
+const getResponseType = (webhook_event, info) => {
     
   const isQuickReply = _.get(webhook_event, 'message.quick_reply.payload')
   const isSticker = _.get(webhook_event, 'message.sticker_id')
@@ -265,8 +265,10 @@ const getResponseType = (webhook_event) => {
   const isAddressQuery = isAnAddressQuery(webhook_event)
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
+  const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage 
 
-  return (isEndConversation) && 'end-conversation'
+  return isInitialGreeting && null
+    || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
