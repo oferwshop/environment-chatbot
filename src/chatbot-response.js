@@ -6,7 +6,7 @@ const { getUserHooksCount, hasMids, setEnglish, getEnglish, handleConversationSt
 function getChatbotResponse(webhook_event, sender_psid) {
     console.log("**** Received webhook:", JSON.stringify(webhook_event))
     
-    const isFirstMessage = getUserHooksCount(webhook_event) > 0
+    const isFirstMessage = getUserHooksCount(webhook_event) === 0
     
     handleConversationState(webhook_event)
 
