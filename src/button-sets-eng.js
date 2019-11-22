@@ -39,10 +39,11 @@ const priceInquiry = [
 ]
 
 const greetingsLocation = [
-  { "payload": 'tel-aviv', "title": 'Tel Aviv (center)' },
-  { "payload": 'misgav', "title": 'Misgav (north)'},
+  { "payload": 'tel-aviv', "title": 'Tel Aviv (Center)' },
+  { "payload": 'hertzlia', "title": 'Herzlia (Hasharon)' },
+  { "payload": 'misgav', "title": 'Misgav (North)'},
   { "payload": 'kadima' , "title": 'Kadima (Hasharon)'},
-  { "payload": 'kfar-bilu', "title": 'Kfar Bilu (south)' }
+  { "payload": 'kfar-bilu', "title": 'Kfar Bilu (South)' }
 ]
 
 const signWaiver =  [

@@ -40,6 +40,7 @@ const priceInquiry = [
 
 const greetingsLocation = [
   { "payload": 'tel-aviv', "title": 'תל אביב (מרכז)' },
+  { "payload": 'hertzlia', "title": 'הרצליה (השרון)' },
   { "payload": 'misgav', "title": 'משגב (צפון)' },
   { "payload": 'kadima', "title": 'קדימה (השרון)' },
   { "payload": 'kfar-bilu', "title": 'כפר בילו (דרום)' }
