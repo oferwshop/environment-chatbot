@@ -267,7 +267,7 @@ const getResponseType = (webhook_event, info) => {
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
   const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage 
 
-  return isInitialGreeting && null
+  return isInitialGreeting && 'initial-greeting'
     || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
@@ -290,6 +290,7 @@ const getResponseType = (webhook_event, info) => {
 
 const isTextInput = type => (type === 'greetings-location'
   || type === 'date'
+  || type === 'initial-greeting'
   || type === 'schedule'
   || type === 'price-inquiry'
   || type === 'military-info'
