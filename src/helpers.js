@@ -6,7 +6,7 @@ var nodemailer = require('nodemailer');
 const _ = require('lodash')
 const buttonSets = require('./button-sets')
 const buttonSetsEng = require('./button-sets-eng')
-const { getEnglish } = require('./app-state')
+const { getEnglish, setGender, getGender } = require('./app-state')
 
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN || process.env.PAGE_ACCESS_TOKEN_PROTOTYPE
@@ -194,10 +194,11 @@ const getReply = (webhook_event, payload, userName, gender) => {
 
   const responses = _.get(buttonSet[payload], 'first') ? [buttonSet[payload].first, _.get(buttonSet[payload], 'next')] : [payload]
   return _.map(responses, response => {
-    console.log("**** Getting text file. Payload, Response, Webhook: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event))
+    console.log("**** Getting text file. Payload, Response, Webhook, Gender: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event) + "** "+ gender)
     let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (gender) text = handleGender(handleGender(text, gender), gender)
+    const theGender = getGender(webhook_event) || gender
+    if (theGender) text = handleGender(handleGender(text, theGender), theGender)
     return createResponse(text, response, webhook_event)
   }  )
 }
@@ -219,6 +220,7 @@ const getReplyWithUser = async (webhook_event, payload, sender_psid) => {
           var bodyObj = JSON.parse(body);
           const name = bodyObj.first_name;
           const gender = bodyObj.gender
+          if (gender) setGender(webhook_event, gender)
           resolve( { name,gender })
         }
         }
