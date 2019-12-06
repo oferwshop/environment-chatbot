@@ -23,12 +23,19 @@ const hasDateTime = webhook_event => _.get(webhook_event, 'message.nlp.entities.
 const textContains = (webhook_event, strArray) =>{
   return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')).indexOf(str) > -1, false )
 }
+
+const textEquals = (webhook_event, strArray) =>{
+  return _.reduce( strArray, (hasStr, str) => hasStr || _.toLower(_.get(webhook_event, 'message.text', '')) === str, false )
+}
+
 const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','come','שעות',
 'מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', " free ", " train",
 "morning", "noon", "evening", "when", "זמן", "time", "today", "יום", "drop by", "attend"
 , "לקפוץ", "נסיון", "ניסיון", "drop in", "שעור", "שיעור", "class"]
 
 const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
+
+const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','שלום','הי,','שלום,']
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
 
@@ -146,6 +153,8 @@ const isActiveDuty = webhook_event => textContains(webhook_event, activeDutyWord
 
 const isKids = webhook_event => textContains(webhook_event, kidsWords)
 
+const isGreeting = webhook_event => textEquals(webhook_event, greetingWords)
+
 const isParking = webhook_event => textContains(webhook_event, parkingWords)
 
 const isMuayThai = webhook_event => textContains(webhook_event, muayThaiWords)
@@ -256,6 +265,7 @@ const getResponseType = (webhook_event, info) => {
   const isASchedule = isSchedule(webhook_event)
   const isAnActiveDuty = isActiveDuty(webhook_event)
   const isAKidsQuery = isKids(webhook_event)
+  const isAGreeting = isGreeting(webhook_event)
   const isAParkingQuery = isParking(webhook_event)
   const isAMuayThaiQuery = isMuayThai(webhook_event)
   const isAPriceInquiry = isPriceInquiry(webhook_event)
@@ -265,9 +275,9 @@ const getResponseType = (webhook_event, info) => {
   const isAddressQuery = isAnAddressQuery(webhook_event)
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
-  const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage 
+  const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage
 
-  return isInitialGreeting && 'initial-greeting'
+  return (isInitialGreeting || isAGreeting) && 'initial-greeting'
     || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
