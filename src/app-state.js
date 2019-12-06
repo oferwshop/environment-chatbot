@@ -49,7 +49,7 @@ const setGender = (webhook_event, val) => {
 const getEnglish = webhook_event => {
     return _.get(getConversation(webhook_event), 'english')
 }
-}
+
 const getGender = webhook_event => {
     return _.get(getConversation(webhook_event), 'gender')
 }
