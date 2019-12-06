@@ -191,13 +191,13 @@ const isAnAddressQuery = webhook_event => textContains(webhook_event, addressWor
 const getReply = (webhook_event, payload, userName, gender) => {
   const english = getEnglish(webhook_event)
   const buttonSet = english ? buttonSetsEng:  buttonSets
+  const theGender = getGender(webhook_event) || gender
 
   const responses = _.get(buttonSet[payload], 'first') ? [buttonSet[payload].first, _.get(buttonSet[payload], 'next')] : [payload]
   return _.map(responses, response => {
     console.log("**** Getting text file. Payload, Response, Webhook, Gender: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event) + "** "+ gender)
     let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
-    const theGender = getGender(webhook_event) || gender
     if (theGender) text = handleGender(handleGender(text, theGender), theGender)
     return createResponse(text, response, webhook_event)
   }  )
