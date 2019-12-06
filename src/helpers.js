@@ -198,7 +198,7 @@ const getReply = (webhook_event, payload, userName, gender) => {
     console.log("**** Getting text file. Payload, Response, Webhook, Gender: "+ JSON.stringify(payload) + " ** " + JSON.stringify(response) +" ** " + JSON.stringify(webhook_event) + "** "+ gender)
     let text = getFileText(response, english)
     text = text.replace('[user_name]', userName ? userName : '')
-    if (theGender) text = handleGender(handleGender(text, theGender), theGender)
+    if (theGender) text = handleGender(handleGender(handleGender(text, theGender), theGender), theGender)
     return createResponse(text, response, webhook_event)
   }  )
 }
