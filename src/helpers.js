@@ -43,7 +43,7 @@ const misgavBranchWords = ['misgav','north','צפון','משגב','מישגב']
 
 const kfarBiluBranchWords = ['bilu','בילו','south','דרום']
 
-const kadimaWords = ['kadima','hasharon','קדימה','השרון']
+const kadimaWords = ['kadima','hasharon','קדימה','השרון','בשרון']
 
 const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
 
