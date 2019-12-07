@@ -19,6 +19,7 @@
 // Imports dependencies and set up http server
 const 
   express = require('express'),
+  _ = require('lodash'),
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()),
   handleMessage = require('./src/handle-message'), // creates express http server
