@@ -45,7 +45,7 @@ const kfarBiluBranchWords = ['bilu','בילו','south','דרום']
 
 const kadimaWords = ['kadima','hasharon',' sharon','קדימה','השרון','בשרון']
 
-const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
+const greetingWords = ['hi!','Hi!','hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
 
