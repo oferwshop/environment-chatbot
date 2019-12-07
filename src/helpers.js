@@ -35,7 +35,7 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
 
 const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
-const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','שלום','הי,','שלום,']
+const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
 
