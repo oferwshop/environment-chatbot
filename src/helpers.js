@@ -35,6 +35,16 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
 
 const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
+const telAvivBranchWords = ['tel-aviv','tel aviv','תל אביב','תל-אביב','מרכז']
+
+const hertzliaBranchWords = ['hertzlia','herzlia','הרצליה']
+
+const misgavBranchWords = ['misgav','north','צפון','משגב','מישגב']
+
+const kfarBiluBranchWords = ['bilu','בילו','south','דרום']
+
+const kadimaWords = ['kadima','hasharon','קדימה','השרון']
+
 const greetingWords = ['hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
@@ -278,6 +288,11 @@ const getResponseType = (webhook_event, info) => {
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
   const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage
+  const isTelAviv = textContains(webhook_event, telAvivBranchWords)
+  const isKadima = textContains(webhook_event, kadimaWords)
+  const isKfarBilu = textContains(webhook_event, kfarBiluBranchWords)
+  const isHertzlia = textContains(webhook_event, hertzliaBranchWords)
+  const isMisgav = textContains(webhook_event, misgavBranchWords)
 
   return (isInitialGreeting || isAGreeting) && 'initial-greeting'
     || (isEndConversation) && 'end-conversation'
@@ -289,6 +304,11 @@ const getResponseType = (webhook_event, info) => {
     || (isAParkingQuery && 'parking-info')
     || (isAMuayThaiQuery && 'muay-thai-info')
     || (isQuickReply && 'quick-reply')
+    || (isTelAviv && 'tel-aviv')
+    || (isKadima && 'kadima')
+    || (isKfarBilu && 'kfar-bilu')
+    || (isHertzlia && 'hertzlia')
+    || (isMisgav && 'misgav')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (date && 'date')
