@@ -39,6 +39,9 @@ app.post('/webhook', (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
   const responses = []
+  // parse messaging array
+  const webhook_events = req.body.entry[0];
+  if (webhook_events.standby) { console.log("******* standby *******")
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
@@ -62,7 +65,7 @@ app.post('/webhook', (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       }
       */
-     if (response) responses.push(response)
+     // if (response) responses.push(response)
       
     });
 
