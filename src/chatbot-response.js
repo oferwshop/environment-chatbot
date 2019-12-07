@@ -4,8 +4,6 @@ const { isTextInput, isHebrew, getDate, getReply, getResponseType, getReplyWithU
 const { getUserHooksCount, hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
-    console.log("**** Received webhook:", JSON.stringify(webhook_event))
-    
     const isFirstMessage = getUserHooksCount(webhook_event) === 0
     
     handleConversationState(webhook_event)

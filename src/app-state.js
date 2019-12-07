@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const conversations = {}
-const botDisablePeriod =  1000 * 60 * 5
+const botDisablePeriod = 1000 * 15// 1000 * 60 * 5
 const expirationPeriod = 1000 * 60 * 30
 
 const handleConversationState = (webhook_event) => {
@@ -21,7 +21,7 @@ const handleConversationState = (webhook_event) => {
 
   setLastUserInput(webhook_event)
 
-  const isAdmin = false //!userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 5
+  const isAdmin =  webhook_event.request_thread_control//!userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 5
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
