@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 const conversations = {}
-const botDisablePeriod = 1000 * 10 // 1000 * 60 * 5
+const botDisablePeriod = 1000 * 20 // 1000 * 60 * 5
 const expirationPeriod = 1000 * 60 * 30
 
 const handleConversationState = (webhook_event) => {
