@@ -13,7 +13,7 @@ const handleConversationState = (webhook_event) => {
   const converstationExpired = timeSinceLastUserInput > expirationPeriod
   if (converstationExpired) conversation = initConversation(webhook_event)
 
-  const userInputHookLately = timeSinceLastUserInput < 8000
+  const userInputHookLately = timeSinceLastUserInput < 5000
   const oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
   const newBotDisabledTS = oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
 
