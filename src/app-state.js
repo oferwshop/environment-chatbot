@@ -13,19 +13,25 @@ const handleConversationState = (webhook_event) => {
   const converstationExpired = timeSinceLastUserInput > expirationPeriod
   if (converstationExpired) conversation = initConversation(webhook_event)
 
-  const userInputHookLately = timeSinceLastUserInput < 30000
+  const userInputHookLately = timeSinceLastUserInput < 8000
   const oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
   const newBotDisabledTS = oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
 
   _.set(conversation, 'botDisabledTS', newBotDisabledTS)
 
   setLastUserInput(webhook_event)
-
-  const isAdmin =  webhook_event.request_thread_control//!userInputHookLately && hasMids(webhook_event) && conversation.nonUserHooksCount > 5
+// webhook_event.request_thread_control//
+  const isAdmin =  !userInputHookLately && hasMids(webhook_event)
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
   }
+
+  const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
+  const botDisabledLately = timeSinceLastBotDisabled < 5000
+  const adminFalseAlarm = userInputHookLately && botDisabledLately
+  if (adminFalseAlarm) _.set(conversation, 'botDisabledTS', null)
+
 }
 
 const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDisabledTS')
