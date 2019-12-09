@@ -23,7 +23,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
     if (isEcho) return
 
     return type === 'thank-you' && getReplyAndEmail(webhook_event, 'thank-you', sender_psid, _.get(webhook_event, 'message.text'))
-      || type === 'get-waiver' && getReply(webhook_event, 'get-waiver')
+      || type === 'get-waiver' && getReplyWithUser(webhook_event, 'get-waiver', sender_psid )
       || type === 'contact-details-left' && getReply(webhook_event, 'contact-details-left')
       || type === 'quick-reply' && getReply(webhook_event, webhook_event.message.quick_reply.payload)
       || type === 'button-postback' && getReplyWithUser(webhook_event, webhook_event.postback.payload, sender_psid)
