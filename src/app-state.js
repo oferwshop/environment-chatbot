@@ -21,19 +21,21 @@ const handleConversationState = (webhook_event) => {
 
   setLastUserInput(webhook_event)
 // webhook_event.request_thread_control//
-  const isAdmin =  !userInputHookLately && hasMids(webhook_event)
+  const isButtonPostback = _.get(webhook_event, 'postback.payload')
+  if (isButtonPostback) _.set(conversation, 'botDisabledTS', null)
+ 
+  const isAdmin =  !isButtonPostback && !userInputHookLately && hasMids(webhook_event)
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
   }
 
-  const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
+   const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
   const botDisabledLately = timeSinceLastBotDisabled < 5000
   const adminFalseAlarm = userInputHookLately && botDisabledLately
   if (adminFalseAlarm) {
       console.log("***  ADMIN CANCELLED !!!!!!! timeSinceLastBotDisabled:" + timeSinceLastBotDisabled + " timeSinceLastUserInput: "+ timeSinceLastUserInput)
       _.set(conversation, 'botDisabledTS', null)
-
   }
 
 }
