@@ -44,7 +44,7 @@ const handleConversationState = (webhook_event) => {
    const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
   const botDisabledLately = timeSinceLastBotDisabled < 5000
   const adminFalseAlarm = userInputHookLately && botDisabledLately
-  if (adminFalseAlarm) {
+  if (adminFalseAlarm && !allDisabledLately) {
       console.log("***  ADMIN CANCELLED !!!!!!! timeSinceLastBotDisabled:" + timeSinceLastBotDisabled + " timeSinceLastUserInput: "+ timeSinceLastUserInput)
       _.set(conversation, 'botDisabledTS', null)
   }
