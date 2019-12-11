@@ -15,10 +15,11 @@ const handleConversationState = (webhook_event) => {
   if ( messageText === 'start bot') allDisabledTS = null
   const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
   const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
-  _.set(conversation, 'allDisabled', allDisabledLately)
   
   // get conversation
   let conversation = getConversation(webhook_event) || initConversation(webhook_event)
+
+  _.set(conversation, 'allDisabled', allDisabledLately)
 
   // Handle conversation expired
   const timeSinceLastUserInput = webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)
