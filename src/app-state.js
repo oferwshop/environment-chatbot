@@ -2,17 +2,28 @@ const _ = require('lodash')
 
 const conversations = {}
 const botDisablePeriod = 1000 * 60 * 60 * 3
+const allDisabledPeriod = 1000 * 60 * 15
 const expirationPeriod = 1000 * 60 * 60 * 5
+let allDisabledTS = null
 
 const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
 
+  // Handle disable all
+  const messageText = _.get(webhook_event, 'message.text')
+  if ( messageText === 'stop bot') allDisabledTS = webhook_event.timestamp
+  if ( messageText === 'start bot') allDisabledTS = null
+  const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
+  const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
+
   let conversation = getConversation(webhook_event) || initConversation(webhook_event)
 
+  // Handle conversation expired
   const timeSinceLastUserInput = webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)
   const converstationExpired = timeSinceLastUserInput > expirationPeriod
   if (converstationExpired) conversation = initConversation(webhook_event)
 
+  // handle admin hijack
   const userInputHookLately = timeSinceLastUserInput < 5000
   const oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
   const newBotDisabledTS = oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
@@ -24,7 +35,7 @@ const handleConversationState = (webhook_event) => {
   const isButtonPostback = _.get(webhook_event, 'postback.payload')
   if (isButtonPostback) _.set(conversation, 'botDisabledTS', null)
  
-  const isAdmin =  !isButtonPostback && !userInputHookLately && hasMids(webhook_event)
+  const isAdmin =  !isButtonPostback && (allDisabledLately || !userInputHookLately && hasMids(webhook_event))
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
@@ -72,6 +83,7 @@ const getConversation = webhook_event => conversations[webhook_event.sender.id]
 
 const initConversation = webhook_event => {
     _.set(conversations, webhook_event.sender.id, {} )
+    allDisabledTS = null
     setLastUserInput(webhook_event)
     return getConversation(webhook_event)
 }
