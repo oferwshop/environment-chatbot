@@ -15,7 +15,9 @@ const handleConversationState = (webhook_event) => {
   if ( messageText === 'start bot') allDisabledTS = null
   const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
   const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
-
+  _.set(conversation, 'allDisabled', allDisabledLately)
+  
+  // get conversation
   let conversation = getConversation(webhook_event) || initConversation(webhook_event)
 
   // Handle conversation expired
@@ -35,7 +37,7 @@ const handleConversationState = (webhook_event) => {
   const isButtonPostback = _.get(webhook_event, 'postback.payload')
   if (isButtonPostback) _.set(conversation, 'botDisabledTS', null)
  
-  const isAdmin =  !isButtonPostback && (allDisabledLately || !userInputHookLately && hasMids(webhook_event))
+  const isAdmin =  !isButtonPostback && !userInputHookLately && hasMids(webhook_event)
   if (isAdmin){
     console.log("*** IS ADMIN !!!!!!!" + "webhook_event.timestamp - lastUserInputTS - : " + (webhook_event.timestamp - _.get(conversation, 'lastUserInputTS', 0)))
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
@@ -44,14 +46,14 @@ const handleConversationState = (webhook_event) => {
    const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
   const botDisabledLately = timeSinceLastBotDisabled < 5000
   const adminFalseAlarm = userInputHookLately && botDisabledLately
-  if (adminFalseAlarm && !allDisabledLately) {
+  if (adminFalseAlarm) {
       console.log("***  ADMIN CANCELLED !!!!!!! timeSinceLastBotDisabled:" + timeSinceLastBotDisabled + " timeSinceLastUserInput: "+ timeSinceLastUserInput)
       _.set(conversation, 'botDisabledTS', null)
   }
 
 }
 
-const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDisabledTS')
+const isDisabled = webhook_event => _.get(getConversation(webhook_event), 'botDisabledTS') || _.get(getConversation(webhook_event), 'allDisabled')
 
 const getMainScriptStarted = webhook_event => _.get(getConversation(webhook_event), 'mainScriptStarted')
 
