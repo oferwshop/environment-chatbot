@@ -8,11 +8,12 @@ let allDisabledTS = null
 
 const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
+  const isButtonPostback = _.get(webhook_event, 'postback.payload')
 
   // Handle disable all
   const messageText = _.get(webhook_event, 'message.text')
   if ( messageText === 'stop bot') allDisabledTS = webhook_event.timestamp
-  if ( messageText === 'start bot') allDisabledTS = null
+  if ( messageText === 'start bot' || isButtonPostback) allDisabledTS = null
   const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
   const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
   
@@ -29,13 +30,12 @@ const handleConversationState = (webhook_event) => {
   // handle admin hijack
   const userInputHookLately = timeSinceLastUserInput < 5000
   const oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
-  const newBotDisabledTS = allDisabledLately || oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
+  const newBotDisabledTS =  oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
 
   _.set(conversation, 'botDisabledTS', newBotDisabledTS)
 
   setLastUserInput(webhook_event)
 // webhook_event.request_thread_control//
-  const isButtonPostback = _.get(webhook_event, 'postback.payload')
   if (isButtonPostback) _.set(conversation, 'botDisabledTS', null)
  
   const isAdmin =  !isButtonPostback && !userInputHookLately && hasMids(webhook_event)
@@ -44,7 +44,7 @@ const handleConversationState = (webhook_event) => {
     _.set(conversation, 'botDisabledTS', webhook_event.timestamp)
   }
 
-   const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
+  const timeSinceLastBotDisabled = webhook_event.timestamp - _.get(conversation, 'botDisabledTS', 0)
   const botDisabledLately = timeSinceLastBotDisabled < 5000
   const adminFalseAlarm = userInputHookLately && botDisabledLately
   if (adminFalseAlarm) {
