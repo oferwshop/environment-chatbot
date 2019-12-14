@@ -35,7 +35,9 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
 
 const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
-const telAvivBranchWords = ['tel-aviv','tel aviv','תל אביב','תל-אביב','מרכז']
+const telAvivBranchWords = ['tel-aviv','tel aviv','תל אביב','ת"א','תל-אביב','מרכז', 'tlv']
+
+const onlyTelAvivBranchWords = ['תא']
 
 const hertzliaBranchWords = ['hertzlia','herzlia','הרצליה']
 
@@ -288,7 +290,7 @@ const getResponseType = (webhook_event, info) => {
   const isAVeryShortMessage = _.get(webhook_event, 'message.text', null) &&  isVeryShortMessage(webhook_event)
   const isEndConversation = (isAVeryShortMessage && !isASchedule) || textContains(webhook_event, possibleEndWords) && isShortMessage(webhook_event)
   const isInitialGreeting = isAVeryShortMessage && info.isFirstMessage
-  const isTelAviv = textContains(webhook_event, telAvivBranchWords)
+  const isTelAviv = textContains(webhook_event, telAvivBranchWords) || textEquals(webhook_event, onlyTelAvivBranchWords)
   const isKadima = textContains(webhook_event, kadimaWords)
   const isKfarBilu = textContains(webhook_event, kfarBiluBranchWords)
   const isHertzlia = textContains(webhook_event, hertzliaBranchWords)
