@@ -26,7 +26,7 @@ const handleConversationState = (webhook_event) => {
   // handle admin hijack
   const userInputHookLately = timeSinceLastUserInput < 5000
   let oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
-  const newBotDisabledTS =  oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
+  let newBotDisabledTS =  oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
 
   // Handle disable all
   const messageText = _.get(webhook_event, 'message.text')
