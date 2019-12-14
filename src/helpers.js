@@ -67,6 +67,8 @@ const parkingWords = ['park', 'חניה', 'לחנות', 'חנייה']
 
 const muayThaiWords = [' muay', 'תאילנדי', ' מוי']
 
+const botCommands = ['start bot', 'stop bot']
+
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
 const getWeekDay = (datetime) => {
@@ -295,8 +297,10 @@ const getResponseType = (webhook_event, info) => {
   const isKfarBilu = textContains(webhook_event, kfarBiluBranchWords)
   const isHertzlia = textContains(webhook_event, hertzliaBranchWords)
   const isMisgav = textContains(webhook_event, misgavBranchWords)
+  const isBotCommand = textEquals(webhook_event, botCommands)
 
-  return (isInitialGreeting || isAGreeting) && 'initial-greeting'
+  return isBotCommand && 'bot-command'
+    || (isInitialGreeting || isAGreeting) && 'initial-greeting'
     || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
