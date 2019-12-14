@@ -10,13 +10,6 @@ const handleConversationState = (webhook_event) => {
   console.log("*** CONVERSATIONS: " + JSON.stringify(conversations))
   const isButtonPostback = _.get(webhook_event, 'postback.payload')
 
-  // Handle disable all
-  const messageText = _.get(webhook_event, 'message.text')
-  if ( messageText === 'stop bot') allDisabledTS = webhook_event.timestamp
-  if ( messageText === 'start bot' || isButtonPostback) {
-      allDisabledTS = null
-      newBotDisabledTS = null
-  }
   const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
   const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
   
@@ -35,6 +28,14 @@ const handleConversationState = (webhook_event) => {
   const oldBotDisabledTS = _.get(conversation, 'botDisabledTS')
   const newBotDisabledTS =  oldBotDisabledTS && shouldReEnableBot(webhook_event.timestamp, oldBotDisabledTS) ? null: oldBotDisabledTS
 
+  // Handle disable all
+  const messageText = _.get(webhook_event, 'message.text')
+  if ( messageText === 'stop bot') allDisabledTS = webhook_event.timestamp
+  if ( messageText === 'start bot' || isButtonPostback) {
+      allDisabledTS = null
+      newBotDisabledTS = null
+  }
+  
   _.set(conversation, 'botDisabledTS', newBotDisabledTS)
 
   setLastUserInput(webhook_event)
