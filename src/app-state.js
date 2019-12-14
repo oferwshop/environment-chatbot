@@ -13,7 +13,10 @@ const handleConversationState = (webhook_event) => {
   // Handle disable all
   const messageText = _.get(webhook_event, 'message.text')
   if ( messageText === 'stop bot') allDisabledTS = webhook_event.timestamp
-  if ( messageText === 'start bot' || isButtonPostback) allDisabledTS = null
+  if ( messageText === 'start bot' || isButtonPostback) {
+      allDisabledTS = null
+      newBotDisabledTS = null
+  }
   const timeSinceLastAllDisabled = webhook_event.timestamp - allDisabledTS || 0
   const allDisabledLately = timeSinceLastAllDisabled < allDisabledPeriod
   
