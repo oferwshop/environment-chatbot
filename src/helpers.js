@@ -301,6 +301,11 @@ const getResponseType = (webhook_event, info) => {
 
   return isBotCommand && 'bot-command'
     || (isInitialGreeting || isAGreeting) && 'initial-greeting'
+    || (isTelAviv && 'tel-aviv')
+    || (isKadima && 'kadima')
+    || (isKfarBilu && 'kfar-bilu')
+    || (isHertzlia && 'hertzlia')
+    || (isMisgav && 'misgav')
     || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
@@ -310,11 +315,6 @@ const getResponseType = (webhook_event, info) => {
     || (isAParkingQuery && 'parking-info')
     || (isAMuayThaiQuery && 'muay-thai-info')
     || (isQuickReply && 'quick-reply')
-    || (isTelAviv && 'tel-aviv')
-    || (isKadima && 'kadima')
-    || (isKfarBilu && 'kfar-bilu')
-    || (isHertzlia && 'hertzlia')
-    || (isMisgav && 'misgav')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
     || (date && 'date')
