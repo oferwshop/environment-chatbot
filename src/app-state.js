@@ -100,7 +100,8 @@ const setLastUserInput = (webhook_event) => {
     let nonUserHooksCount = _.get(conversation, 'nonUserHooksCount', 0)
     let userHooksCount = _.get(conversation, 'userHooksCount', 0)
     const lastUserInputTS = _.get(conversation, 'lastUserInputTS')
-    _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) ? lastUserInputTS : webhook_event.timestamp )
+    const isButtonPostback = _.get(webhook_event, 'postback.payload')
+    _.set(conversation, 'lastUserInputTS', hasMids(webhook_event) && !isButtonPostback ? lastUserInputTS : webhook_event.timestamp )
     _.set(conversation, 'nonUserHooksCount', hasMids(webhook_event) ? nonUserHooksCount + 1 : 0 )
     _.set(conversation, 'userHooksCount', hasMids(webhook_event) ? userHooksCount : userHooksCount + 1 )
 }
