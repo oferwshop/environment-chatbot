@@ -300,13 +300,11 @@ const getResponseType = (webhook_event, info) => {
   const isBotCommand = textEquals(webhook_event, botCommands)
 
   return isBotCommand && 'bot-command'
-    || (isInitialGreeting || isAGreeting) && 'initial-greeting'
     || (isTelAviv && 'tel-aviv')
     || (isKadima && 'kadima')
     || (isKfarBilu && 'kfar-bilu')
     || (isHertzlia && 'hertzlia')
     || (isMisgav && 'misgav')
-    || (isEndConversation) && 'end-conversation'
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
     || (isAWaiver && 'get-waiver')
@@ -322,6 +320,8 @@ const getResponseType = (webhook_event, info) => {
     || (isAPriceInquiry && 'price-inquiry')
     || (isASchedule && 'schedule')
     || (isAddressQuery && 'restart')
+    || (isInitialGreeting || isAGreeting) && 'initial-greeting'
+    || (isEndConversation) && 'end-conversation'
     || (isAGeneralInfo && 'general-info')
     || (isTextMessage && 'greetings-location')
 }
