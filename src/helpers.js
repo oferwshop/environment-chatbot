@@ -49,7 +49,9 @@ const kadimaWords = ['kadima','hasharon',' sharon','קדימה','השרון','ב
 
 const greetingWords = ['hi!','Hi!','hi','hi,','hello','hello','hey','hey,','הי','היי','היי,','שלום','הי,','שלום,']
 
-const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign']
+const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign', ' app', 'אפליקציה']
+
+const appWords = ['app']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
@@ -299,6 +301,7 @@ const getResponseType = (webhook_event, info) => {
   const isHertzlia = textContains(webhook_event, hertzliaBranchWords)
   const isMisgav = textContains(webhook_event, misgavBranchWords)
   const isBotCommand = textEquals(webhook_event, botCommands)
+  const isApp = textEquals(webhook_event, appWords)
 
   return isBotCommand && 'bot-command'
     || (isTelAviv && 'tel-aviv')
@@ -308,7 +311,7 @@ const getResponseType = (webhook_event, info) => {
     || (isMisgav && 'misgav')
     || (isSticker) && 'sticker'
     || (isPhoneNumber || isEmail) && 'contact-details-left' 
-    || (isAWaiver && 'get-waiver')
+    || ((isAWaiver || isApp) && 'get-waiver')
     || (isAnActiveDuty && 'military-info')
     || (isAKidsQuery && 'kids-info')
     || (isAParkingQuery && 'parking-info')
