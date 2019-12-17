@@ -117,6 +117,7 @@ const getFileText = (payload, english) => {
 const handleGender = (text, gender) => text.replace('מתעניין/ת', gender === "male" ? "מתעניין" : "מתעניינת")
     .replace('ברוך/ה', gender === "male" ? "ברוך" : "ברוכה")
     .replace('הבא/ה', gender === "male" ? "הבא" : "הבאה")
+    .replace('הורד/י', gender === "male" ? "הורד" : "הורידי")
     .replace('את/ה', gender === "male" ? "אתה" : "את")
     .replace('מחפש/ת', gender === "male" ? "מחפש" : "מחפשת")
     .replace('מקצועני/ת', gender === "male" ? "מקצועני" : "מקצוענית")

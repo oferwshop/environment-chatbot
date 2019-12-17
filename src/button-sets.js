@@ -47,7 +47,8 @@ const greetingsLocation = [
 ]
 
 const signWaiver =  [
-  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'https://goo.gl/forms/AnFOlYfTakeZQ7NG3',"title": "לטופס ההרשמה", "webview_height_ratio": "full" },
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להורדת האפליקציה", "webview_height_ratio": "full" }
 ]
 
 const registerClass =  [
