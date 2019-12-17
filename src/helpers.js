@@ -51,7 +51,7 @@ const greetingWords = ['hi!','Hi!','hi','hi,','hello','hello','hey','hey,','הי
 
 const waiverWords = ['הרשמה','טופס','בריאות','להירשם','נרש','הצהרת','מסמך',' form','regist',' sign', ' app', 'אפליקציה']
 
-const appWords = ['app']
+const appWords = ['app', 'אפליקציה']
 
 const generalInfoWords = ['מה זה', "hat is", "seminar", "סמינר"]
 
