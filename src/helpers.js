@@ -180,7 +180,7 @@ const isMuayThai = webhook_event => textContains(webhook_event, muayThaiWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
 
-const isMainScript = webhook_event => textContains(webhook_event, shouldStartMainScriptWords) && isVeryShortMessage(webhook_event)
+const isMainScript = webhook_event => textContains(webhook_event, shouldStartMainScriptWords) && !isVeryShortMessage(webhook_event)
 
 const getHebrewWeekday = (webhook_event) => {
   const text = _.toLower(_.get(webhook_event, 'message.text', ''))
