@@ -52,7 +52,8 @@ const signWaiver =  [
 ]
 
 const registerClass =  [
-  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc', "title": 'Register class', "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc', "title": 'Register class', "webview_height_ratio": "full" },
+  { "payload": 'restart', "title": 'To Main Menu' }
 ]
 const generalInfo =  [
   { "type": 'web_url', "url": 'https://www.jja.co.il', "title": 'About', "webview_height_ratio": "full" }

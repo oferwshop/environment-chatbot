@@ -52,7 +52,8 @@ const signWaiver =  [
 ]
 
 const registerClass =  [
-  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" }
+  { "type": 'web_url', "url": 'http://wix.to/hcDaAuc',"title": "להרשמה לאימון", "webview_height_ratio": "full" },
+  { "payload": 'restart', "title": 'לתפריט ראשי' }
 ]
 const generalInfo =  [
   { "type": 'web_url', "url": 'https://www.jja.co.il',"title": "על האימונים", "webview_height_ratio": "full" }

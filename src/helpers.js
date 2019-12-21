@@ -73,6 +73,8 @@ const botCommands = ['start bot', 'stop bot']
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
+const shouldStartMainScriptWords = ['שבת שלום']
+
 const getWeekDay = (datetime) => {
   const val = _.get(datetime, '[0].values[0]')
   const date = (!datetime ? new Date() : new Date(_.get(val, 'from.value') || _.get(val, 'value'))).getDay() 
@@ -177,6 +179,8 @@ const isParking = webhook_event => textContains(webhook_event, parkingWords)
 const isMuayThai = webhook_event => textContains(webhook_event, muayThaiWords)
 
 const isPriceInquiry = webhook_event => textContains(webhook_event, priceWords)
+
+const isMainScript = webhook_event => textContains(webhook_event, shouldStartMainScriptWords) && isVeryShortMessage(webhook_event)
 
 const getHebrewWeekday = (webhook_event) => {
   const text = _.toLower(_.get(webhook_event, 'message.text', ''))
@@ -302,6 +306,7 @@ const getResponseType = (webhook_event, info) => {
   const isMisgav = textContains(webhook_event, misgavBranchWords)
   const isBotCommand = textEquals(webhook_event, botCommands)
   const isApp = textEquals(webhook_event, appWords)
+  const shouldStartMainScript = isMainScript(webhook_event)
 
   return isBotCommand && 'bot-command'
     || (isTelAviv && 'tel-aviv')
@@ -319,6 +324,7 @@ const getResponseType = (webhook_event, info) => {
     || (isQuickReply && 'quick-reply')
     || (isButtonPostback && 'button-postback')
     || (isAGiNoGi && !date && !isASchedule && 'gi-no-gi')
+    || (shouldStartMainScript && 'greetings-location')
     || (date && 'date')
     || (isAPriceInquiry && isASchedule && 'schedule-price')
     || (isAPriceInquiry && 'price-inquiry')
