@@ -46,6 +46,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'price-inquiry' && getReplyWithUser(webhook_event, 'price-inquiry', sender_psid)
       || type === 'greetings-location' && getReplyWithUser(webhook_event, 'greetings-location', sender_psid)
       || type === 'back-to-beginning' && getReplyWithUser(webhook_event, 'back-to-beginning', sender_psid)
+      || getReply(webhook_event, type)
     }
 
 
