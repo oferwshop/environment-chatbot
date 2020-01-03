@@ -12,10 +12,9 @@ function getChatbotResponse(webhook_event, sender_psid) {
     
     const initialType = getResponseType(webhook_event, { isFirstMessage })
 
-    if (isTextInput(initialType)
-        && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
+    if (webhook_event.message && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
 
-    const isEcho = isTextInput(initialType) && !webhook_event.message
+    const isEcho = isTextInput(initialType, webhook_event) && !webhook_event.message
 
     const type = getActualType(initialType, webhook_event)
     console.log("**** Response Initial and Actual Type: " + initialType + "," + type)
@@ -46,7 +45,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
       || type === 'price-inquiry' && getReplyWithUser(webhook_event, 'price-inquiry', sender_psid)
       || type === 'greetings-location' && getReplyWithUser(webhook_event, 'greetings-location', sender_psid)
       || type === 'back-to-beginning' && getReplyWithUser(webhook_event, 'back-to-beginning', sender_psid)
-      || getReply(webhook_event, type)
+      || getReplyWithUser(webhook_event, type, sender_psid)
     }
 
 

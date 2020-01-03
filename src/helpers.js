@@ -355,6 +355,7 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'kadima'
   || type === 'hertzlia'
   || type === 'misgav'
+  || type === 'gi-no-gi'
   || type === 'back-to-beginning')
 
 const isHebrew = (webhook_event) =>{

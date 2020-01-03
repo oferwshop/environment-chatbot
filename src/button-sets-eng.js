@@ -89,7 +89,7 @@ const buttonSets = {
   'schedule-combined': { first: 'schedule', next: 'weekly-schedule' },
   'schedule-price-combined': { first: 'schedule', next: 'schedule-price' },
   "weekly-schedule": backToBeginning,
-  "gi-no-gi": generalInfo,
+  "gi-no-gi": backToBeginning,
   "end-conversation": endConversation,
   'back-to-beginning': backToBeginning,
   'general-info': generalInfo,
