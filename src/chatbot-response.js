@@ -12,7 +12,8 @@ function getChatbotResponse(webhook_event, sender_psid) {
     
     const initialType = getResponseType(webhook_event, { isFirstMessage })
 
-    if (webhook_event.message && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(webhook_event))
+    const messageText = _.get(webhook_event, 'message.text', _.get(webhook_event, 'postback.title'))
+    if (messageText && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(messageText))
 
     const isEcho = isTextInput(initialType, webhook_event) && !webhook_event.message
 
