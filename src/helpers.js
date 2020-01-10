@@ -38,7 +38,7 @@ const scheduleWords = ['לו"ז','לוז','מערכת','לבוא','להגיע','
   'מתי ','שעה','chedule', "time",'שעה','שבוע','בוקר','ערב','צהריים', " free ", " train",
   "morning", "noon", "evening", "when", "זמן", "time", "today", "יום", "drop by", "attend"
   , "לקפוץ", "נסיון", "ניסיון", "drop in", "שעור", "שיעור", "class",
-  "!good evening", "!good day", "!good afternoon", "!good morning"]
+  "!good evening", "!good day", "!good afternoon", "!good morning","!בוקר טוב","!צהריים טובים","!ערב טוב","!שבת שלום"]
 
 const priceWords = ['price','cost','pay','fee','discount','how much',' subscr','מחיר','עלות','מנוי','תשלום','לשלם','עולה','כסף','כרטיס','עלויות','הנח','עולים']
 
@@ -80,7 +80,7 @@ const botCommands = ['start bot', 'stop bot']
 
 const englishWeekdays = ["sunday", "monday", "tuesday", "wendsday", "thursday", "friday", "saturday"]
 
-const shouldStartMainScriptWords = ['שבת שלום']
+const shouldStartMainScriptWords = []
 
 const getWeekDay = (datetime) => {
   const val = _.get(datetime, '[0].values[0]')
