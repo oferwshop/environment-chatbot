@@ -173,7 +173,7 @@ const sendEmail = (info, contactPayload) => {
       }); 
 }
 
-const isSchedule = webhook_event => hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)
+const isSchedule = webhook_event => (hasDateTime(webhook_event) || textContains(webhook_event, scheduleWords)) && !textContains(webhook_event, greetingsWithTime)
 
 const isActiveDuty = webhook_event => textContains(webhook_event, activeDutyWords)
 
