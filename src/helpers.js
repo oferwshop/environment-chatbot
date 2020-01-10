@@ -198,7 +198,7 @@ const getHebrewWeekday = (webhook_event) => {
 }
 const greetingsWithTime = ['צהריים טובים','בוקר טוב', 'ערב טוב','שבת שלום','good afternoon','good morning','good evening']
 const getDate = webhook_event => {
-    if (textContains(webhook_event, greetingsWithTime)) return falase
+    if (textContains(webhook_event, greetingsWithTime)) return false
     if (hasLongText(webhook_event)) return false
     let today = false
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
