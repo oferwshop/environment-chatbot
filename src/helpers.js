@@ -365,9 +365,12 @@ const isTextInput = type => (type === 'greetings-location'
   || type === 'gi-no-gi'
   || type === 'back-to-beginning')
 
-const isHebrew = (messageText) =>{
+const getLang = (messageText) =>{
   HebrewChars = new RegExp("[\u0590-\u05FF]");
-  return HebrewChars.test(messageText)
+  const isNumbersOnly = !isNaN(messageText)
+  if (HebrewChars.test(messageText)) return 'Eebrew'
+  if (isNumbersOnly) return null
+  return 'English'
 }
-module.exports = { isTextInput, isHebrew, getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
+module.exports = { isTextInput, getLang , getResponseType, getDate, isWaiver, getReply, isGeneralInfo, getReplyWithUser, getReplyAndEmail, isPriceInquiry, isSchedule, generalInfoWords, createResponse, handleGender, getFileText, hasLongText, hasDateTime, textContains, scheduleWords, priceWords, getWeekDay, waiverWords, getQuickReplies }
  

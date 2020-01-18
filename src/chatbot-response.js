@@ -1,7 +1,7 @@
 const _ = require('lodash')
-const { isTextInput, isHebrew, getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
+const { isTextInput, getLang , getDate, getReply, getResponseType, getReplyWithUser, getReplyAndEmail } = require('./helpers')
 
-const { getUserHooksCount, hasMids, setEnglish, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
+const { getUserHooksCount, hasMids, setLanguage, getEnglish, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted, initConversation } = require('./app-state')
 
 function getChatbotResponse(webhook_event, sender_psid) {
     const isFirstMessage = getUserHooksCount(webhook_event) === 0
@@ -13,7 +13,7 @@ function getChatbotResponse(webhook_event, sender_psid) {
     const initialType = getResponseType(webhook_event, { isFirstMessage })
 
     const messageText = _.get(webhook_event, 'message.text', _.get(webhook_event, 'postback.title'))
-    if (messageText && !hasMids(webhook_event)) setEnglish(webhook_event, !isHebrew(messageText))
+    if (messageText && !hasMids(webhook_event)) setLanguage(webhook_event, getLang(messageText))
 
     const isEcho = isTextInput(initialType, webhook_event) && !webhook_event.message
 
@@ -58,7 +58,7 @@ const getActualType = (type, webhook_event) => {
   if (type === 'button-postback' && _.get(webhook_event, 'postback.payload') === 'restart' || type === 'restart'){
     const english = getEnglish(webhook_event)
     initConversation(webhook_event)
-    setEnglish(webhook_event, english)
+    setLanguage(webhook_event, english)
     setMainScriptStarted(webhook_event, true)
     return 'greetings-location'
   }

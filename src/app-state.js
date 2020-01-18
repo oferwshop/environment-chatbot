@@ -67,9 +67,21 @@ const setMainScriptStarted = (webhook_event, val) => {
     _.set(conversation, 'mainScriptStarted', val)
 }
 
-const setEnglish = (webhook_event, val) => {
+const setLanguage = (webhook_event, lang) => {
     const conversation = getConversation(webhook_event)
-    _.set(conversation, 'english', val)
+    let value
+    switch (lang) {
+        case 'English':
+            value = true
+            break;
+        case 'Hebrew':
+            value = false
+            break;
+        default:
+            value = conversation.english
+            break;
+    }
+    _.set(conversation, 'english', value)
 }
 
 const setGender = (webhook_event, val) => {
@@ -110,4 +122,4 @@ const getUserHooksCount = webhook_event => _.get(getConversation(webhook_event),
 
 const hasMids = webhook_event => _.get(webhook_event, 'delivery.mids')
 
-module.exports = { getGender, setGender, getUserHooksCount, hasMids, setEnglish, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
+module.exports = { getGender, setGender, getUserHooksCount, hasMids, setLanguage, getEnglish, initConversation, handleConversationState, isDisabled, getMainScriptStarted, setMainScriptStarted  }
