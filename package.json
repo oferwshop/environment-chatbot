@@ -20,7 +20,7 @@
     "flatted": "^2.0.1",
     "lodash": ">=4.17.13",
     "mongoose": "^5.0.0-rc0",
-    "nodemailer": "^5.1.1",
+    "nodemailer": "^6.4.16",
     "request": "^2.83.0"
   },
   "devDependencies": {
