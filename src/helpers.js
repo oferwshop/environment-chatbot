@@ -204,6 +204,8 @@ const getDate = webhook_event => {
     let datetime = _.get(webhook_event, 'message.nlp.entities.datetime')
     let withoutGreeting = _.get(webhook_event, 'message.text', '')
     if (textContains(webhook_event, ['לו"ז','לוז'] )) { today = true; datetime = true }
+    if (textContains(webhook_event, ['היום','ערב','בוקר','עכשיו'] )) { today = true; datetime = true }
+    if (textContains(webhook_event, ['onight','oday'] )) { today = true; datetime = true }
     if (textContains({ message: { text: withoutGreeting }}, scheduleWords)) {  datetime = false }
     if (textContains(webhook_event, englishWeekdays)) return getHebrewWeekday(webhook_event)
     if (datetime || today) return getWeekDay(datetime)
