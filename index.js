@@ -25,7 +25,6 @@ const
   handleMessage = require('./src/handle-message'), // creates express http server
  // handlePostback = require('./src/handle-postback'); // creates express http server
   { parse, stringify } = require('flatted/cjs');
-require('express-debug')(app);
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
